@@ -1,0 +1,26 @@
+
+.nav-tab{width: 100%;height: 40px;position: relative;}
+.nav-scroll{position: absolute;width: 25px;height: 39px;overflow: hidden;margin: 0;top: 0;background: #fff url(../images/icon-left.png) center center no-repeat;background-size: 55% auto;cursor: pointer;}
+.nav-scroll-left{left: 0;border-radius: 5px 0px 0px 0px;border-right: 1px solid #eee;border-bottom: 1px solid #eee;}
+.nav-scroll-right{right: 40px;transform: rotate(180deg);border: 1px solid #eee;border-bottom: 0px;}
+
+.close-box{position: absolute;right: 0;top: 0;width: 40px;height: 39px;border-bottom: 1px solid #eee;}
+.close-box>label{display: block;width: 100%;height: 100%;margin: 0;background: #fff url(../images/uploadify-cancel.png) center center no-repeat;background-size: 35% auto;cursor: pointer;}
+.close-box:hover .close-item,.close-item:hover{display: block;}
+
+.close-item{display: none;position: absolute;right: 2px;overflow: hidden;height: 71px;width: 100px;top: 38px;background: #fff;text-align: center;border-radius: 5px;box-shadow: 0 0 5px 1px #ddd;}
+.close-item>span{display: block;height: 35px;font-size: 12px;color: #444;line-height: 35px;cursor: pointer;}
+.close-item>span:first-of-type{border-bottom: 1px solid #ddd;}
+.close-item>span:hover{background: #2196F3;color: #fff;}
+
+.tabbed {position: absolute;left: 25px;right: 65px;height: 40px;overflow: hidden;background-color: #ebeced;transition: border 250ms ease;}
+.tabbed ul {position: absolute;display: block;left: 0;top: 0;margin: 0px;padding: 0px;overflow: hidden;float: left;padding-left: 15px;list-style-type: none;white-space: nowrap;transition: all 0.3s;}
+.tabbed ul * {margin: 0px;padding: 0px;}
+.tabbed ul li {display: inline-block;z-index: 2;cursor: pointer;color: #777;text-transform: uppercase;font: 600 13px/20px roboto, "Open Sans", Helvetica, sans-serif;transition: all 0.2s;}
+.tabs-animated .nav-link {position: relative;padding: 10px;margin: 0 .75rem 0 0;color: #495057;}
+.tabbed ul li .closetag{width: 16px;height: 16px;border-radius: 8px;background-color: #909ca7;font: 600 10px/19px "simsun";text-align: center;color: #f1f1f1;margin-left: 5px;}
+.tabbed ul li .closetag:hover{background-color: #6c757d;}
+
+.tabbed.round ul li {border-radius: 8px 8px 0 0;}
+.tabbed.round ul li:before {border-radius: 0 8px 0 0;}
+.tabbed.round ul li:after {border-radius: 8px 0 0 0;}

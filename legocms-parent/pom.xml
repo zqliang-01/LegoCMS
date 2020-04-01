@@ -1,132 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.legocms</groupId>
-	<artifactId>legocms-parent</artifactId>
-	<version>1.0.0</version>
-	<packaging>jar</packaging>
+    <groupId>com.legocms</groupId>
+    <artifactId>legocms-parent</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
-	<name>lego-search</name>
+    <properties>
+        <shiro-version>1.5.1</shiro-version>
+        <jedis.version>3.0.0</jedis.version>
+        <slf4j-api.version>1.7.25</slf4j-api.version>
+        <spring-boot.version>2.0.8.RELEASE</spring-boot.version>
+        <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
-	<properties>
-		<version.lucene>5.5.5</version.lucene>
-		<version.ehcache>3.6.3</version.ehcache>
-		<version.hibernate>5.3.7.Final</version.hibernate>
-		<version.hibernateSearch>5.10.5.Final</version.hibernateSearch>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
+    <modules>
+        <module>legocms-core</module>
+        <module>legocms-data</module>
+        <module>legocms</module>
+    </modules>
 
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.1.0.RELEASE</version>
-	</parent>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-parent</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
-	<dependencies>
-		<!-- springboot -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-starter-logging</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-log4j</artifactId>
-    		<version>1.3.8.RELEASE</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>log4j</artifactId>
-					<groupId>log4j</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-freemarker</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-starter-logging</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<!-- <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-		</dependency> -->
-		
-		<!-- hibernate -->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>druid</artifactId>
-			<version>1.0.29</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-ehcache</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-search-orm</artifactId>
-			<version>${version.hibernateSearch}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-search-elasticsearch</artifactId>
-			<version>${version.hibernateSearch}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.lucene</groupId>
-			<artifactId>lucene-analyzers-smartcn</artifactId>
-			<version>${version.lucene}</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-		</dependency>
-	</dependencies>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>${javax.servlet-api.version}</version>
+            </dependency>
+
+            <!-- slf4j -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j-api.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>${slf4j-api.version}</version>
+            </dependency>
+
+            <!-- jedis -->
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>${jedis.version}</version>
+            </dependency>
+
+            <!-- shiro -->
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-core</artifactId>
+                <version>${shiro-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-web</artifactId>
+                <version>${shiro-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-spring</artifactId>
+                <version>${shiro-version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
 </project>
