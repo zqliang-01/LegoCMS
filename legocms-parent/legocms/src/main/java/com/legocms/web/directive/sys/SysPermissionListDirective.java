@@ -14,7 +14,7 @@ import com.legocms.web.AdminView;
 import com.legocms.web.directive.AbstractTemplateDirective;
 
 @Component
-public class SysModuleListDirective extends AbstractTemplateDirective {
+public class SysPermissionListDirective extends AbstractTemplateDirective {
 
     @Autowired
     private ISysPermissionService moduleService;
@@ -23,7 +23,7 @@ public class SysModuleListDirective extends AbstractTemplateDirective {
         String code = handler.getString("code");
         boolean menu = handler.getBoolean("menu", true).booleanValue();
         SysUserInfo user = getAttribute(AdminView.USER_SESSION_KEY);
-        List<SysPermissionInfo> modules = moduleService.findBy(user.getCode(), code, menu);
-        handler.put("modules", modules).render();
+        List<SysPermissionInfo> permissions = moduleService.findBy(user.getCode(), code, menu);
+        handler.put("permissions", permissions).render();
     }
 }

@@ -6,5 +6,5 @@ import com.legocms.core.dto.sys.SysPermissionInfo;
 
 public interface ISysPermissionService {
 
-    List<SysPermissionInfo> findByParent(String parentCode, boolean menu);
+    List<SysPermissionInfo> findBy(String userCode, String parentCode, boolean menu);
 }

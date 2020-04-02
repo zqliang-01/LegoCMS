@@ -8,7 +8,7 @@ import javax.persistence.EntityManager;
 
 import com.legocms.data.base.BaseEntity;
 
-public class QueryHandler<T extends BaseEntity> extends BaseHandler<T> {
+public class QueryHandler<T extends BaseEntity> extends BaseQueryHandler<T> {
     public static final String COUNT_SQL = "select count(*) ";
     public static final String KEYWORD_FROM = " from ";
     public static final String KEYWORD_ORDER = " order by ";

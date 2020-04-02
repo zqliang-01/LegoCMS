@@ -18,21 +18,25 @@ public class SysUserInfo extends Dto {
     private String name;
     private String password;
     private List<Role> roles = new ArrayList<Role>();
+    private List<String> permissions = new ArrayList<String>();
 
     public Set<String> getRoleCodes() {
-      Set<String> codes = new HashSet<String>();
-      for (Role role : this.roles) {
-        codes.add(role.getCode());
-      }
-      return codes;
+        Set<String> codes = new HashSet<String>();
+        for (Role role : this.roles) {
+            codes.add(role.getCode());
+        }
+        return codes;
     }
 
     public Set<String> getRoleNames() {
-      Set<String> names = new HashSet<String>();
-      for (Role role : this.roles) {
-        names.add(role.getCode());
-      }
-      return names;
+        Set<String> names = new HashSet<String>();
+        for (Role role : this.roles) {
+            names.add(role.getCode());
+        }
+        return names;
     }
 
+    public void addPermission(String permission) {
+        permissions.add(permission);
+    }
 }

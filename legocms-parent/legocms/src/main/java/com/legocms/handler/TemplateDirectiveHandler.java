@@ -12,6 +12,8 @@ import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.legocms.data.handler.BaseFreemarkerHandler;
+import com.legocms.data.handler.RenderHandler;
 import com.legocms.tools.TemplateModelUtils;
 
 import freemarker.core.Environment;
@@ -24,7 +26,7 @@ import freemarker.template.TemplateHashModelEx;
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
 
-public class TemplateDirectiveHandler extends BaseHandler {
+public class TemplateDirectiveHandler extends BaseFreemarkerHandler {
     private Map<String, TemplateModel> parameters;
     private TemplateModel[] loopVars;
     private TemplateDirectiveBody templateDirectiveBody;

@@ -1,4 +1,4 @@
-package com.legocms.handler;
+package com.legocms.data.handler;
 
 import java.io.IOException;
 import java.io.Writer;

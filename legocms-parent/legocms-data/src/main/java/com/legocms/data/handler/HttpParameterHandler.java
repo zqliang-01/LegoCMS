@@ -1,4 +1,4 @@
-package com.legocms.handler;
+package com.legocms.data.handler;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -22,7 +22,7 @@ import com.legocms.core.common.DateUtil;
 import com.legocms.core.common.StringUtil;
 import com.legocms.core.exception.BusinessException;
 
-public class HttpParameterHandler extends BaseHandler {
+public class HttpParameterHandler extends BaseFreemarkerHandler {
 
     private MediaType mediaType;
     private HttpMessageConverter<Object> httpMessageConverter;

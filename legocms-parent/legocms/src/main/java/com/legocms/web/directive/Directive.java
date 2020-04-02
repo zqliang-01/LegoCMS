@@ -2,7 +2,7 @@ package com.legocms.web.directive;
 
 import java.io.IOException;
 
-import com.legocms.handler.RenderHandler;
+import com.legocms.data.handler.RenderHandler;
 
 public interface Directive {
 

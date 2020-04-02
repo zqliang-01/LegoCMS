@@ -1,4 +1,4 @@
-package com.legocms.web;
+package com.legocms.core.web;
 
 import org.springframework.web.servlet.ModelAndView;
 
@@ -10,6 +10,10 @@ public class ViewResponse extends ModelAndView {
 
     public static ViewResponse ok(String page) {
         return new ViewResponse(page);
+    }
+
+    public static ViewResponse redirect(String page) {
+        return new ViewResponse("redirect:/" + page);
     }
 
     public static ViewResponse error(String code, String msg, String page) {

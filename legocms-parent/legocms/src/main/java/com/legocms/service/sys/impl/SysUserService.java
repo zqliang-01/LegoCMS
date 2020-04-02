@@ -14,6 +14,7 @@ public class SysUserService extends BaseService implements ISysUserService {
         userInfo.setCode("1");
         userInfo.setName("test");
         userInfo.setPassword("test");
+        userInfo.addPermission("permission:admin");
         return userInfo;
     }
 }

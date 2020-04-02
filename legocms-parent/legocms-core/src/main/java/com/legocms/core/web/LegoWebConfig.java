@@ -1,8 +1,9 @@
-package com.legocms.web;
+package com.legocms.core.web;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -15,6 +16,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -22,10 +24,14 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.legocms.core.common.Constants;
+import com.legocms.core.web.session.ISessionInterceptor;
 
 @EnableWebMvc
 @Configuration
 public class LegoWebConfig implements WebMvcConfigurer {
+
+    @Autowired
+    private List<ISessionInterceptor> sessionInterceptes;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -33,6 +39,15 @@ public class LegoWebConfig implements WebMvcConfigurer {
         registry.addResourceHandler(new String[] { "swagger-ui.html" }).addResourceLocations(new String[] { "classpath:/META-INF/resources/" });
         registry.addResourceHandler(new String[] { "/webjars/**" }).addResourceLocations(new String[] { "classpath:/META-INF/resources/webjars/" });
         WebMvcConfigurer.super.addResourceHandlers(registry);
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        for (ISessionInterceptor sessionInterceptor : sessionInterceptes) {
+            registry.addInterceptor(sessionInterceptor)
+            .addPathPatterns(sessionInterceptor.getPathPatterns())
+            .excludePathPatterns(sessionInterceptor.getExcludePathPatterns());
+        }
     }
 
     @Bean

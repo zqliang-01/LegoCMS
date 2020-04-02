@@ -1,8 +1,8 @@
 <div class="app-sidebar__inner">
-	<#macro module parentCode top>
-	    <@sysModuleList code=parentCode menu=true>
-			<#list modules as m>
-		        <#if m?size gt 0>
+	<#macro permission parentCode top>
+	    <@sysPermissionList code=parentCode menu=true>
+			<#list permissions as p>
+		        <#if p?size gt 0>
 		        	<ul class="vertical-nav-menu">
 		        		<#if top>
 				        	<!-- <li class="app-sidebar__heading">----</li> -->
@@ -10,22 +10,22 @@
 				        <li>
 				        	<#if top>
 					            <a href="#" aria-expanded="true" class="menu-item-top">
-					                <i class="metismenu-icon ${m.icon!}"></i>
-					                ${m.name}
+					                <i class="metismenu-icon ${p.icon!}"></i>
+					                ${p.name}
 					                <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
 					            </a>
 				        	<#else>
 			                    <a href="#" data-url="index.html" class="menu-item">
-			                        <i class="metismenu-icon ${m.icon!}"></i>
-			                        ${m.name}
+			                        <i class="metismenu-icon ${p.icon!}"></i>
+			                        ${p.name}
 			                    </a>
 				        	</#if>
-							<@module parentCode=m.code top=false />
+							<@permission parentCode=p.code top=false />
 				        </li>
 				    </ul>
 		        </#if>
 		    </#list>
-		</@sysModuleList>
+		</@sysPermissionList>
 	</#macro>
-	<@module parentCode='' top=true />
+	<@permission parentCode='' top=true />
 </div>

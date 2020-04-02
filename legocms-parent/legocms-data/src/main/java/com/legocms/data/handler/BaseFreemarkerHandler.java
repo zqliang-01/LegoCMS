@@ -1,4 +1,4 @@
-package com.legocms.handler;
+package com.legocms.data.handler;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,13 +12,10 @@ import java.util.TreeSet;
 import com.legocms.core.common.CollectionUtil;
 import com.legocms.core.common.StringUtil;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
   * 指令处理器基类
  */
-@Slf4j
-public abstract class BaseHandler implements RenderHandler {
+public abstract class BaseFreemarkerHandler implements RenderHandler {
     /**
          * 参数名称
      */
@@ -96,7 +93,7 @@ public abstract class BaseHandler implements RenderHandler {
     protected boolean renderd = false;
 
     /**
-     * 注册参数
+         * 注册参数
      */
     public void regristerParameters() {
         this.regristerParameters = getBooleanWithoutRegister(PARAMETERS_CONTROLLER, false);
@@ -127,7 +124,7 @@ public abstract class BaseHandler implements RenderHandler {
     }
 
     /**
-     * 获取结果集大小
+         * 获取结果集大小
      */
     public int getSize() {
         return map.size();

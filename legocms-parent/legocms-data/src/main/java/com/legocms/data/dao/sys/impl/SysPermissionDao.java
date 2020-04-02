@@ -16,7 +16,7 @@ public class SysPermissionDao extends GenericDao<SysPermission> implements ISysP
         super(domainClass, em);
     }
 
-    public List<SysPermission> findBy(String parentCode, boolean menu) {
+    public List<SysPermission> findBy(String userCode, String parentCode, boolean menu) {
         QueryHandler<SysPermission> query = createQueryHandler("FROM {0} m");
         if (StringUtil.isNoneBlank(new CharSequence[] { parentCode })) {
             query.condition("m.parent.code = :parentCode").setParameter("parentCode", parentCode);

@@ -4,5 +4,5 @@ import com.legocms.core.dto.sys.SysUserInfo;
 
 public interface ISysUserService {
 
-    SysUserInfo findBy(String paramString);
+    SysUserInfo findBy(String code);
 }
