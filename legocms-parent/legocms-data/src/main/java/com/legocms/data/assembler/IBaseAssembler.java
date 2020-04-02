@@ -7,7 +7,7 @@ import com.legocms.data.base.BaseEntity;
 
 public interface IBaseAssembler<T extends Dto, E extends BaseEntity> {
 
-    T create(E paramE);
+    T create(E entity);
 
-    List<T> create(List<E> paramList);
+    List<T> create(List<E> entities);
 }

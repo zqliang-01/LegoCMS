@@ -10,6 +10,9 @@
     <packaging>pom</packaging>
 
     <properties>
+        <db.url>jdbc:mysql://127.0.0.1:3306/lego-cms</db.url>
+        <db.username>root</db.username>
+        <db.password></db.password>
         <shiro-version>1.5.1</shiro-version>
         <jedis.version>3.0.0</jedis.version>
         <slf4j-api.version>1.7.25</slf4j-api.version>
@@ -62,4 +65,73 @@
         </dependencies>
     </dependencyManagement>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>sql-maven-plugin</artifactId>
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <encoding>GBK</encoding>
+                    <keepFormat>true</keepFormat>
+                    <delimiterType>normal</delimiterType>
+                    <driver>com.mysql.jdbc.Driver</driver>
+                    <url>${db.url}</url>
+                    <username>${db.username}</username>
+                    <password>${db.password}</password>
+                    <orderFile>true</orderFile>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>s0</id>
+                        <phase>process-test-resources</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <delimiter>/</delimiter>
+                            <fileset>
+                                <basedir>${project.basedir}/sql/init</basedir>
+                                <includes>
+                                    <include>*.sql</include>
+                                    <include>*.fnc</include>
+                                    <include>*.prc</include>
+                                </includes>
+                            </fileset>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>s1</id>
+                        <phase>process-test-resources</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <onError>continue</onError>
+                            <srcFiles>
+                                <srcFile>${project.basedir}/sql/ddl</srcFile>
+                            </srcFiles>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>s2</id>
+                        <phase>process-test-resources</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <fileset>
+                                <basedir>${project.basedir}/sql/dml</basedir>
+                            </fileset>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

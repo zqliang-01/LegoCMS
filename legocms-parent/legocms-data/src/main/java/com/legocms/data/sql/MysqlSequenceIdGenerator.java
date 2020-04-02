@@ -21,7 +21,8 @@ public class MysqlSequenceIdGenerator extends IdGenerator implements Initializin
     private EntityManager entityManager;
 
     public Long nextId(BaseEntity baseEntity) {
-        String sql = MessageFormat.format("SELECT nextval({0}) FROM DUAL", new Object[] { "'idSequence'" });
+        String subSystemPrefix = parserSubSystemPrefix(baseEntity.getClass().getName());
+        String sql = MessageFormat.format("SELECT nextval({0}) FROM DUAL", "'" + subSystemPrefix + "'");
         Query query = this.entityManager.createNativeQuery(sql);
         BigInteger id = (BigInteger) query.getSingleResult();
         return Long.valueOf(id.longValue());

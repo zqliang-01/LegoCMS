@@ -13,13 +13,14 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @Entity
-@Table(name = "sys_permission_lang")
+@Table(name = "sys_organization")
 @EqualsAndHashCode(callSuper = false)
-public class SysPermissionLang extends BaseEntity {
+public class SysOrganization extends BaseEntity {
+
+    private String name;
+    private boolean state;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "permission_id", nullable = false)
-    private SysPermission module;
-    private String value;
-
+    @JoinColumn(name = "parent_id", referencedColumnName = "id")
+    private SysOrganization parent;
 }

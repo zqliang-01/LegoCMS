@@ -8,9 +8,9 @@ public interface IGenericDao<T> extends JpaRepository<T, Long> {
 
     List<T> findByCodes(List<String> codes);
 
-    T findByCode(String paramString);
+    T findByCode(String code);
 
-    T findByUnsureCode(String paramString);
+    T findByUnsureCode(String code);
 
     List<T> findAll();
 

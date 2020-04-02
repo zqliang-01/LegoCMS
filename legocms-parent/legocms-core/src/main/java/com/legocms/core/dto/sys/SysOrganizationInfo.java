@@ -7,8 +7,12 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Role extends Dto {
-    private static final long serialVersionUID = -675190400224637949L;
+public class SysOrganizationInfo extends Dto {
+
+    private static final long serialVersionUID = 8367196170464564704L;
+
     private String code;
     private String name;
+    private boolean state;
+
 }
