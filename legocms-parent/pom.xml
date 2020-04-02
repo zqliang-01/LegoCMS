@@ -4,19 +4,21 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.0.8.RELEASE</version>
+    </parent>
+
     <groupId>com.legocms</groupId>
     <artifactId>legocms-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <properties>
-        <db.url>jdbc:mysql://127.0.0.1:3306/lego-cms</db.url>
-        <db.username>root</db.username>
-        <db.password></db.password>
+        <skipTests>true</skipTests>
         <shiro-version>1.5.1</shiro-version>
         <jedis.version>3.0.0</jedis.version>
-        <slf4j-api.version>1.7.25</slf4j-api.version>
-        <spring-boot.version>2.0.8.RELEASE</spring-boot.version>
         <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -29,31 +31,11 @@
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-parent</artifactId>
-                <version>${spring-boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
 
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
                 <version>${javax.servlet-api.version}</version>
-            </dependency>
-
-            <!-- log4j -->
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${slf4j-api.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-log4j12</artifactId>
-                <version>${slf4j-api.version}</version>
             </dependency>
 
             <!-- jedis -->
@@ -62,72 +44,42 @@
                 <artifactId>jedis</artifactId>
                 <version>${jedis.version}</version>
             </dependency>
+            
+            <dependency>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <build>
         <plugins>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>sql-maven-plugin</artifactId>
+                <inherited>false</inherited> 
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
                 <dependencies>
                     <dependency>
                         <groupId>mysql</groupId>
                         <artifactId>mysql-connector-java</artifactId>
+                        <version>${mysql.version}</version>
+                        <scope>compile</scope>
                     </dependency>
                 </dependencies>
-                <configuration>
-                    <encoding>GBK</encoding>
-                    <keepFormat>true</keepFormat>
-                    <delimiterType>normal</delimiterType>
-                    <driver>com.mysql.jdbc.Driver</driver>
-                    <url>${db.url}</url>
-                    <username>${db.username}</username>
-                    <password>${db.password}</password>
-                    <orderFile>true</orderFile>
-                </configuration>
                 <executions>
                     <execution>
-                        <id>s0</id>
-                        <phase>process-test-resources</phase>
+                        <id>run-sql</id>
+                        <phase>test</phase>
                         <goals>
-                            <goal>execute</goal>
+                            <goal>run</goal>
                         </goals>
                         <configuration>
-                            <delimiter>/</delimiter>
-                            <fileset>
-                                <basedir>${project.basedir}/sql/init</basedir>
-                                <includes>
-                                    <include>*.sql</include>
-                                    <include>*.fnc</include>
-                                    <include>*.prc</include>
-                                </includes>
-                            </fileset>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>s1</id>
-                        <phase>process-test-resources</phase>
-                        <goals>
-                            <goal>execute</goal>
-                        </goals>
-                        <configuration>
-                            <onError>continue</onError>
-                            <srcFiles>
-                                <srcFile>${project.basedir}/sql/ddl</srcFile>
-                            </srcFiles>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>s2</id>
-                        <phase>process-test-resources</phase>
-                        <goals>
-                            <goal>execute</goal>
-                        </goals>
-                        <configuration>
-                            <fileset>
-                                <basedir>${project.basedir}/sql/dml</basedir>
-                            </fileset>
+                            <target>
+                                <ant antfile="run-sql.xml" target="default" inheritAll="false">
+                                	<property name="driver_classpath" refid="maven.test.classpath" />
+                                </ant>
+                            </target>
                         </configuration>
                     </execution>
                 </executions>

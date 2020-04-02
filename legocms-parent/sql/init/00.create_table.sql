@@ -6,6 +6,10 @@
 
 drop table if exists SYS_PERMISSION_LANG;
 
+drop table if exists SYS_USER_ROLE;
+
+drop table if exists SYS_ROLE_PERMISSION;
+
 drop table if exists SYS_PERMISSION;
 
 drop table if exists SYS_ROLE;

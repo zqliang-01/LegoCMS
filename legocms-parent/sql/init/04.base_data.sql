@@ -1,4 +1,7 @@
 
+insert into sequence(ID, NAME) values ('100000000000001', 'sys');
+insert into sequence(ID, NAME) values ('100100000000001', 'general');
+
 insert into sys_organization
     (id, version, code, create_date, name, state)
 values
