@@ -16,6 +16,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import com.legocms.data.base.BaseEntity;
+import com.legocms.data.entities.sys.simpletype.UserStatus;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -38,4 +39,8 @@ public class SysUser extends BaseEntity {
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JoinTable(name = "sys_user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
     private List<SysRole> roles;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "status", nullable = false)
+    private UserStatus status;
 }

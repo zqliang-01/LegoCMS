@@ -52,11 +52,11 @@ public class AdminSysUserController extends SessionController {
         return ViewResponse.redirect(AdminView.ROOT);
     }
 
-    @PostMapping("/doLogout")
+    @GetMapping("/doLogout")
     public ViewResponse doLogout() {
         log.debug("doLogout");
         clearAttribute();
-        return ViewResponse.redirect(AdminView.LOGIN);
+        return ViewResponse.ok(AdminView.LOGIN);
     }
 
     @GetMapping("/init")

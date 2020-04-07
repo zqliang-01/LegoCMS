@@ -1,6 +1,7 @@
 package com.legocms.core.dto.sys;
 
 import com.legocms.core.dto.Dto;
+import com.legocms.core.dto.TypeInfo;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,6 +14,6 @@ public class SysOrganizationInfo extends Dto {
 
     private String code;
     private String name;
-    private boolean state;
+    private TypeInfo state;
 
 }

@@ -19,7 +19,7 @@ public class AdminInterceptor extends AbstractInterceptor {
 
     @Override
     public List<String> getExcludePathPatterns() {
-        return Arrays.asList("/admin/login", "/admin/user/doLogin");
+        return Arrays.asList("/admin/login", "/admin/user/doLogin", "/admin/user/doLogout");
     }
 
     @Override

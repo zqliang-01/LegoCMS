@@ -7,6 +7,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.legocms.data.base.BaseEntity;
+import com.legocms.data.entities.sys.simpletype.OrganizationStatus;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,7 +19,10 @@ import lombok.EqualsAndHashCode;
 public class SysOrganization extends BaseEntity {
 
     private String name;
-    private boolean state;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "status", referencedColumnName = "id")
+    private OrganizationStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id", referencedColumnName = "id")

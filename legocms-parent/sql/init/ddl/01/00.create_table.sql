@@ -1,28 +1,4 @@
 /*==============================================================*/
-/* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2020/4/3 18:01:33                            */
-/*==============================================================*/
-
-
-drop table if exists SYS_PERMISSION_LANG;
-
-drop table if exists SYS_USER_ROLE;
-
-drop table if exists SYS_ROLE_PERMISSION;
-
-drop table if exists SYS_PERMISSION;
-
-drop table if exists SYS_ROLE;
-
-drop table if exists SYS_ROLE_PERMISSION;
-
-drop table if exists SYS_USER;
-
-drop table if exists SYS_ORGANIZATION;
-
-drop table if exists SYS_USER_ROLE;
-
-/*==============================================================*/
 /* Table: SYS_ORGANIZATION                                      */
 /*==============================================================*/
 create table SYS_ORGANIZATION
@@ -32,7 +8,7 @@ create table SYS_ORGANIZATION
    CODE                 varchar(50) not null comment 'CODE',
    CREATE_DATE          datetime not null comment '创建时间',
    NAME                 varchar(100) not null comment '名称',
-   STATE                tinyint(1) not null default 1 comment '状态',
+   STATUS               bigint(15) not null comment '状态',
    PARENT_ID            bigint(15) comment '上级部门',
    primary key (ID)
 );
@@ -104,6 +80,39 @@ create table SYS_ROLE_PERMISSION
 alter table SYS_ROLE_PERMISSION comment '角色授权';
 
 /*==============================================================*/
+/* Table: SYS_SIMPLE_TYPE                                       */
+/*==============================================================*/
+create table SYS_SIMPLE_TYPE
+(
+   ID                   bigint(15) not null comment 'ID',
+   VERSION              int(5) not null comment 'VERSION',
+   CODE                 varchar(50) not null comment 'CODE',
+   CREATE_DATE          datetime not null comment '创建时间',
+   NAME                 varchar(100) not null comment '名称',
+   CLASS_TYPE           varchar(50) not null comment '类型',
+   SEQUENCE             int(10) not null comment '序号',
+   primary key (ID)
+);
+
+alter table SYS_SIMPLE_TYPE comment '系统主题';
+
+/*==============================================================*/
+/* Table: SYS_THEME                                             */
+/*==============================================================*/
+create table SYS_THEME
+(
+   ID                   bigint(15) not null comment 'ID',
+   VERSION              int(5) not null comment 'VERSION',
+   CODE                 varchar(50) not null comment 'CODE',
+   CREATE_DATE          datetime not null comment '创建时间',
+   NAME                 varchar(100) not null comment '名称',
+   TYPE                 bigint(15) not null comment '类型',
+   primary key (ID)
+);
+
+alter table SYS_THEME comment '系统主题';
+
+/*==============================================================*/
 /* Table: SYS_USER                                              */
 /*==============================================================*/
 create table SYS_USER
@@ -115,6 +124,7 @@ create table SYS_USER
    NAME                 varchar(100) not null comment '名称',
    PASSWORD             varchar(100) not null comment '密码',
    ORGANIZATION_ID      bigint(15) not null comment '部门',
+   STATUS               bigint(15) not null comment '状态',
    primary key (ID)
 );
 
@@ -132,6 +142,9 @@ create table SYS_USER_ROLE
 
 alter table SYS_USER_ROLE comment '用户角色';
 
+alter table SYS_ORGANIZATION add constraint FK_ORGANIZATION_STATUS foreign key (STATUS)
+      references SYS_SIMPLE_TYPE (ID) on delete restrict on update restrict;
+
 alter table SYS_PERMISSION_LANG add constraint FK_PERMISSION_LANG foreign key (PERMISSION_ID)
       references SYS_PERMISSION (ID) on delete restrict on update restrict;
 
@@ -141,8 +154,14 @@ alter table SYS_ROLE_PERMISSION add constraint FK_PERMISSION_ROLE foreign key (P
 alter table SYS_ROLE_PERMISSION add constraint FK_ROLE_PERMISSION foreign key (ROLE_ID)
       references SYS_ROLE (ID) on delete restrict on update restrict;
 
+alter table SYS_THEME add constraint FK_THEME_TYPE foreign key (TYPE)
+      references SYS_SIMPLE_TYPE (ID) on delete restrict on update restrict;
+
 alter table SYS_USER add constraint FK_USER_ORGANIZATION foreign key (ORGANIZATION_ID)
       references SYS_ORGANIZATION (ID) on delete restrict on update restrict;
+
+alter table SYS_USER add constraint FK_USER_STATUS foreign key (STATUS)
+      references SYS_SIMPLE_TYPE (ID) on delete restrict on update restrict;
 
 alter table SYS_USER_ROLE add constraint FK_ROLE_USER foreign key (USER_ID)
       references SYS_USER (ID) on delete restrict on update restrict;
