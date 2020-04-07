@@ -18,9 +18,9 @@ $(function(){
         var menuId = that.attr('id');
         if (!getTab(menuId + "_tab")) {
             addTab(menuId, that.attr('name'));
-            addPage(menuId, that.attr('href'));
+            addPage(menuId, that.attr('data-url'));
         }
-    })
+    });
 
 	function getTab(tabId) {
     	var isContain = false;
@@ -65,7 +65,10 @@ $(function(){
 
     // 添加内容页面
     function addPage(menuId, path) {
-    	var pageHtml = '<div class="tab-pane tabs-animation fade" id="' + menuId + '_page" role="tabpanel">' + path + '</div>';
+    	var width = $('.app-main__inner').width() - 5;
+    	var height = $('.app-main__inner').height() - 5;
+    	var iframeHtml = '<iframe onload="this.height=' + height + '" frameborder="0" allowtransparency="true" width="' + width + 'px" src="' + path + '"></iframe>';
+    	var pageHtml = '<div class="tab-pane tabs-animation fade" id="' + menuId + '_page" role="tabpanel">' + iframeHtml + '</div>';
     	var childdiv = $(pageHtml);
     	childdiv.appendTo($(".tab-content"));
     	selectPage(childdiv);

@@ -1,6 +1,7 @@
 package com.legocms.web.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -52,4 +53,8 @@ public class SysUserController extends SessionController {
         return ViewResponse.redirect(AdminView.ROOT);
     }
 
+    @GetMapping("/init")
+    public ViewResponse init() {
+        return ViewResponse.ok(AdminView.CMS_USER_LIST);
+    }
 }

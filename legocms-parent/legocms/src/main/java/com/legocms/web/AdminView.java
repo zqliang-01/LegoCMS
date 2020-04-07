@@ -9,4 +9,6 @@ public interface AdminView {
     String ERROR_403 = "error/403";
     String LOGIN = "login";
     String INDEX = "index";
+
+    String CMS_USER_LIST = "cms_user/list";
 }
