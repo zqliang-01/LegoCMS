@@ -1976,6 +1976,12 @@ pre code {
     background-color: rgba(0, 0, 0, 0.03)
 }
 
+.table-hover tbody tr {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    white-space: nowrap;
+}
+
 .table-hover tbody tr:hover {
     background-color: #e0f3ff
 }
@@ -25656,7 +25662,8 @@ a.fc-more:hover {
     border: #e9ecef solid 1px;
     border-radius: .25rem;
     margin: 0 0 10px;
-    padding: 5px
+    padding: 5px;
+    cursor: pointer;
 }
 
 .font-icon-wrapper.font-icon-lg {

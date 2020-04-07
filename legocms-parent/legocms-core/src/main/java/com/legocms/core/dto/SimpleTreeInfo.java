@@ -10,4 +10,9 @@ public class SimpleTreeInfo extends TypeInfo {
 
     private String parentCode;
     private boolean open;
+    private boolean isParent;
+
+    public boolean getIsParent() {
+        return isParent;
+    }
 }

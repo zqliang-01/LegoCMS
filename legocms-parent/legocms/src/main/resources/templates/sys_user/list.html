@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		<meta charset="utf-8">
+        <meta name="description" content="LegoCMS">
+        <#include "../include_page/link.html"/>
+		<script type="text/javascript" src="${res}/assets/js/cms/sys-user.js"></script>
+    </head>
+    <body>
+        <div class="app-main__inner" id="MyPagination-user-list">
+           	<form class="queryForm app-page-title" onsubmit="return false;" name="queryForm">
+               	<div class="page-title-wrapper">
+                     <div class="form-inline">
+		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+		                 	<input name="name" placeholder="name" type="text" class="form-control">
+		                 </div>
+		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+		                 	<input name="code" placeholder="code" type="text" class="form-control">
+		                 </div>
+		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+							<select name="status" id="status" class="form-control custom-select">
+								<option value=""><@t.page 'list.status'/></option>
+								<@sysUserStatus>
+									<#list userStatus as userState>
+										<option value="${userState.code}">${userState.name}</option>
+									</#list>
+								</@sysUserStatus>
+							</select>
+		                 </div>
+		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+		                 	<button class="btn btn-primary query"><@t.page 'btn.query'/></button>
+		                 </div>
+		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+		                 	<button type="button" data-toggle="collapse" href="#advanced-search" class="btn btn-danger"><@t.page 'btn.advance-query'/></button>
+		                 </div>
+		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+		                 	<button class="btn btn-info"onclick="window.parent.addTab('user-add', '创建员工', '/admin/user/edit/1_#')" ><@t.page 'btn.create'/></button>
+		                 </div>
+                     </div>
+                </div>
+                <div class="collapse" id="advanced-search">
+					<div class="divider"></div>
+					<div class="page-title-wrapper">
+						<div class="form-inline">
+							<div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+								<div class="btn date-inline selectdate" title="创建时间">
+									<i class="fa fa-calendar"></i>
+									<span></span>
+									<input type="hidden" name="createStart"  value="">
+									<input type="hidden" name="createEnd"  value="">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+           	</form>
+	        <div class="row row-fluid">
+	            <div class="col-md-12">
+	                <div class="main-card mb-3 card">
+	                    <div class="card-header"><@t.page 'employee.list'/></div>
+	                    <div class="table-responsive">
+	                        <table role="grid" class="align-middle mb-0 table table-borderless table-striped table-hover mytab">
+	                            <thead>
+	                                <tr role="row">
+	                                    <th class="text-center"><@t.page 'list.code'/></th>
+	                                    <th><@t.page 'list.name'/></th>
+	                                    <th class="text-center"><@t.page 'list.organization'/></th>
+	                                    <th class="text-center"><@t.page 'list.create-time'/></th>
+	                                    <th class="text-center"><@t.page 'list.status'/></th>
+	                                    <th class="text-center"><@t.page 'list.operation'/></th>
+	                                </tr>
+	                            </thead>
+                        		<tbody></tbody>
+	                        </table>
+	                    </div>
+	                    <div class="d-block text-center card-footer widget-content-rigth">
+	                    	<nav class="" aria-label="Page navigation example">
+	                    	<div class="tempContentDiv"></div>
+				   			<p style="display: none">
+					            <textarea id="Template-user-list" rows="0" cols="0">
+					                <!--
+					                    {#template MAIN}
+					                        {#foreach $T.page.result as Result}
+					                            <tr role="row" >
+					                                <td class="text-center text-muted">{$T.Result.code}</td>
+					                                <td>{$T.Result.name}</td>
+					                                <td class="text-center">{$T.Result.organization.name}</td>
+					                                <td class="text-center">{$T.Result.createDate}</td>
+					                                <td class="text-center">
+					                                	{#if $T.Result.status.code == 'Using'}
+					                                		<div class="badge badge-info">{$T.Result.status.name}</div>
+					                                	{#else}
+					                                		<div class="badge badge-danger">{$T.Result.status.name}</div>
+					                                	{#/if}
+					                                </td>
+					                                <td class="text-center">
+					                                	<button onclick="window.parent.addTab('user-edit', '员工修改', '/admin/user/edit/{$T.Result.code}')" class="btn btn-primary btn-sm"><@t.page 'btn.edit'/></button>
+					                                	{#if $T.Result.status.code == 'Using'}
+					                                		<button onclick="invalid('{$T.Result.code}')" class="btn btn-primary btn-sm"><@t.page 'btn.invalid'/></button>
+					                                	{#else}
+					                                		<button onclick="active('{$T.Result.code}')" class="btn btn-primary btn-sm"><@t.page 'btn.active'/></button>
+					                                	{#/if}
+					                                </td>
+					                            </tr>
+					                        {#/for}
+					                    {#/template MAIN}
+					                -->
+					            </textarea>
+				        	</p>
+	                    	</nav>
+	                   	</div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+    </body>
+</html>

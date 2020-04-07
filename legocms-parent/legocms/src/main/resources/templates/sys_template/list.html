@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		<meta charset="utf-8">
+        <meta name="description" content="LegoCMS">
+        <#include "../include_page/link.html"/>
+		<link rel="stylesheet" href="${res}/assets/js/codemirror/lib/codemirror.css">
+		<link rel="stylesheet" href="${res}/assets/js/codemirror/theme/eclipse.css">
+		<link rel="stylesheet" href="${res}/assets/js/codemirror/addon/hint/show-hint.css">
+		<link rel="stylesheet" href="${res}/assets/js/codemirror/addon/display/fullscreen.css">
+		<script type="text/javascript" src="${res}/assets/js/codemirror/lib/codemirror.js"></script>
+		<script type="text/javascript" src="${res}/assets/js/codemirror/mode/xml/xml.js"></script>
+		<script type="text/javascript" src="${res}/assets/js/codemirror/mode/javascript/javascript.js"></script>
+		<script type="text/javascript" src="${res}/assets/js/codemirror/mode/css/css.js"></script>
+		<script type="text/javascript" src="${res}/assets/js/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+		<script type="text/javascript" src="${res}/assets/js/codemirror/addon/mode/multiplex.js"></script>
+		<script type="text/javascript" src="${res}/assets/js/codemirror/mode/htmlembedded/htmlembedded.js"></script>
+		<script type="text/javascript" src="${res}/assets/js/codemirror/addon/hint/anyword-hint.js"></script>
+		<script type="text/javascript" src="${res}/assets/js/codemirror/addon/hint/css-hint.js"></script>
+		<script type="text/javascript" src="${res}/assets/js/codemirror/addon/hint/html-hint.js"></script>
+		<script type="text/javascript" src="${res}/assets/js/codemirror/addon/hint/javascript-hint.js"></script>
+		<script type="text/javascript" src="${res}/assets/js/codemirror/addon/hint/show-hint.js"></script>
+		<script type="text/javascript" src="${res}/assets/js/codemirror/addon/hint/sql-hint.js"></script>
+		<script type="text/javascript" src="${res}/assets/js/codemirror/addon/hint/xml-hint.js"></script>
+		<script type="text/javascript" src="${res}/assets/js/codemirror/addon/display/fullscreen.js"></script>
+		<script type="text/javascript" src="${res}/assets/js/codemirror/addon/edit/closetag.js"></script>
+		<script type="text/javascript" src="${res}/assets/js/codemirror/addon/edit/closebrackets.js"></script>
+		<script type="text/javascript" src="${res}/assets/js/codemirror/addon/fold/xml-fold.js"></script>
+		<script type="text/javascript" src="${res}/assets/js/codemirror/addon/selection/active-line.js"></script>
+		<script type="text/javascript">
+		$(function(){
+			var dummy = {
+		    	attrs: {
+		        	color: ["red", "green", "blue", "purple", "white", "black", "yellow"],
+		        	size: ["large", "medium", "small"],
+		        	description: null
+		        },
+		        children: []
+		    };
+			var tags = {
+				"!top": ["top"],
+				"!attrs": {
+					id: null,
+					class: ["A", "B", "C"]
+				},
+				top: {
+					attrs: {
+						lang: ["en", "de", "fr", "nl"],
+						freeform: null
+					},
+					children: ["animal", "plant"]
+				},
+				animal: {
+					attrs: {
+						name: null,
+						isduck: ["yes", "no"]
+					},
+					children: ["wings", "feet", "body", "head", "tail"]
+				},
+				plant: {
+					attrs: {
+						name: null
+					},
+					children: ["leaves", "stem", "flowers"]
+				},
+				wings: dummy,
+				feet: dummy,
+				body: dummy,
+				head: dummy,
+				tail: dummy,
+				leaves: dummy,
+				stem: dummy,
+				flowers: dummy
+			};
+
+			function completeAfter(cm, pred) {
+				var cur = cm.getCursor();
+				if (!pred || pred()) setTimeout(function() {
+					if (!cm.state.completionActive)
+						cm.showHint({
+							completeSingle: false
+						});
+				}, 100);
+				return CodeMirror.Pass;
+			}
+
+			function completeIfAfterLt(cm) {
+				return completeAfter(cm, function() {
+					var cur = cm.getCursor();
+					return cm.getRange(CodeMirror.Pos(cur.line, cur.ch - 1), cur) == "<";
+				});
+			}
+
+			function completeIfInTag(cm) {
+				return completeAfter(cm, function() {
+					var tok = cm.getTokenAt(cm.getCursor());
+					if (tok.type == "string" && (!/['"]/.test(tok.string.charAt(tok.string.length - 1)) || tok.string.length == 1))
+						return false;
+					var inner = CodeMirror.innerMode(cm.getMode(), tok.state).state;
+					return inner.tagName;
+				});
+			}
+			var editor = CodeMirror.fromTextArea(document.getElementById("content"), {
+		        lineNumbers: true,
+		        mode: "application/x-ejs",
+		        theme: 'eclipse',
+		        indentUnit: 4,
+		        indentWithTabs: true,
+		        autoCloseTags: true,
+		        autoCloseBrackets: true,
+		        styleActiveLine: {nonEmpty: true},
+		        lineWrapping: true,
+		        extraKeys: {
+		            "'<'": completeAfter,
+		            "'/'": completeIfAfterLt,
+		            "' '": completeIfInTag,
+		            "'='": completeIfInTag,
+		            "Ctrl-Space": "autocomplete",
+		            "F11": function(cm) {
+		                cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+		            },
+		            "Esc": function(cm) {
+		                if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+		            }
+		        },
+		        hintOptions: {schemaInfo: tags}
+	        });
+			refreshTree();
+			function refreshTree() {
+				var treeUrl = ctx + "/admin/directive/cmsTemplateTree";
+				ajaxSubmit(treeUrl, null, function(data) {
+					var setting = {
+						data: {
+							simpleData: {
+								enable: true,
+								idKey : 'code',
+								pIdKey : "parentCode"
+							}
+						},
+						callback: {
+							onClick: function(event, treeId, treeNode) {
+								refreshForm(treeNode.code);
+							}
+						}
+					};
+					$.fn.zTree.init($("#templateTree"), setting, data.simpleTree);
+				});
+			}
+
+			function refreshForm(code) {
+				var detailUrl = ctx + "/admin/directive/cmsTemplate";
+			    ajaxSubmit(detailUrl, 'code=' + code, function(data) {
+			    	var form = $('#save-template-form');
+			    	form.resetForm();
+			    	form.setForm(data.template);
+			    	editor.setValue(data.template.content);
+			    	form.find("[name=code]").attr("readonly", "");
+			    })
+			}
+			
+			$('#add').click(function() {
+				var nodes = getTree('templateTree').getSelectedNodes();
+				var form = $('#save-template-form');
+				form.resetForm();
+				form.find("input[name=code]").removeAttr("readonly");
+				if (nodes) {
+					form.find("input[name='parent.code']").val(nodes[0].code);
+				}
+				else {
+					form.find("input[name='parent.code']").val('');
+				}
+			});
+			
+			$('#delete').click(function() {
+				var code = $('#save-template-form').find("[name=code]").val();
+				if (isEmpty(code)) {
+					showMsg("请选择需要删除的部门", 5);
+					return;
+				}
+				window.parent.showConfirm("是否确认删除该模板信息！", '模板删除', function(){
+					var url = ctx + "/admin/template/delete";
+					ajaxSubmit(url, "code=" + code, function() {
+						$('#save-template-form').resetForm();
+						refreshTree();
+					});
+				})
+			});
+			
+			ajaxForm($('#save-template-form'), function() {
+				refreshTree();
+				var code = $('#save-template-form').find("[name=code]").val();
+				refreshForm(code);
+			});
+		})
+		</script>
+    </head>
+    <body>
+       	<div class="row">
+			<div class="col-md-3">
+				<div class="main-card card">
+					<div class="card-body">
+						<ul id="templateTree" class="ztree"></ul>
+					</div>
+				</div>
+			</div>
+       		<div class="col-md-9">
+				<div class="main-card card">
+					<div class="card-body">
+		       			<form id="save-template-form" action="${ctx}/admin/template/save" onsubmit="return false;" class="needs-validation" novalidate>
+							<input name="site.code" type="hidden" required>
+							<input name="parent.code" type="hidden" required>
+							<div class="position-relative row form-group">
+				                <div class="col-md-3">
+									<label class="col-form-label"><@t.page 'list.code'/></label>
+									<input name="code" type="text" class="form-control" required>
+									<div class="invalid-feedback">
+                                        Please provide a valid code
+                                    </div>
+				                </div>
+				                <div class="col-md-3">
+									<label class="col-form-label"><@t.page 'list.name'/></label>
+									<input name="name" type="text" class="form-control" required>
+									<div class="invalid-feedback">
+                                        Please provide a valid name
+                                    </div>
+				                </div>
+				                <div class="col-md-3">
+									<label class="col-form-label"><@t.page 'list.type'/></label>
+									<select name="type.code" class="custom-select" required>
+										<@cmsTemplateType>
+											<#list types as type>
+												<option value="${type.code}">${type.name}</option>
+											</#list>
+										</@cmsTemplateType>
+									</select>
+									<div class="invalid-feedback">
+                                        Please provide a valid sort
+                                    </div>
+				                </div>
+							</div>
+							<div class="position-relative row form-group">
+								<textarea id="content" name="content" class="form-control"></textarea>
+							</div>
+							<div class="position-relative row form-check">
+								<div class="col-sm-10 offset-sm-2">
+									<button class="btn btn-info" type="submit"><@t.page 'btn.save'/></button>
+									<span class="btn btn-secondary" id="add" onclick="add();"><@t.page 'btn.add'/></span>
+									<span class="btn btn-danger" id="delete"><@t.page 'btn.delete'/></span>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+       		</div>
+       	</div>
+    </body>
+</html>

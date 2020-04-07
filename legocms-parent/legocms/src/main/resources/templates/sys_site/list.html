@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		<meta charset="utf-8">
+        <meta name="description" content="LegoCMS">
+        <#include "../include_page/link.html"/>
+		<script type="text/javascript">
+		$(function() {
+			var url = ctx + "/admin/directive/sysSiteList";
+			initMyPagination("MyPagination-site-list", "Template-site-list", url);
+		})
+		function manage(code) {
+			window.parent.showConfirm("是否设置管理当前站点！", '站点激活', function(){
+				var url = ctx + "/admin/site/manage";
+				ajaxSubmit(url, "code=" + code, function() {
+					myPagination.reload('MyPagination-site-list');
+				});
+			})
+		}
+		function del(code) {
+			window.parent.showConfirm("是否删除当前站点！", '站点删除', function(){
+				var url = ctx + "/admin/site/delete";
+				ajaxSubmit(url, "code=" + code, function() {
+					myPagination.reload('MyPagination-site-list');
+				});
+			})
+		}
+		</script>
+    </head>
+    <body>
+        <div class="app-main__inner" id="MyPagination-site-list">
+           	<form class="queryForm app-page-title" onsubmit="return false;" name="queryForm">
+               	<div class="page-title-wrapper">
+                     <div class="form-inline">
+		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+		                 	<input name="name" placeholder="name" type="text" class="form-control">
+		                 </div>
+		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+		                 	<input name="code" placeholder="code" type="text" class="form-control">
+		                 </div>
+		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+		                 	<button class="btn btn-primary query"><@t.page 'btn.query'/></button>
+		                 </div>
+		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+		                 	<button class="btn btn-info"onclick="window.parent.addTab('site-add', '<@t.page 'site.title.create'/>', '/admin/site/edit/1_#')"><@t.page 'btn.create'/></button>
+		                 </div>
+                     </div>
+                </div>
+           	</form>
+	        <div class="row row-fluid">
+	            <div class="col-md-12">
+	                <div class="main-card mb-3 card">
+	                    <div class="card-header"><@t.page 'site.list'/></div>
+	                    <div class="table-responsive">
+	                        <table role="grid" class="align-middle mb-0 table table-borderless table-striped table-hover mytab">
+	                            <thead>
+	                                <tr role="row">
+	                                    <th class="text-center"><@t.page 'list.code'/></th>
+	                                    <th><@t.page 'list.name'/></th>
+	                                    <th class="text-center"><@t.page 'list.path'/></th>
+	                                    <th class="text-center"><@t.page 'list.dynamic-path'/></th>
+	                                    <th class="text-center"><@t.page 'list.organization'/></th>
+	                                    <th class="text-center"><@t.page 'list.create-time'/></th>
+	                                    <th class="text-center"><@t.page 'list.current-site'/></th>
+	                                    <th class="text-center"><@t.page 'list.operation'/></th>
+	                                </tr>
+	                            </thead>
+                        		<tbody></tbody>
+	                        </table>
+	                    </div>
+	                    <div class="d-block text-center card-footer widget-content-rigth">
+	                    	<nav class="" aria-label="Page navigation example">
+	                    	<div class="tempContentDiv"></div>
+				   			<p style="display: none">
+					            <textarea id="Template-site-list" rows="0" cols="0">
+					                <!--
+					                    {#template MAIN}
+					                        {#foreach $T.page.result as Result}
+					                            <tr>
+					                                <td class="text-center text-muted">{$T.Result.code}</td>
+					                                <td>{$T.Result.name}</td>
+					                                <td class="text-center">{$T.Result.path}</td>
+					                                <td class="text-center">{$T.Result.dynamicPath}</td>
+					                                <td class="text-center">{$T.Result.organization.name}</td>
+					                                <td class="text-center">{$T.Result.createDate}</td>
+					                                <td class="text-center">
+					                                	{#if $T.Result.manageSite}
+					                                		<div class="badge badge-info"><@t.page 'select.ture'/></div>
+					                                	{#else}
+					                                		<div class="badge badge-danger"><@t.page 'select.false'/></div>
+					                                	{#/if}
+					                                </td>
+					                                <td class="text-center">
+					                                	<button onclick="window.parent.addTab('site-edit', '<@t.page 'site.title.modify'/>', '/admin/site/edit/{$T.Result.code}')" class="btn btn-primary btn-sm"><@t.page 'btn.edit'/></button>
+					                                	<button onclick="del('{$T.Result.code}')" class="btn btn-danger btn-sm"><@t.page 'btn.delete'/></button>
+					                                	{#if !$T.Result.manageSite}
+					                                		<button onclick="manage('{$T.Result.code}')" class="btn btn-primary btn-sm"><@t.page 'list.current-site'/></button>
+					                                	{#/if}
+					                                </td>
+					                            </tr>
+					                        {#/for}
+					                    {#/template MAIN}
+					                -->
+					            </textarea>
+				        	</p>
+	                    	</nav>
+	                   	</div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+    </body>
+</html>

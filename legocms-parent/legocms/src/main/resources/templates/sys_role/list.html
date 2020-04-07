@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		<meta charset="utf-8">
+        <meta name="description" content="LegoCMS">
+        <#include "../include_page/link.html"/>
+		<script type="text/javascript" src="${res}/assets/js/cms/sys-role.js"></script>
+    </head>
+    <body>
+        <div class="app-main__inner" id="MyPagination-role-list">
+           	<form class="queryForm app-page-title" onsubmit="return false;" name="queryForm">
+               	<div class="page-title-wrapper">
+                     <div class="form-inline">
+		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+		                 	<input name="name" placeholder="name" type="text" class="form-control">
+		                 </div>
+		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+		                 	<input name="code" placeholder="code" type="text" class="form-control">
+		                 </div>
+		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+		                 	<button class="btn btn-primary query"><@t.page 'btn.query'/></button>
+		                 </div>
+		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+		                 	<button class="btn btn-info"onclick="edit('', '<@t.page 'role.title.create'/>')"><@t.page 'btn.create'/></button>
+		                 </div>
+                     </div>
+                </div>
+           	</form>
+	        <div class="row row-fluid">
+	            <div class="col-md-12">
+	                <div class="main-card mb-3 card">
+	                    <div class="card-header"><@t.page 'role.list'/></div>
+	                    <div class="table-responsive">
+	                        <table role="grid" class="align-middle mb-0 table table-borderless table-striped table-hover mytab">
+	                            <thead>
+	                                <tr role="row">
+	                                    <th class="text-center"><@t.page 'list.code'/></th>
+	                                    <th><@t.page 'list.name'/></th>
+	                                    <th class="text-center"><@t.page 'list.create-time'/></th>
+	                                    <th class="text-center"><@t.page 'list.operation'/></th>
+	                                </tr>
+	                            </thead>
+                        		<tbody></tbody>
+	                        </table>
+	                    </div>
+	                    <div class="d-block text-center card-footer widget-content-rigth">
+	                    	<nav class="" aria-label="Page navigation example">
+	                    	<div class="tempContentDiv"></div>
+				   			<p style="display: none">
+					            <textarea id="Template-role-list" rows="0" cols="0">
+					                <!--
+					                    {#template MAIN}
+					                        {#foreach $T.page.result as Result}
+					                            <tr role="row" >
+					                                <td class="text-center text-muted">{$T.Result.code}</td>
+					                                <td>{$T.Result.name}</td>
+					                                <td class="text-center">{$T.Result.createDate}</td>
+					                                <td class="text-center">
+					                                	<button onclick="edit('{$T.Result.code}', '<@t.page 'role.title.modify'/>')" class="btn btn-primary btn-sm"><@t.page 'btn.edit'/></button>
+					                                	<button onclick="permission('{$T.Result.code}', '<@t.page 'role.title.permission'/>')" class="btn btn-primary btn-sm"><@t.page 'btn.authorization'/></button>
+					                                	<button onclick="del('{$T.Result.code}', '<@t.page 'role.title.delete'/>', '<@t.message 'tips.role.delete'/>')" class="btn btn-danger btn-sm"><@t.page 'btn.delete'/></button>
+					                                </td>
+					                            </tr>
+					                        {#/for}
+					                    {#/template MAIN}
+					                -->
+					            </textarea>
+				        	</p>
+	                    	</nav>
+	                   	</div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+    	<#include "edit-modal.html"/>
+    </body>
+</html>

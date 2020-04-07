@@ -43,6 +43,10 @@ public class SysUser extends BaseEntity {
     @JoinColumn(name = "status", nullable = false)
     private UserStatus status;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "site_id")
+    private SysSite site;
+
     protected SysUser() { }
 
     public SysUser(String code) {

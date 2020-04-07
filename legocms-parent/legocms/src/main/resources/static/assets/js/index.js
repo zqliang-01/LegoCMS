@@ -48,3 +48,9 @@ $(function(){
         }
     }
 })
+
+function changePassword(title) {
+	var modal = $('#change-password-modal');
+	console.log(modal);
+	showFormDialog(title, modal)
+}

@@ -6,14 +6,19 @@ function ajaxForm(form, successFun){
 		}
 		var url = form.attr('action');
 		var data = form.serialize();
-		ajaxSubmit(url, data, function(data) {
+		var method = form.attr('method');
+		if (isEmpty(method)) {
+			method = 'POST';
+		}
+		ajaxRequest(url, data, function(data) {
+			console.log();
 			form.removeClass('was-validated');
 			showMsg("操作成功！", 1, function(){
-				if (!isEmpty(successFun)) {
+				if (isNotEmpty(successFun)) {
 					successFun(data);
 				}
 			});
-		});
+		}, null, true, method);
 	});
 }
 
@@ -30,6 +35,7 @@ function ajaxSyncGetSubmit(url, data, successFun, errorFun){
 }
 
 function ajaxFileSubmit(url, data, successFun, errorFun) {
+	var index;
 	$.ajax({
 		url: url,
 		type: 'POST',
@@ -38,12 +44,9 @@ function ajaxFileSubmit(url, data, successFun, errorFun) {
 		async: false,
 		contentType: false,
 		dataType: "json",
-        beforeSend: function () {
-            layer.load(0, {
-                shade: false
-            });
-        },
+        beforeSend: function () { index = layer.load(); },
         success: function(data){
+			layer.close(index);
 			if(!isEmpty(data) && data.hasOwnProperty("code")){
 				if (interceptorResponse(data)) {
 					return;
@@ -52,7 +55,6 @@ function ajaxFileSubmit(url, data, successFun, errorFun) {
 					successShowFun(data);
 				}
 				else {
-					layer.closeAll();
 					successFun(data);
 				}
 			}
@@ -61,12 +63,12 @@ function ajaxFileSubmit(url, data, successFun, errorFun) {
 			}
 		},	//请求成功后的回调函数
 		error: function(date){
+			layer.close(index);
 			if(isEmpty(errorFun)){
 				console.log(date);
 				showMsg("系统发生未知异常……", 5);
 			}
 			else {
-				layer.closeAll();
 				errorFun(data);
 			}
 		}
@@ -77,6 +79,7 @@ function ajaxRequest(url, data, successFun, errorFun, async, method){
 	if(null==async ||'boolean'!= typeof(async)){
 		async=true;
 	}
+	var index;
 	$.ajax({
 		url: url ,		//发送请求的地址
 		data: data,		//要传递到服务器端的数据
@@ -84,12 +87,9 @@ function ajaxRequest(url, data, successFun, errorFun, async, method){
 		async: async,	//请求默认为异步请求true
 		cache: false,	//设置为 false 将不缓存此页面
 		dataType: "json",	//预期服务器返回的数据类型
-        beforeSend: function () {
-                layer.load(0, {
-                    shade: false
-                });
-            },
+        beforeSend: function () { index = layer.load(); },
 		success: function(data){
+			layer.close(index);
 			if(!isEmpty(data) && data.hasOwnProperty("code")){
 				if (interceptorResponse(data)) {
 					return;
@@ -98,7 +98,6 @@ function ajaxRequest(url, data, successFun, errorFun, async, method){
 					successShowFun(data);
 				}
 				else {
-					layer.closeAll();
 					successFun(data);
 				}
 			}
@@ -107,12 +106,12 @@ function ajaxRequest(url, data, successFun, errorFun, async, method){
 			}
 		},	//请求成功后的回调函数
 		error: function(date){
+			layer.close(index);
 			if(isEmpty(errorFun)){
-				console.log(date.responseJSON.status);
 				showMsg("系统发生未知异常……" + date.responseJSON.status, 5);
 			}
 			else {
-				layer.closeAll();
+				layer.close(index);
 				errorFun(data);
 			}
 		}

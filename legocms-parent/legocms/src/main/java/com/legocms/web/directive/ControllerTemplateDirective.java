@@ -20,8 +20,8 @@ public abstract class ControllerTemplateDirective extends BaseTemplateDirective 
     @Autowired
     private Cache cache;
 
-    private int pageIndex;
-    private int pageSize;
+    protected int pageIndex;
+    protected int pageSize;
 
     public void execute(HttpMessageConverter<Object> httpMessageConverter, MediaType mediaType, HttpServletRequest request, HttpServletResponse response) throws IOException, Exception {
         HttpParameterHandler handler = new HttpParameterHandler(httpMessageConverter, mediaType, request, response);

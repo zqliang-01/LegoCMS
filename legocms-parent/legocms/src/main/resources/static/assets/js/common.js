@@ -1,108 +1,9 @@
 
-/**----------------------------多窗口控制----------------------------------**/
-var marginLeft = 0;
 var messageMap = new Map();
-
-// 添加窗口
-function addTab(menuId, tabName, menuUrl) {
-    if (getTab(menuId + "_tab")) {
-    	return;
-    }
-    menuUrl = ctx + menuUrl;
-	var tabHtml = 
-    	  '<li class="nav-item">' +
-		       '<a role="tab" class="nav-link" id="' + menuId + '_tab" data-toggle="tab" href="#' + menuId + '_page">' +
-		        	'<span>' + tabName + '</span><span class="closetag">&times;</span>' +
-		       '</a>' +
-		  '</li>';
-	var liTab = $(tabHtml);
-	liTab.appendTo($("#tab-home"));
-	liTab.find(".closetag").click(function() {
-        let index;
-        let a = $(this).parent();
-        let li = a.parent();
-    	closeTabWidth = li[0].offsetWidth;
-    	if (li.index() > 0) {
-    		index = $(".body-tabs li a").eq(li.index() - 1);
-    	}
-        else {
-    		index = $(".body-tabs li a").eq(0);
-    	}
-        selectTag(index);
-    	$(a.attr('href')).remove();
-    	li.remove();
-	});
-    selectTag(liTab.find('.nav-link'));
-	setNavMarginLeft();
-    addPage(menuId, menuUrl);
-}
-
-function getTab(tabId) {
-	var isContain = false;
-	$("#tab-home").children().each(function (i, e) {
-		if ($(this).find('.nav-link').attr('id') == tabId) {
-			selectTag($('#' + tabId));
-			isContain = true;
-			return false;
-		}
-	});
-	return isContain;
-}
-
-// 添加内容页面
-function addPage(menuId, path) {
-	var height = $('.app-main__inner').height() - 5;
-	if (height < 300) {
-		height = document.body.scrollHeight;
-	}
-	var iframeHtml = '<iframe onload="this.height=' + height + '" frameborder="0" allowtransparency="true" width="100%" src="' + path + '"></iframe>';
-	var pageHtml = '<div class="tab-pane tabs-animation fade" id="' + menuId + '_page" role="tabpanel">' + iframeHtml + '</div>';
-	var childdiv = $(pageHtml);
-	childdiv.appendTo($(".tab-content"));
-	selectPage(childdiv);
-}
-
-function setNavMarginLeft() {
-	var boxWidth = $(".tabbed").width();
-	var ulWidth = $("#tab-home").width();
-	if (boxWidth < ulWidth) {
-		marginLeft = ulWidth - boxWidth + 15;
-	} else {
-		marginLeft = 0;
-	}
-	setLeft();
-}
-
-function selectTag(tab) {
-    $(".body-tabs li a").each(function(i, e) {
-        if ($(this) != tab) {
-            $(this).removeClass('active');
-        }
-    });
-    tab.addClass('active');
-	selectPage($(tab.attr('href')));
-}
-
-function selectPage(page) {
-	$(".tab-content .tab-pane").each(function() {
-		if ($(this) != page) {
-            $(this).removeClass('active');
-            $(this).removeClass('show');
-        }
-	})
-	page.addClass('show');
-	page.addClass('active');
-}
-
-// 设置焦点
-function setLeft() {
-	$(".body-tabs").css("left", -marginLeft + "px");
-}
 
 /**----------------------------ajax----------------------------------**/
 
 function showMsg(msg, type, callback){
-	layer.closeAll();
 	if (isEmpty(msg)) {
 		return;
 	}
@@ -117,9 +18,9 @@ function showMsg(msg, type, callback){
 	}
 }
 
-function showConfirm(msg, callback) {
+function showConfirm(msg, title, callback) {
 	if (isNotEmpty(msg)) {
-		layer.confirm(msg, function(index){
+		layer.confirm(msg, {icon: 3, title: title}, function(index){
 			callback();
 			layer.close(index);
 		});
@@ -128,6 +29,7 @@ function showConfirm(msg, callback) {
 
 function showFormDialog(title, id, init, callback) {
 	var form;
+	var submitNum = 0;
 	layer.open({
 		type: 1,
 		title: title,
@@ -135,17 +37,39 @@ function showFormDialog(title, id, init, callback) {
 		content : id.html(),
 		success: function(layero, index) {
 			form = $(id.attr('data-form'));
-			init(form);
+			if (isNotEmpty(init)) {
+				init(form);
+			}
 		},
 		btn: ['确定', '取消'],
 		yes: function(index, layero){
-			ajaxForm(form, function() {
+			if (submitNum == 0) {
+				ajaxForm(form, function() {
+					if (isNotEmpty(callback)) {
+						callback(form);
+					}
+					layer.close(index);
+				});
+			}
+			submitNum += 1;
+			form.submit();
+		}
+	});
+}
+
+function showSimpleDialog(title, id, callback) {
+	layer.open({
+		type: 1,
+		title: title,
+		area : [ '520px', '600px'],
+		content : id.html(),
+		success: function(layero, index){
+			$(id.attr('data-form')).click(function() {
 				if (isNotEmpty(callback)) {
-					callback(form);
+					callback($(this));
 				}
 				layer.close(index);
-			});
-			form.submit();
+			})
 		}
 	});
 }

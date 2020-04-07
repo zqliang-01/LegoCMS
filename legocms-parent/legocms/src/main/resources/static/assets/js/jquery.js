@@ -10331,7 +10331,9 @@ jQuery.fn.setForm = function(jsonValue, prename) {
     		obj.find("[name='" + prename + name + "']").html(ival);
     	}
     	else{
-            obj.find("[name='" + prename + name + "']").val(ival + '');
+    		if (isNotEmpty(ival)) {
+                obj.find("[name='" + prename + name + "']").val(ival + '');
+    		}
         }
    });
 };

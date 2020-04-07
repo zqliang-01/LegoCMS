@@ -20,6 +20,9 @@ public class DirectiveComponent {
     private Map<String, ControllerTemplateDirective> templateDirectiveMap = new HashMap<String, ControllerTemplateDirective>();
 
     @Autowired
+    private TemplateComponent templateComponent;
+
+    @Autowired
     private void init(Configuration freeMarkerConfigurer, List<ControllerTemplateDirective> templateDirectiveList) {
         for (ControllerTemplateDirective templateDirective : templateDirectiveList) {
             if (templateDirective.getName() == null) {
@@ -30,6 +33,24 @@ public class DirectiveComponent {
             templateDirectiveMap.put(templateDirective.getName(), templateDirective);
             freeMarkerConfigurer.setSharedVariable(templateDirective.getName(), templateDirective);
         }
+        templateComponent.setAdminConfiguration(freeMarkerConfigurer);
+
+    }
+
+    private void copyConfig(Configuration source, Configuration target) {
+        target.setNewBuiltinClassResolver(source.getNewBuiltinClassResolver());
+        target.setTemplateUpdateDelayMilliseconds(source.getTemplateUpdateDelayMilliseconds());
+        target.setDefaultEncoding(source.getDefaultEncoding());
+        target.setLocale(source.getLocale());
+        target.setBooleanFormat(source.getBooleanFormat());
+        target.setDateTimeFormat(source.getDateTimeFormat());
+        target.setDateFormat(source.getDateFormat());
+        target.setTimeFormat(source.getTimeFormat());
+        target.setNumberFormat(source.getNumberFormat());
+        target.setOutputFormat(source.getOutputFormat());
+        target.setURLEscapingCharset(source.getURLEscapingCharset());
+        target.setLazyAutoImports(source.getLazyAutoImports());
+        target.setTemplateExceptionHandler(source.getTemplateExceptionHandler());
     }
 
 }

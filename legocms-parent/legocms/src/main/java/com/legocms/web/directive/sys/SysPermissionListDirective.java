@@ -11,7 +11,7 @@ import com.legocms.core.dto.sys.SysPermissionInfo;
 import com.legocms.core.dto.sys.SysUserInfo;
 import com.legocms.data.handler.RenderHandler;
 import com.legocms.service.sys.ISysPermissionService;
-import com.legocms.web.AdminView;
+import com.legocms.web.controller.admin.AdminView;
 import com.legocms.web.directive.ControllerTemplateDirective;
 
 @Component

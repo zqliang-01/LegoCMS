@@ -71,12 +71,12 @@
                                     <i class="fa fa-angle-down ml-2 opacity-8"></i>
                                 </a>
                                 <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
-                                    <button type="button" tabindex="0" class="dropdown-item">User Account</button>
+                                    <!-- <button type="button" tabindex="0" class="dropdown-item">User Account</button>
                                     <button type="button" tabindex="0" class="dropdown-item">Settings</button>
                                     <h6 tabindex="-1" class="dropdown-header">Header</h6>
                                     <button type="button" tabindex="0" class="dropdown-item">Actions</button>
-                                    <div tabindex="-1" class="dropdown-divider"></div>
-                                    <button type="button" tabindex="0" class="dropdown-item">Dividers</button>
+                                    <div tabindex="-1" class="dropdown-divider"></div> -->
+                                    <button type="button" onclick="showFormDialog('<@t.page 'setting.change-password'/>', $('#change-password-modal'));" tabindex="0" class="dropdown-item"><@t.page 'setting.change-password'/></button>
                                 </div>
                             </div>
                         </div>
@@ -90,7 +90,7 @@
                         </div>
                         <div class="widget-content-right header-user-info ml-3">
                             <a class="btn-shadow p-1 btn btn-primary btn-sm" href="${ctx}/admin/user/doLogout" id="logout">
-                                <i class="fa text-white fa-calendar pr-1 pl-1 pe-7s-door-lock"></i>
+                                <i class="fa text-white fa-calendar pr-1 pl-1 pe-7s-door-lock" title="<@t.page 'btn.logout'/>"></i>
                             </a>
                         </div>
                     </div>

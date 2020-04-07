@@ -50,7 +50,7 @@ $(function(){
 			showMsg("请选择需要删除的部门", 5);
 			return;
 		}
-		window.parent.showConfirm("是否确认删除该部门信息！", function(){
+		window.parent.showConfirm("是否确认删除该部门信息！", '部门删除', function(){
 			var url = ctx + "/admin/organization/delete";
 			ajaxSubmit(url, "code=" + code, function() {
 				$('#save-organization-form').resetForm();

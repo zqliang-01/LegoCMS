@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import com.legocms.data.entities.sys.SimpleType;
+import com.legocms.data.entities.SimpleType;
 
 @Entity
 @Table(name = "sys_simple_type")

@@ -5,7 +5,6 @@
         <meta name="description" content="LegoCMS">
         <#include "include_page/link.html"/>
         <link rel="stylesheet" href="${res}/assets/css/index.css">
-		<script type="text/javascript" src="${res}/assets/js/index.js"></script>
         <script type="text/javascript" src="${res}/assets/js/menu.js"></script>
     </head>
     <body>
@@ -28,7 +27,7 @@
 					    <div class="close-box">
 					        <label></label>
 					        <div class="close-item">
-					            <span class="closeAll"><@t.page 'tab.close-all'/></span>123
+					            <span class="closeAll"><@t.page 'tab.close-all'/></span>
 					            <span class="closeOther"><@t.page 'tab.close-other'/></span>
 					        </div>
 					    </div>
@@ -42,5 +41,6 @@
                 </div>
             </div>
         </div>
+		<#include "include_page/change-password-modal.html"/>
     </body>
 </html>

@@ -24,7 +24,6 @@ import com.legocms.core.vo.sys.SysPermissionLangCode;
 import com.legocms.core.web.JsonResponse;
 import com.legocms.core.web.ViewResponse;
 import com.legocms.core.web.session.SessionController;
-import com.legocms.web.AdminView;
 
 import lombok.extern.slf4j.Slf4j;
 

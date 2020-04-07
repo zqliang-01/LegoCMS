@@ -85,4 +85,11 @@ public class SysUserService extends BaseService implements ISysUserService {
         user.setRoles(roleDao.findByCodes(vo.getRoles()));
         userDao.save(user);
     }
+
+    @Override
+    public void changePassword(String code, String newPassword) {
+        SysUser user = userDao.findByCode(code);
+        user.setPassword(newPassword);
+        userDao.save(user);
+    }
 }

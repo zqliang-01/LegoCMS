@@ -19,4 +19,6 @@ public interface ISysUserService {
     void invalid(String code);
 
     void save(SysUserVo vo);
+
+    void changePassword(String code, String newPassword);
 }

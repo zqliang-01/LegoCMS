@@ -1,7 +1,5 @@
 package com.legocms.web.controller.admin;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,8 +14,6 @@ import com.legocms.core.annotation.RequiresPermissions;
 import com.legocms.core.common.ConstantEnum;
 import com.legocms.core.common.Constants;
 import com.legocms.core.exception.BusinessException;
-import com.legocms.core.web.session.SessionController;
-import com.legocms.web.AdminView;
 import com.legocms.web.directive.ControllerTemplateDirective;
 
 import lombok.SneakyThrows;
@@ -26,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping("/admin/directive")
-public class AdminDirectiveController extends SessionController {
+public class AdminDirectiveController extends AdminController {
 
     @Autowired
     private DirectiveComponent directiveComponent;
@@ -40,14 +36,11 @@ public class AdminDirectiveController extends SessionController {
     public void action(@PathVariable String action, HttpServletRequest request, HttpServletResponse response) {
         log.debug("/admin/action:{}", action);
         ControllerTemplateDirective directive = directiveComponent.getTemplateDirectiveMap().get(action);
-        RequiresPermissions permission = directive.getClass().getAnnotation(RequiresPermissions.class);
-        BusinessException.check(directive != null && directive.httpEnabled(), ConstantEnum.INTERFACE_NOTFOUND_INVALID);
-        BusinessException.check(permission != null, ConstantEnum.AUTHORIZATION_INVALID);
 
-        if (!permission.skip()) {
-            List<String> permissionCodes = getPermissionCodes(AdminView.USER_SESSION_KEY);
-            BusinessException.check(permissionCodes.contains(permission.value()), ConstantEnum.AUTHORIZATION_INVALID);
-        }
+        BusinessException.check(directive != null && directive.httpEnabled(), ConstantEnum.INTERFACE_NOTFOUND_INVALID);
+        RequiresPermissions permission = directive.getClass().getAnnotation(RequiresPermissions.class);
+        BusinessException.check(permission != null, ConstantEnum.AUTHORIZATION_INVALID);
+        BusinessException.check(permission.skip() || getPermissionCodes().contains(permission.value()), ConstantEnum.AUTHORIZATION_INVALID);
 
         directive.execute(jsonMessageConverter, Constants.JSON_MEDIA_TYPE, request, response);
     }

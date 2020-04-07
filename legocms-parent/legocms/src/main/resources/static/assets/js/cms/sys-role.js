@@ -2,10 +2,10 @@ $(function() {
 	var url = ctx + "/admin/directive/sysRoleList";
 	initMyPagination("MyPagination-role-list", "Template-role-list", url);
 })
-function permission(code) {
+function permission(code, title) {
 	var url = ctx + "/admin/directive/sysPermissionCheckTree";
 	ajaxSubmit(url, "roleCode=" + code, function(data) {
-		window.parent.showCheckTree('角色授权', data.simpleCheckTree, function(nodes){
+		window.parent.showCheckTree(title, data.simpleCheckTree, function(nodes){
 			var permissionCodes = new Array();
 			$.each(nodes, function(index,value){
 				permissionCodes.push(value.code);
@@ -15,8 +15,8 @@ function permission(code) {
 		});
 	});
 }
-function edit(code) {
-	window.parent.showFormDialog('角色管理', $('#role-modal'), function(form) {
+function edit(code, title) {
+	window.parent.showFormDialog(title, $('#role-modal'), function(form) {
 		var url = ctx + "/admin/directive/sysRole";
 		ajaxSubmit(url, "code=" + code, function(data) {
 			form.resetForm();
@@ -33,9 +33,9 @@ function edit(code) {
 		myPagination.reload('MyPagination-role-list');
 	});
 }
-function del(code) {
+function del(code, title, tips) {
 	var url = ctx + "/admin/role/delete";
-	window.parent.showConfirm("是否删除该角色信息！", function(){
+	window.parent.showConfirm(tips, title, function(){
 		ajaxSubmit(url, "code=" + code, function(){
 			myPagination.reload('MyPagination-role-list');
 		});

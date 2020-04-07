@@ -4,7 +4,7 @@ $(function() {
 })
 
 function active(code) {
-	window.parent.showConfirm("是否激活该用户信息！", function(){
+	window.parent.showConfirm("是否激活该用户信息！", '用户激活', function(){
 		var url = ctx + "/admin/user/active";
 		ajaxSubmit(url, "code=" + code, function() {
 			myPagination.reload('MyPagination-user-list');
@@ -12,7 +12,7 @@ function active(code) {
 	})
 }
 function invalid(code) {
-	window.parent.showConfirm("是否注销该用户信息！", function(){
+	window.parent.showConfirm("是否注销该用户信息！", "用户注销", function(){
 		var url = ctx + "/admin/user/invalid";
 		ajaxSubmit(url, "code=" + code, function() {
 			myPagination.reload('MyPagination-user-list');

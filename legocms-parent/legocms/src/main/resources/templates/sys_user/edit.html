@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="LegoCMS">
+	<#include "../include_page/link.html"/>
+	<script type="text/javascript">
+		$(function(){
+			ajaxForm($('#save-user-form'), function() {
+		    	$('#save-user-form').find("[name=code]").attr("readonly", "");
+			});
+			$('#select-org').click(function(){
+				var orgUrl = ctx + "/admin/directive/sysOrganizationTree";
+				ajaxSubmit(orgUrl, null, function(data) {
+					window.parent.showSimpleTree('组织选择', data.simpleTree, function(treeNode){
+					    $("input[name='organization.name']").val(treeNode.name);
+					    $("input[name='organization.code']").val(treeNode.code);
+					})
+				});
+			})
+			$('.multiple').select2({
+				width: '100%'
+			});
+		});
+	</script>
+</head>
+<body>
+	<div class="app-main__inner" id="MyPagination-user-list">
+		<@sysUser code=code>
+		<div class="main-card mb-3 card">
+			<div class="card-body">
+				<h5 class="card-title"><@t.page 'employee.info'/></h5>
+				<form id="save-user-form" action="${ctx}/admin/user/save" ajax="true" onsubmit="return false;" class="needs-validation" novalidate>
+					<div class="position-relative row form-group">
+						<label class="col-sm-2 col-form-label"><@t.page 'list.code'/></label>
+						<div class="col-sm-10">
+							<#if (userInfo.code)??>
+								<input name="code" placeholder="Code" type="text" class="form-control" value="${(userInfo.code)!''}" readonly required>
+							<#else>
+								<input name="code" placeholder="Code" type="text" class="form-control" required>
+							</#if>
+							<div class="invalid-feedback">
+                                Please provide a valid code
+                            </div>
+						</div>
+					</div>
+					<div class="position-relative row form-group">
+						<label class="col-sm-2 col-form-label"><@t.page 'list.name'/></label>
+						<div class="col-sm-10">
+							<input name="name" placeholder="Name" type="text" class="form-control" value="${(userInfo.name)!''}" required>
+							<div class="invalid-feedback">
+                                Please provide a valid name
+                            </div>
+						</div>
+					</div>
+					<div class="position-relative row form-group">
+						<label class="col-sm-2 col-form-label"><@t.page 'list.status'/></label>
+						<div class="col-sm-10">
+							<select name="status" class="form-control custom-select" required>
+								<@sysUserStatus>
+									<#list userStatus as userState>
+										<#if (userInfo.status.code)??&&userState.code == userInfo.status.code>
+											<option selected="selected" value="${userState.code}">${userState.name}</option>
+										<#else>
+											<option value="${userState.code}">${userState.name}</option>
+										</#if>
+									</#list>
+								</@sysUserStatus>
+							</select>
+							<div class="invalid-feedback">
+                                Please provide a valid status
+                            </div>
+						</div>
+					</div>
+					<div class="position-relative row form-group">
+						<label class="col-sm-2 col-form-label"><@t.page 'list.organization'/></label>
+						<div class="col-sm-10">
+							<div class="input-group">
+								<input type="text" class="form-control" name="organization.name" value="${(userInfo.organization.name)!''}" readonly required>
+								<input type="hidden" class="form-control" name="organization.code" value="${(userInfo.organization.code)!''}">
+	                            <div class="input-group-append">
+	                                <span id="select-org" class="btn btn-secondary"><@t.page 'btn.chose-organization'/></span>
+	                            </div>
+							</div>
+						</div>
+					</div>
+					<div class="position-relative row form-group">
+						<label class="col-sm-2 col-form-label"><@t.page 'list.role'/></label>
+						<div class="col-sm-10 controls">
+	                        <select name="roles" class="multiple" multiple>
+	                        	<@sysRoleSimpleList userCode=(userInfo.code)!>
+	                        		<#list roles as role>
+										<#if role.checked>
+											<option value="${role.code}" selected="selected">${role.name}</option>
+										<#else>
+											<option value="${role.code}">${role.name}</option>
+										</#if>
+									</#list>
+	                        	</@sysRoleSimpleList>
+							</select>
+						</div>
+					</div>
+					<div class="position-relative row form-group">
+						<label class="col-sm-2 col-form-label"><@t.page 'list.create-time'/></label>
+						<div class="col-sm-10">
+							<input placeholder="Create Date" class="form-control" value="${(userInfo.createDate)!''}" disabled>
+						</div>
+					</div>
+					<div class="position-relative row form-check">
+						<div class="col-sm-10 offset-sm-2">
+							<button class="btn btn-secondary"><@t.page 'btn.save'/></button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		</@sysUser>
+	</div>
+</body>
+</html>

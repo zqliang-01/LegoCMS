@@ -1,8 +1,46 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2020/4/22 15:03:42                           */
+/* Created on:     2020/5/9 9:51:55                             */
 /*==============================================================*/
 
+
+/*==============================================================*/
+/* Table: CMS_SIMPLE_TYPE                                       */
+/*==============================================================*/
+create table CMS_SIMPLE_TYPE
+(
+   ID                   bigint(15) not null comment 'ID',
+   VERSION              int(5) not null comment 'VERSION',
+   CODE                 varchar(50) not null comment 'CODE',
+   NAME                 varchar(100) not null comment '名称',
+   CREATE_DATE          datetime not null comment '创建时间',
+   CLASS_TYPE           varchar(50) not null comment '类型',
+   SEQUENCE             int(10) not null comment '序号',
+   primary key (ID)
+);
+
+alter table CMS_SIMPLE_TYPE comment 'cms枚举类型';
+
+/*==============================================================*/
+/* Table: CMS_TEMPLATE                                          */
+/*==============================================================*/
+create table CMS_TEMPLATE
+(
+   ID                   bigint(15) not null comment 'ID',
+   VERSION              int(5) not null comment 'VERSION',
+   CODE                 varchar(50) not null comment 'CODE',
+   NAME                 varchar(255) comment '名称',
+   CREATE_DATE          datetime not null comment '创建时间',
+   UPDATE_TIME          bigint not null comment '更新时间',
+   TYPE_ID              bigint(15) not null comment '类型：file/dir',
+   PARENT_ID            bigint(15) comment '父ID',
+   SITE_ID              bigint(15) not null comment '站点ID',
+   CONTENT              text comment '内容',
+   primary key (ID),
+   unique key AK_UNIQUE_CODE (CODE)
+);
+
+alter table CMS_TEMPLATE comment '页面模板';
 
 /*==============================================================*/
 /* Table: SYS_ORGANIZATION                                      */
@@ -102,7 +140,25 @@ create table SYS_SIMPLE_TYPE
    primary key (ID)
 );
 
-alter table SYS_SIMPLE_TYPE comment '系统主题';
+alter table SYS_SIMPLE_TYPE comment '系统枚举';
+
+/*==============================================================*/
+/* Table: SYS_SITE                                              */
+/*==============================================================*/
+create table SYS_SITE
+(
+   ID                   bigint(15) not null comment 'ID',
+   VERSION              int(5) not null comment 'VERSION',
+   CODE                 varchar(50) not null comment 'CODE',
+   NAME                 varchar(100) not null comment '名称',
+   CREATE_DATE          datetime not null comment '创建时间',
+   PATH                 varchar(255) not null comment '地址',
+   DYNAMIC_PATH         varchar(255) comment '动态地址',
+   ORGANIZATION_ID      bigint(15) not null comment '部门',
+   primary key (ID)
+);
+
+alter table SYS_SITE comment '站点配置';
 
 /*==============================================================*/
 /* Table: SYS_THEME                                             */
@@ -133,6 +189,7 @@ create table SYS_USER
    PASSWORD             varchar(100) not null comment '密码',
    ORGANIZATION_ID      bigint(15) not null comment '部门',
    STATUS               bigint(15) not null comment '状态',
+   SITE_ID              bigint(15) comment '当前管理站点',
    primary key (ID)
 );
 
@@ -150,6 +207,12 @@ create table SYS_USER_ROLE
 
 alter table SYS_USER_ROLE comment '用户角色';
 
+alter table CMS_TEMPLATE add constraint FK_TEMPLATE_SITE foreign key (SITE_ID)
+      references SYS_SITE (ID) on delete restrict on update restrict;
+
+alter table CMS_TEMPLATE add constraint FK_TEMPLATE_TYPE foreign key (TYPE_ID)
+      references CMS_SIMPLE_TYPE (ID) on delete restrict on update restrict;
+
 alter table SYS_ORGANIZATION add constraint FK_ORGANIZATION_STATUS foreign key (STATUS)
       references SYS_SIMPLE_TYPE (ID) on delete restrict on update restrict;
 
@@ -162,8 +225,14 @@ alter table SYS_ROLE_PERMISSION add constraint FK_PERMISSION_ROLE foreign key (P
 alter table SYS_ROLE_PERMISSION add constraint FK_ROLE_PERMISSION foreign key (ROLE_ID)
       references SYS_ROLE (ID) on delete restrict on update restrict;
 
+alter table SYS_SITE add constraint FK_ORGANIZATION_SITE foreign key (ORGANIZATION_ID)
+      references SYS_ORGANIZATION (ID) on delete restrict on update restrict;
+
 alter table SYS_THEME add constraint FK_THEME_TYPE foreign key (TYPE)
       references SYS_SIMPLE_TYPE (ID) on delete restrict on update restrict;
+
+alter table SYS_USER add constraint FK_SITE_USER foreign key (SITE_ID)
+      references SYS_SITE (ID) on delete restrict on update restrict;
 
 alter table SYS_USER add constraint FK_USER_ORGANIZATION foreign key (ORGANIZATION_ID)
       references SYS_ORGANIZATION (ID) on delete restrict on update restrict;

@@ -3,7 +3,7 @@ package com.legocms.handler;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
 import com.legocms.core.web.AbstractExceptionHandler;
-import com.legocms.web.AdminView;
+import com.legocms.web.controller.admin.AdminView;
 
 @ControllerAdvice("com.legocms.web.controller.admin")
 public class AdminExceptionHandler extends AbstractExceptionHandler {

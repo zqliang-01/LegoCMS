@@ -17,7 +17,7 @@ public class WebInterceptor extends AbstractInterceptor {
 
     @Override
     public List<String> getExcludePathPatterns() {
-        return Arrays.asList("/web/", "/web/login");
+        return Arrays.asList("/web/");
     }
 
     @Override

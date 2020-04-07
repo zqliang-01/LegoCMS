@@ -10,12 +10,21 @@
         <meta name="description" content="LegoCMS">
         <meta name="msapplication-tap-highlight" content="no">
         <style>
-            body {background-color: rgba(0, 0, 0, 0.3)!important;}
-            .fa-box-open {padding-top: 100px;}
-            .fa-box-open:before {}
-            .widget-content {width: 450px;margin-left: auto;margin-right: auto;text-align: center;}
-            .widget-content h1 {color: #FFFFFF;font-weight: 700;}
+            body {background: #667ea7!important;}
+            .fa-box-open-top {background: #f8fbff;padding-top: 10%;}
+            .fa-box-open:before {content: ""!important;;}
+            .widget-content {width: 450px;margin-left: auto;margin-right: auto;text-align: center;background: #485563;
+            	box-shadow: 0 0.46875rem 2.1875rem rgba(4, 9, 20, 0.03),
+            		0 0.9375rem 1.40625rem rgba(4, 9, 20, 0.03),
+            		0 0.25rem 0.53125rem rgba(4, 9, 20, 0.05),
+            		0 0.125rem 0.1875rem rgba(4, 9, 20, 0.03);
+    			border-width: 0;
+    			transition: all .2s;
+    			border: 1px solid rgba(26, 54, 126, 0.125);}
+    		.card {border-radius: 0px!important;}
+            .widget-content h1 {color: #eff9ff;font-weight: 700;margin: 15px 0 15px 0;}
             .widget-content-wrapper {display: block!important;padding: 0px 40px;}
+            .input-group-prepend span i{width: 25px;font-size: 1.4rem;}
             .input-group {margin-top: 10px;}
             .input-group a {color: red!important;}
             .btn-primary {width: 100%;margin-top: 10px;}
@@ -31,27 +40,27 @@
         </script>
 	</head>
 	<body>
-        <div class="fa-box-open">
-            <div class="widget-content">
-                <h1><@t.page 'logo'/></h1>
-            </div>
-            <div class="card mb-3 widget-content">
-                <div class="widget-content-wrapper">
-                    <form id="login-form" action="${ctx}/admin/user/doLogin" method="post">
-                		<div class="input-group"><a>${msg!''}</a></div>
-                        <div class="input-group">
-                            <div class="input-group-prepend"><span class="input-group-text">@</span></div>
-                            <input placeholder="" type="text" value="admin" name="username" class="form-control">
-                        </div>
-                        <div class="input-group">
-                            <div class="input-group-prepend"><span class="input-group-text">@</span></div>
-                            <input placeholder="password" type="password" value="admin" name="password" class="form-control">
-                        </div>
-                        <div class="input-group">
-                            <button class="mb-2 mr-2 btn btn-primary"style="margin-right: 0px!important;">Login</button>
-                        </div>
-                    </form>
-                </div>
+        <div class="fa-box-open-top">
+	        <div class="widget-content">
+	            <h1><@t.page 'logo'/></h1>
+	        </div>
+        </div>
+        <div class="card mb-3 widget-content">
+            <div class="widget-content-wrapper">
+                <form id="login-form" action="${ctx}/admin/user/doLogin" method="post">
+            		<div class="input-group"><a>${msg!''}</a></div>
+                    <div class="input-group">
+                        <div class="input-group-prepend"><span class="input-group-text"><i class="pe-7s-users"></i></span></div>
+                        <input placeholder="" type="text" value="admin" name="username" class="form-control">
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-prepend"><span class="input-group-text"><i class="pe-7s-key"></i></span></div>
+                        <input placeholder="password" type="password" value="admin" name="password" class="form-control">
+                    </div>
+                    <div class="input-group">
+                        <button class="mb-2 mr-2 btn btn-primary"style="margin-right: 0px!important;"><@t.page 'btn.login'/></button>
+                    </div>
+                </form>
             </div>
         </div>
 	</body>
