@@ -31,7 +31,7 @@ CALL addPermissionLang('zh', '系统管理', 'admin');
 CALL addPermissionLang('en', 'System Management', 'admin');
 
 CALL addPermission('user', 'admin', 'pe-7s-add-user', '/admin/user/init', 1, 1);
-CALL addPermissionLang('zh', '员工管理', 'user');
+CALL addPermissionLang('zh', '用户管理', 'user');
 CALL addPermissionLang('en', 'Employee Management', 'user');
 
 CALL addPermission('user-edit', 'user', null, null, 0, 2);

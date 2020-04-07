@@ -35,7 +35,7 @@ public class CmsPlaceService extends BaseService implements ICmsPlaceService {
 
     @Override
     public List<SimpleTreeInfo> findSimpleTree() {
-        List<CmsPlace> places = placeDao.findAll(new Sort(Sort.Direction.ASC, "type.code", "name"));
+        List<CmsPlace> places = placeDao.findAll(Sort.by("type.code", "name"));
         return placeAssembler.createSimpleTree(places);
     }
 

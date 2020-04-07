@@ -1,5 +1,7 @@
 package com.legocms.data.entities.cms;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -20,7 +22,7 @@ import lombok.EqualsAndHashCode;
 public class CmsTemplate extends BaseEntity {
 
     private String content;
-    private long updateTime;
+    private Date updateTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "type_id", referencedColumnName = "id")

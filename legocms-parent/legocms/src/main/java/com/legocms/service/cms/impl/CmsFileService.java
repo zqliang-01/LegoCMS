@@ -66,7 +66,7 @@ public class CmsFileService extends BaseService implements ICmsFileService {
 
     @Override
     public List<SimpleTreeInfo> findSimpleTree() {
-        List<CmsFile> files = fileDao.findAll(new Sort(Sort.Direction.ASC, "type.code", "name"));
+        List<CmsFile> files = fileDao.findAll(Sort.by("type.code", "name"));
         return fileAssembler.createSimpleTree(files);
     }
 

@@ -17,7 +17,7 @@
 		<@sysDomain code=code>
 		<div class="main-card mb-3 card">
 			<div class="card-body">
-				<h5 class="card-title"><@t.page 'employee.info'/></h5>
+				<h5 class="card-title"><@t.page 'domain.info'/></h5>
 				<form id="save-domain-form" action="${ctx}/admin/domain/save" ajax="true" onsubmit="return false;" class="needs-validation" novalidate>
 					<div class="position-relative row form-group">
 						<label class="col-sm-2 col-form-label"><@t.page 'list.code'/></label>
@@ -50,13 +50,13 @@
 					<div class="position-relative row form-group">
 						<label class="col-sm-2 col-form-label"><@t.page 'list.site'/></label>
 						<div class="col-sm-10">
-							<input placeholder="Create Date" class="form-control" value="${(domainInfo.site.name)!''}" disabled>
+							<input placeholder="Site Name" class="form-control" value="${(domainInfo.site.name)!''}" disabled>
 						</div>
 					</div>
 					<div class="position-relative row form-group">
 						<label class="col-sm-2 col-form-label"><@t.page 'list.create-time'/></label>
 						<div class="col-sm-10">
-							<input placeholder="Create Date" class="form-control" value="${(domainInfo.createDate)!''}" disabled>
+							<input placeholder="Create Time" class="form-control" value="${(domainInfo.createTime)!''}" disabled>
 						</div>
 					</div>
 					<div class="position-relative row form-check">

@@ -21,7 +21,7 @@ public class DatabaseTemplateLoader implements TemplateLoader {
     public Object findTemplateSource(String code) {
         code = code.split("_")[0];
         CmsTemplate template = templateDao.findByCode(code);
-        return new StringTemplateSource(code, template.getContent().replaceAll("\r|\n|\t", ""), template.getUpdateTime());
+        return new StringTemplateSource(code, template.getContent().replaceAll("\r|\n|\t", ""), template.getUpdateTime().getTime());
     }
 
     @Override

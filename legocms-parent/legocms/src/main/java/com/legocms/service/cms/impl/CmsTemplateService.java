@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.legocms.core.common.DateUtil;
 import com.legocms.core.common.StringUtil;
 import com.legocms.core.dto.SimpleTreeInfo;
 import com.legocms.core.dto.cms.CmsTemplateInfo;
@@ -35,7 +36,7 @@ public class CmsTemplateService extends BaseService implements ICmsTemplateServi
 
     @Override
     public List<SimpleTreeInfo> findSimpleTree() {
-        List<CmsTemplate> templates = templateDao.findAll(new Sort(Sort.Direction.ASC, "type.code", "name"));
+        List<CmsTemplate> templates = templateDao.findAll(Sort.by("type", "name"));
         return templateAssembler.createSimpleTree(templates);
     }
 
@@ -62,6 +63,7 @@ public class CmsTemplateService extends BaseService implements ICmsTemplateServi
         template.setType(templateType);
         template.setName(vo.getName());
         template.setContent(vo.getContent());
+        template.setUpdateTime(DateUtil.getCurrentDate());
         templateDao.save(template);
     }
 

@@ -71,22 +71,6 @@ $(function(){
     	marginLeft = 0;
     	setLeft();
     });
-    // 关闭当前窗口
-    $(".closetag").click(function () {
-        let index;
-        let a = $(this).parent();
-        let li = a.parent();
-    	closeTabWidth = li[0].offsetWidth;
-    	if (li.index() > 0) {
-    		index = $(".body-tabs li a").eq(li.index() - 1);
-    	}
-        else {
-    		index = $(".body-tabs li a").eq(0);
-    	}
-        selectTab(index);
-    	$(a.attr('href')).remove();
-    	li.remove();
-    });
 })
 var marginLeft = 0;
 var tabArray = new Array();
