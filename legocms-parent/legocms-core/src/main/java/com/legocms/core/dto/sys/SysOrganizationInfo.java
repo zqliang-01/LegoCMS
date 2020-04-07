@@ -14,6 +14,6 @@ public class SysOrganizationInfo extends Dto {
 
     private String code;
     private String name;
-    private TypeInfo state;
-
+    private TypeInfo status;
+    private TypeInfo parent;
 }

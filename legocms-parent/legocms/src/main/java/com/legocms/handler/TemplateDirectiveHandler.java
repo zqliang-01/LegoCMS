@@ -141,7 +141,7 @@ public class TemplateDirectiveHandler extends BaseFreemarkerHandler {
     }
 
     @Override
-    public Locale getLocale() throws Exception {
+    public Locale getLocale() {
         return environment.getLocale();
     }
 

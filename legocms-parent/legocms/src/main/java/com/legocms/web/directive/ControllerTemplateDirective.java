@@ -10,9 +10,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 
 import com.legocms.core.cache.Cache;
+import com.legocms.core.common.Constants;
+import com.legocms.core.common.StringUtil;
 import com.legocms.data.handler.HttpParameterHandler;
+import com.legocms.data.handler.RenderHandler;
 
-public abstract class AbstractTemplateDirective extends BaseTemplateDirective {
+public abstract class ControllerTemplateDirective extends BaseTemplateDirective {
 
     @Autowired
     private Cache cache;
@@ -47,5 +50,13 @@ public abstract class AbstractTemplateDirective extends BaseTemplateDirective {
 
     public boolean httpEnabled() {
         return true;
+    }
+
+    protected String getLang(RenderHandler handler) {
+        String lang = handler.getLocale().getLanguage();
+        if (StringUtil.isBlank(lang)) {
+            return Constants.DEFAULT_LANG;
+        }
+        return lang;
     }
 }

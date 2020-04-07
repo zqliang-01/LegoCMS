@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.legocms.core.dto.SimpleTreeInfo;
+import com.legocms.core.dto.sys.SysOrganizationDetailInfo;
 import com.legocms.core.dto.sys.SysOrganizationInfo;
 import com.legocms.data.assembler.AbstractAssembler;
 import com.legocms.data.entities.sys.SysOrganization;
@@ -18,7 +19,22 @@ public class SysOrganizationAssembler extends AbstractAssembler<SysOrganizationI
         SysOrganizationInfo info = new SysOrganizationInfo();
         info.setCode(entity.getCode());
         info.setName(entity.getName());
-        info.setState(typeInfoAssembler.create(entity.getStatus()));
+        info.setStatus(typeInfoAssembler.create(entity.getStatus()));
+        if (entity.getParent() != null) {
+            info.setParent(typeInfoAssembler.create(entity.getParent()));
+        }
+        return info;
+    }
+
+    public SysOrganizationDetailInfo createDetail(SysOrganization entity) {
+        SysOrganizationDetailInfo info = new SysOrganizationDetailInfo();
+        info.setCode(entity.getCode());
+        info.setName(entity.getName());
+        info.setStatus(typeInfoAssembler.create(entity.getStatus()));
+        if (entity.getParent() != null) {
+            info.setParent(typeInfoAssembler.create(entity.getParent()));
+        }
+        info.setCreateDate(entity.getCreateDate());
         return info;
     }
 

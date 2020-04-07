@@ -103,13 +103,13 @@ function setLeft() {
 function showMsg(msg, type, callback){
 	layer.closeAll();
 	if (isEmpty(type)) {
-	    layer.msg(msg, {time: 2000});
+	    layer.msg(msg, {time: 1000});
 	}
 	else if (isEmpty(callback)){
-		layer.msg(msg, {icon: type, time: 2000});
+		layer.msg(msg, {icon: type, time: 1000});
 	}
 	else {
-		layer.msg(msg, {icon: type, time: 2000}, callback);
+		layer.msg(msg, {icon: type, time: 1000}, callback);
 	}
 }
 

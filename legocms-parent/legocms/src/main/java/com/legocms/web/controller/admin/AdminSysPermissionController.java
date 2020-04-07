@@ -29,7 +29,7 @@ public class AdminSysPermissionController extends SessionController {
     @GetMapping("/init")
     @RequiresPermissions(AdminPermission.PERMISSION)
     public ViewResponse init() {
-        return ViewResponse.ok(AdminView.CMS_PERMISSION_LIST).put("langTypes", SysPermissionLangCode.ALL);
+        return ViewResponse.ok(AdminView.CMS_PERMISSION_LIST).put("langTypes", SysPermissionLangCode.ALL_TYPE);
     }
 
     @PostMapping("/save")

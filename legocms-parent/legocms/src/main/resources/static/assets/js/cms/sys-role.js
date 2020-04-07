@@ -5,6 +5,7 @@ $(function() {
 	ajaxForm('save-role-form', function() {
 		$('#save-role-form').find("[name=code]").attr("readonly", "");
 		myPagination.reload('MyPagination-role-list');
+		$("#role-modal .close").click();
 	});
 })
 function permission(code) {

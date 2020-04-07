@@ -51,7 +51,7 @@ public interface RenderHandler {
 
     Date getDate(String name, Date defaultValue) throws Exception;
 
-    Locale getLocale() throws Exception;
+    Locale getLocale();
 
     HttpServletRequest getRequest() throws IOException, Exception;
 

@@ -10,7 +10,7 @@ import com.legocms.core.vo.sys.SysPermissionVo;
 
 public interface ISysPermissionService {
 
-    List<SysPermissionInfo> findBy(String userCode, String parentCode, boolean menu);
+    List<SysPermissionInfo> findBy(String userCode, String parentCode, String lang, boolean menu);
 
     List<SimpleTreeInfo> findSimpleTree(String lang);
 

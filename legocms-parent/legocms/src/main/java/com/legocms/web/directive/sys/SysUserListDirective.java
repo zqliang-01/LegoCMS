@@ -12,11 +12,11 @@ import com.legocms.core.vo.sys.AdminPermission;
 import com.legocms.core.vo.sys.QuerySysUserVo;
 import com.legocms.data.handler.RenderHandler;
 import com.legocms.service.sys.ISysUserService;
-import com.legocms.web.directive.AbstractTemplateDirective;
+import com.legocms.web.directive.ControllerTemplateDirective;
 
 @Component
 @RequiresPermissions(AdminPermission.USER_QUERY)
-public class SysUserListDirective extends AbstractTemplateDirective {
+public class SysUserListDirective extends ControllerTemplateDirective {
 
     @Autowired
     private ISysUserService userService;

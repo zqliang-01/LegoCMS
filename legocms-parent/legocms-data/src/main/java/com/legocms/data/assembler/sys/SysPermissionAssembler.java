@@ -29,7 +29,9 @@ public class SysPermissionAssembler extends AbstractAssembler<SysPermissionInfo,
         SysPermissionInfo info = new SysPermissionInfo();
         info.setCode(entity.getCode());
         info.setIcon(entity.getIcon());
-        info.setName(moduleLang.getName());
+        if (moduleLang != null) {
+            info.setName(moduleLang.getName());
+        }
         info.setSort(entity.getSort());
         info.setUrl(entity.getUrl());
         return info;
@@ -104,6 +106,14 @@ public class SysPermissionAssembler extends AbstractAssembler<SysPermissionInfo,
     @Override
     public SysPermissionInfo create(SysPermission entity) {
         return create(entity, Constants.DEFAULT_LANG);
+    }
+
+    public List<SysPermissionInfo> create(List<SysPermission> permissions, String lang) {
+        List<SysPermissionInfo> infos = new ArrayList<SysPermissionInfo>();
+        for (SysPermission permission : permissions) {
+            infos.add(create(permission, lang));
+        }
+        return infos;
     }
 
 }

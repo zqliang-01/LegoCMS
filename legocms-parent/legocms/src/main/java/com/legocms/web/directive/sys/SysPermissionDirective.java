@@ -10,11 +10,11 @@ import com.legocms.core.dto.sys.SysPermissionDetailInfo;
 import com.legocms.core.vo.sys.AdminPermission;
 import com.legocms.data.handler.RenderHandler;
 import com.legocms.service.sys.ISysPermissionService;
-import com.legocms.web.directive.AbstractTemplateDirective;
+import com.legocms.web.directive.ControllerTemplateDirective;
 
 @Component
 @RequiresPermissions(AdminPermission.PERMISSION_EDIT)
-public class SysPermissionDirective extends AbstractTemplateDirective {
+public class SysPermissionDirective extends ControllerTemplateDirective {
 
     @Autowired
     private ISysPermissionService permissionService;
@@ -24,5 +24,6 @@ public class SysPermissionDirective extends AbstractTemplateDirective {
         SysPermissionDetailInfo permissionInfo = permissionService.findDetailBy(handler.getString("code"));
         handler.put("permission", permissionInfo).render();
     }
+
 
 }

@@ -11,13 +11,13 @@
 				        	<#if top>
 					            <a href="#" aria-expanded="true" class="menu-item-top" id="${p.code!}" name="${p.name}">
 					                <i class="metismenu-icon ${p.icon!}"></i>
-					                ${p.name}
+					                <span>${p.name}</span>
 					                <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
 					            </a>
 				        	<#else>
 			                    <a href="#" data-url="${p.url!}" class="menu-item" id="${p.code!}" name="${p.name}">
 			                        <i class="metismenu-icon ${p.icon!}"></i>
-			                        ${p.name}
+			                        <span>${p.name}</span>
 			                    </a>
 				        	</#if>
 							<@permission parentCode=p.code top=false />
