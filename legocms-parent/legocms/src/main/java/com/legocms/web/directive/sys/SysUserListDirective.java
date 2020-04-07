@@ -9,12 +9,13 @@ import com.legocms.core.annotation.RequiresPermissions;
 import com.legocms.core.dto.Page;
 import com.legocms.core.dto.sys.SysUserInfo;
 import com.legocms.core.vo.sys.QuerySysUserVo;
+import com.legocms.core.vo.sys.SysPermissionCode;
 import com.legocms.data.handler.RenderHandler;
 import com.legocms.service.sys.ISysUserService;
 import com.legocms.web.directive.ControllerTemplateDirective;
 
 @Component
-@RequiresPermissions(skip = true)
+@RequiresPermissions(SysPermissionCode.USER)
 public class SysUserListDirective extends ControllerTemplateDirective {
 
     @Autowired

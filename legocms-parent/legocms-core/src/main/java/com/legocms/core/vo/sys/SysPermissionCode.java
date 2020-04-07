@@ -2,6 +2,8 @@ package com.legocms.core.vo.sys;
 
 public interface SysPermissionCode {
 
+    String ROOT = "root";
+
     String USER = "user";
     String USER_EDIT = "user-edit";
 

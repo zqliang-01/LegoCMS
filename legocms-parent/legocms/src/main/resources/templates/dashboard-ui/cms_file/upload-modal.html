@@ -1,7 +1,8 @@
 <noscript id="upload-modal" data-form="#upload-form" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-	<form id="upload-form" action="${ctx}/admin/file/upload" enctype="multipart/form-data" onsubmit="return false;" class="needs-validation" novalidate>
+	<form id="upload-form" action="${ctx}/admin/file" enctype="multipart/form-data" onsubmit="return false;" class="needs-validation" novalidate>
 		<div class="modal-body">
 			<input name="parentCode" type="hidden" class="form-control" >
+			<input name="action" value="upload" type="hidden">
 			<div class="position-relative row form-group">
 				<div class="col-sm-9">
 					<input name="file" type="file" class="form-control-file" required>

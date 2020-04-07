@@ -24,10 +24,10 @@ public class SysOperationLogDao extends GenericDao<SysOperationLog> implements I
             handler.condition("ol.user.name LIKE :userName").setParameter("userName", "%" + userName + "%");
         }
         if (start != null) {
-            handler.condition("ol.createTime >= createStart").setParameter("createStart", start);
+            handler.condition("ol.createTime >= :createStart").setParameter("createStart", start);
         }
         if (end != null) {
-            handler.condition("ol.createTime >= createEnd").setParameter("createEnd", end);
+            handler.condition("ol.createTime < :createEnd").setParameter("createEnd", end);
         }
         handler.order(" ol.createTime DESC");
         return handler.findPage(pageIndex, pageSize);

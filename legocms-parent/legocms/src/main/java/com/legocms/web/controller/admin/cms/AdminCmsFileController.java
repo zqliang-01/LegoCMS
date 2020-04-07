@@ -44,9 +44,9 @@ public class AdminCmsFileController extends AdminController {
         return ViewResponse.ok(AdminView.CMS_FILE_EDIT).put("code", code);
     }
 
-    @PostMapping("/save")
+    @PostMapping(params = "action=modify")
     @RequiresPermissions(SysPermissionCode.FILE_EDIT)
-    public JsonResponse save(CmsFileVo vo) {
+    public JsonResponse modify(CmsFileVo vo) {
         vo.setSiteCode(getSiteCode());
         ByteArrayInputStream ins = null;
         if (StringUtil.isNotBlank(vo.getContent())) {
@@ -56,7 +56,19 @@ public class AdminCmsFileController extends AdminController {
         return JsonResponse.ok();
     }
 
-    @PostMapping("/upload")
+    @PostMapping(params = "action=add")
+    @RequiresPermissions(SysPermissionCode.FILE_EDIT)
+    public JsonResponse add(CmsFileVo vo) {
+        vo.setSiteCode(getSiteCode());
+        ByteArrayInputStream ins = null;
+        if (StringUtil.isNotBlank(vo.getContent())) {
+            ins = new ByteArrayInputStream(vo.getContent().getBytes());
+        }
+        fileService.add(getUserCode(), vo, ins);
+        return JsonResponse.ok();
+    }
+
+    @PostMapping(params = "action=upload")
     @RequiresPermissions(SysPermissionCode.FILE_EDIT)
     public JsonResponse uploads(@RequestParam MultipartFile file, String parentCode, HttpServletRequest request) throws IOException {
         CmsFileVo vo = new CmsFileVo();

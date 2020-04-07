@@ -45,8 +45,9 @@
 		<div class="main-card mb-3 card">
 			<div class="card-body">
 				<h5 class="card-title"><@t.page 'employee.info'/></h5>
-				<form id="save-file-form" action="${ctx}/admin/file/save" ajax="true" onsubmit="return false;" class="needs-validation" novalidate>
+				<form id="save-file-form" action="${ctx}/admin/file" ajax="true" onsubmit="return false;" class="needs-validation" novalidate>
 					<input name="parentCode" type="hidden" value="${(fileInfo.parent.code)!''}" required>
+					<input name="action" type="hidden" value="modify" required>
 					<div class="position-relative row form-group">
 						<label class="col-sm-2 col-form-label"><@t.page 'list.code'/></label>
 						<div class="col-sm-10">

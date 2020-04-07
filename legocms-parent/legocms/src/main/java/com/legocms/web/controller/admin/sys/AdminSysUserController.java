@@ -48,7 +48,7 @@ public class AdminSysUserController extends AdminController {
             view.put("msg", "账号不存在！");
             return view;
         }
-        if (!user.getPassword().equals(password)) {
+        if (!user.getPassword().equals(StringUtil.getMD5(password))) {
             view.put("msg", "密码错误，登录失败！");
             return view;
         }

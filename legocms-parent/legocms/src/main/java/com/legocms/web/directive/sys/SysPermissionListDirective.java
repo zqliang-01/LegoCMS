@@ -9,13 +9,14 @@ import org.springframework.stereotype.Component;
 import com.legocms.core.annotation.RequiresPermissions;
 import com.legocms.core.dto.sys.SysPermissionInfo;
 import com.legocms.core.dto.sys.SysUserInfo;
+import com.legocms.core.vo.sys.SysPermissionCode;
 import com.legocms.data.handler.RenderHandler;
 import com.legocms.service.sys.ISysPermissionService;
 import com.legocms.web.controller.admin.AdminView;
 import com.legocms.web.directive.ControllerTemplateDirective;
 
 @Component
-@RequiresPermissions(skip = false)
+@RequiresPermissions(SysPermissionCode.PERMISSION)
 public class SysPermissionListDirective extends ControllerTemplateDirective {
 
     @Autowired

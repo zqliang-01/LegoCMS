@@ -8,12 +8,13 @@ import org.springframework.stereotype.Component;
 
 import com.legocms.core.annotation.RequiresPermissions;
 import com.legocms.core.dto.TypeInfo;
+import com.legocms.core.vo.sys.SysPermissionCode;
 import com.legocms.data.handler.RenderHandler;
 import com.legocms.service.sys.ISysSimpleTypeService;
 import com.legocms.web.directive.ControllerTemplateDirective;
 
 @Component
-@RequiresPermissions(skip = true)
+@RequiresPermissions(SysPermissionCode.ORGANIZATION)
 public class SysOrganizationStatusDirective extends ControllerTemplateDirective {
 
     @Autowired

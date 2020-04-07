@@ -7,12 +7,13 @@ import org.springframework.stereotype.Component;
 
 import com.legocms.core.annotation.RequiresPermissions;
 import com.legocms.core.dto.sys.SysRoleInfo;
+import com.legocms.core.vo.sys.SysPermissionCode;
 import com.legocms.data.handler.RenderHandler;
 import com.legocms.service.sys.ISysRoleService;
 import com.legocms.web.directive.ControllerTemplateDirective;
 
 @Component
-@RequiresPermissions(skip = true)
+@RequiresPermissions(SysPermissionCode.ROLE)
 public class SysRoleDirective extends ControllerTemplateDirective {
 
     @Autowired

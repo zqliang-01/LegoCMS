@@ -7,12 +7,13 @@ import org.springframework.stereotype.Component;
 
 import com.legocms.core.annotation.RequiresPermissions;
 import com.legocms.core.dto.cms.CmsPlaceInfo;
+import com.legocms.core.vo.sys.SysPermissionCode;
 import com.legocms.data.handler.RenderHandler;
 import com.legocms.service.cms.ICmsPlaceService;
 import com.legocms.web.directive.ControllerTemplateDirective;
 
 @Component
-@RequiresPermissions(skip = true)
+@RequiresPermissions(SysPermissionCode.PLACE)
 public class CmsPlaceDirective extends ControllerTemplateDirective {
 
     @Autowired

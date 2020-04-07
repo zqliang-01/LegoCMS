@@ -8,12 +8,13 @@ import org.springframework.stereotype.Component;
 
 import com.legocms.core.annotation.RequiresPermissions;
 import com.legocms.core.dto.SimpleCheckTreeInfo;
+import com.legocms.core.vo.sys.SysPermissionCode;
 import com.legocms.data.handler.RenderHandler;
 import com.legocms.service.sys.ISysPermissionService;
 import com.legocms.web.directive.ControllerTemplateDirective;
 
 @Component
-@RequiresPermissions(skip = true)
+@RequiresPermissions(SysPermissionCode.PERMISSION)
 public class SysPermissionCheckTreeDirective extends ControllerTemplateDirective {
 
     @Autowired

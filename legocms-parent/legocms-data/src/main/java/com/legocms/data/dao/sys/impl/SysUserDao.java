@@ -32,11 +32,11 @@ public class SysUserDao extends GenericDao<SysUser> implements ISysUserDao {
         }
 
         if (vo.getCreateStart() != null) {
-            queryHandler.condition("u.createDate >= :createStart").setParameter("createStart", vo.getCreateStart());
+            queryHandler.condition("u.createTime >= :createStart").setParameter("createStart", vo.getCreateStart());
         }
 
         if (vo.getCreateEnd() != null) {
-            queryHandler.condition("u.createDate < :endStart").setParameter("endStart", vo.getCreateEnd());
+            queryHandler.condition("u.createTime < :endStart").setParameter("endStart", vo.getCreateEnd());
         }
         return queryHandler.findPage(pageIndex, pageSize);
     }

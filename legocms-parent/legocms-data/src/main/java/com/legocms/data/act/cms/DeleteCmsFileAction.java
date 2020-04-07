@@ -28,6 +28,8 @@ public class DeleteCmsFileAction extends DeleteAction<CmsFile> {
     protected void preprocess() {
         CmsFile file = fileDao.findByUnsureCode(code);
         BusinessException.check(file != null, "不存在编码为[{0}]的文件信息，文件删除失败！", code);
+
+        setTargetEntity(file);
     }
 
     @Override

@@ -1,8 +1,9 @@
 <noscript id="add-file-modal" data-form="#add-file-form" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-	<form id="add-file-form" action="${ctx}/admin/file/save" onsubmit="return false;" class="needs-validation" novalidate>
+	<form id="add-file-form" action="${ctx}/admin/file" onsubmit="return false;" class="needs-validation" novalidate>
 		<div class="modal-body">
 			<input name="parentCode" type="hidden">
 			<input name="type" value="file" type="hidden">
+			<input name="action" value="add" type="hidden">
 			<div class="position-relative row form-group">
 				<label class="col-sm-3 col-form-label"><@t.page 'list.name'/></label>
 				<div class="col-sm-9">

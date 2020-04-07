@@ -20,7 +20,7 @@ CALL addCmsSimpleType('dir', '目录', 'FileType', 2);
 
 CALL addOrganization('root', '根部门', null);
 
-CALL addUser('admin', '管理员', 'admin', 'root');
+CALL addUser('admin', '管理员', '21232F297A57A5A743894A0E4A801FC3', 'root');
 
 CALL addRole('super', '系统管理员');
 CALL addUserRole('admin', 'super');

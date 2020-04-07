@@ -9,12 +9,13 @@ import org.springframework.stereotype.Component;
 import com.legocms.core.annotation.RequiresPermissions;
 import com.legocms.core.dto.Page;
 import com.legocms.core.dto.sys.SysOperationLogInfo;
+import com.legocms.core.vo.sys.SysPermissionCode;
 import com.legocms.data.handler.RenderHandler;
 import com.legocms.service.sys.ISysOperationLogService;
 import com.legocms.web.directive.ControllerTemplateDirective;
 
 @Component
-@RequiresPermissions(skip = true)
+@RequiresPermissions(SysPermissionCode.LOG)
 public class SysOperationLogListDirective extends ControllerTemplateDirective {
 
     @Autowired

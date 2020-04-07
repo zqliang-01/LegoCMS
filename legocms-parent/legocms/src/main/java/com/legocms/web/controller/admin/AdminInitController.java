@@ -20,6 +20,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import com.legocms.core.annotation.RequiresPermissions;
 import com.legocms.core.dto.TypeCheckInfo;
 import com.legocms.core.dto.TypeInfo;
+import com.legocms.core.vo.sys.SysPermissionCode;
 import com.legocms.core.vo.sys.SysPermissionLangCode;
 import com.legocms.core.web.JsonResponse;
 import com.legocms.core.web.ViewResponse;
@@ -36,7 +37,7 @@ public class AdminInitController extends SessionController {
     private MessageSource messageSource;
 
     @GetMapping
-    @RequiresPermissions("admin")
+    @RequiresPermissions(SysPermissionCode.ROOT)
     public ViewResponse index(HttpServletRequest request) {
         log.debug("page index");
         List<TypeCheckInfo> langs = new ArrayList<TypeCheckInfo>();

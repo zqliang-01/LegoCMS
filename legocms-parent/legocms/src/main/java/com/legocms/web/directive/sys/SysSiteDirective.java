@@ -7,12 +7,13 @@ import org.springframework.stereotype.Component;
 
 import com.legocms.core.annotation.RequiresPermissions;
 import com.legocms.core.dto.sys.SysSiteInfo;
+import com.legocms.core.vo.sys.SysPermissionCode;
 import com.legocms.data.handler.RenderHandler;
 import com.legocms.service.sys.ISysSiteService;
 import com.legocms.web.directive.ControllerTemplateDirective;
 
 @Component
-@RequiresPermissions(skip = true)
+@RequiresPermissions(SysPermissionCode.SITE)
 public class SysSiteDirective extends ControllerTemplateDirective {
 
     @Autowired

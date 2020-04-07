@@ -13,7 +13,7 @@ import com.legocms.service.sys.ISysPermissionService;
 import com.legocms.web.directive.ControllerTemplateDirective;
 
 @Component
-@RequiresPermissions(SysPermissionCode.PERMISSION_EDIT)
+@RequiresPermissions(SysPermissionCode.PERMISSION)
 public class SysPermissionDirective extends ControllerTemplateDirective {
 
     @Autowired
