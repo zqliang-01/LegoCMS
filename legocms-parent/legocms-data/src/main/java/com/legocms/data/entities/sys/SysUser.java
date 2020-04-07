@@ -27,7 +27,6 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class SysUser extends BaseEntity {
 
-    private String name;
     private String password;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -36,8 +36,7 @@ function initMyPagination(id,templateId,url,callBackFun){
 
 	enterClickEvent(function() {
 		$("#"+id+" .query").click();
-	},
-	"#"+id+" input");
+	}, "#"+id+" input");
 }
 
 //处理回车事件
@@ -117,7 +116,9 @@ var panelInfo = {
 function initData(data, pageDivObj, templateId, type) {
     if (type == "table") {
         //使用模板
-        pageDivObj.find("tbody").setTemplateElement(templateId).processTemplate(data);
+    	try {
+    		pageDivObj.find("tbody").setTemplateElement(templateId).processTemplate(data);
+    	} catch(err) {}
     } else {
         pageDivObj.setTemplateElement(templateId).processTemplate(data);
     }

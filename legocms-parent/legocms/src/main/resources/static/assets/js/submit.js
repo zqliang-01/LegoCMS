@@ -114,8 +114,8 @@ function ajaxPost(url, data, successFun, errorFun, async){
 		},	//请求成功后的回调函数
 		error: function(date){
 			if(isEmpty(errorFun)){
-				console.log(date);
-				showMsg("系统发生未知异常……", 5);
+				console.log(date.responseJSON.status);
+				showMsg("系统发生未知异常……" + date.responseJSON.status, 5);
 			}
 			else {
 				layer.closeAll();
@@ -123,57 +123,4 @@ function ajaxPost(url, data, successFun, errorFun, async){
 			}
 		}
 	});
-}
-
-/*
- * ajx请求响应内容拦截，返回true不回调成功函数，返回false回调成功函数
- */
-function interceptorResponse(data) {
-	if (data.code != "0") {
-		if (data.code == "1000") {
-			showMsg(data.msg, 5, function() {
-				window.open(ctx + "/login","_parent");
-			});
-		}
-		else {
-			showMsg(data.msg, 5);
-		}
-		return true;
-	}
-	return false;
-}
-
-//ajax成功后的回调函数
-function successShowFun(data){
-	if(data.code == "0"){
-		showMsg("操作成功！");
-	}
-	else {
-		showMsg("操作失败：" + data.msg, 5);
-	}
-}
-
-function showMsg(msg, type, callback){
-	layer.closeAll();
-	if (isEmpty(type)) {
-	    layer.msg(msg);
-	}
-	else if (isEmpty(callback)){
-		layer.msg(msg, {icon: type});
-	}
-	else {
-		layer.msg(msg, {icon: type}, callback);
-	}
-}
-
-function isEmpty(value) {
-    if (value == null || value == undefined || value == '') {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-function isNotEmpty(value) {
-    return !isEmpty(value);
 }

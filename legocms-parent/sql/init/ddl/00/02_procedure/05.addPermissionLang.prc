@@ -1,6 +1,6 @@
 CREATE PROCEDURE ADDPERMISSIONLANG (
     IN code VARCHAR(255),
-    IN value VARCHAR(255),
+    IN name VARCHAR(255),
     IN permissionCode VARCHAR(255)
 ) 
 BEGIN
@@ -12,8 +12,8 @@ BEGIN
     SELECT p.id INTO vPermissionId FROM sys_permission p WHERE p.CODE = permissionCode;
  
 	 insert into sys_permission_lang
-	     (id, version, code, create_date, value, permission_id)
+	     (id, version, code, create_date, name, permission_id)
 	 values
-	     (vId, 1, code, sysdate(), value, vPermissionId);
+	     (vId, 1, code, sysdate(), name, vPermissionId);
 
 END;

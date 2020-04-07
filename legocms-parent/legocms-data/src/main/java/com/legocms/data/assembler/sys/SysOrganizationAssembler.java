@@ -22,5 +22,4 @@ public class SysOrganizationAssembler extends AbstractAssembler<SysOrganizationI
         info.setState(typeInfoAssembler.create(entity.getStatus()));
         return info;
     }
-
 }

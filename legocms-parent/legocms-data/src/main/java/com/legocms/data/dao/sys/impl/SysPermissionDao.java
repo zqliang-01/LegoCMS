@@ -32,7 +32,7 @@ public class SysPermissionDao extends GenericDao<SysPermission> implements ISysP
         }
         query.condition("u.code = :userCode").setParameter("userCode", userCode);
         if (menu) {
-            query.condition("p.menu = :menu").setParameter("menu", Boolean.valueOf(menu));
+            query.condition("p.menu = :menu").setParameter("menu", menu);
         }
         return query.findSqlList();
     }

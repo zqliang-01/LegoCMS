@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="LegoCMS">
+<#include "../include_page/link.html"/>
+<script type="text/javascript" src="${res}/assets/js/cms/sysUser.js"></script>
+</head>
+<body>
+	<div class="app-main__inner" id="MyPagination-user-list">
+		<@sysUser code=code>
+		<div class="main-card mb-3 card">
+			<div class="card-body">
+				<h5 class="card-title">员工信息</h5>
+				<form id="save-user-form" action="${ctx}/admin/user/save" ajax="true" onsubmit="return false;">
+					<div class="position-relative row form-group">
+						<label class="col-sm-2 col-form-label">Code</label>
+						<div class="col-sm-10">
+							<input name="code" placeholder="Code" type="text" class="form-control" value="${userInfo.code}">
+						</div>
+					</div>
+					<div class="position-relative row form-group">
+						<label class="col-sm-2 col-form-label">Name</label>
+						<div class="col-sm-10">
+							<input name="name" placeholder="Name" type="text" class="form-control" value="${userInfo.name}">
+						</div>
+					</div>
+					<div class="position-relative row form-group">
+						<label class="col-sm-2 col-form-label">Status</label>
+						<div class="col-sm-10">
+							<select name="status" id="status" class="form-control custom-select" disabled>
+								<#if userStatus??>
+									<#list userStatus as userState>
+										<#if userState.code == userInfo.status.code>
+											<option selected="selected" value="${userState.code}">${userState.name}</option>
+										<#else>
+											<option value="${userState.code}">${userState.name}</option>
+										</#if>
+									</#list>
+								</#if>
+							</select>
+						</div>
+					</div>
+					<div class="position-relative row form-group">
+						<label for="exampleSelectMulti" class="col-sm-2 col-form-label">Organization</label>
+						<div class="col-sm-10">
+							<div class="input-group">
+								<input type="text" class="form-control" value="${userInfo.organization.name}" disabled>
+								<input type="hidden" class="form-control" name="organizationCode" value="${userInfo.organization.code}" disabled>
+	                            <div class="input-group-append">
+	                                <div class="btn btn-secondary" id="chose-organization">Chose organization</div>
+	                            </div>
+							</div>
+						</div>
+					</div>
+					<div class="position-relative row form-group">
+						<label for="exampleText" class="col-sm-2 col-form-label">Create Date</label>
+						<div class="col-sm-10">
+							<input placeholder="Create Date" class="form-control" value="${userInfo.createDate}" disabled>
+						</div>
+					</div>
+					<div class="position-relative row form-check">
+						<div class="col-sm-10 offset-sm-2">
+							<button class="btn btn-secondary" >Submit</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div id="select-org">
+			<div class="zTreeDemoBackground left">
+				<ul id="orgTree" class="ztree"></ul>
+			</div>
+		</div>
+		</@sysUser>
+	</div>
+</body>
+</html>

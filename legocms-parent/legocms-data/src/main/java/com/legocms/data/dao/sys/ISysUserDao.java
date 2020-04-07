@@ -8,4 +8,5 @@ import com.legocms.data.entities.sys.SysUser;
 public interface ISysUserDao extends IGenericDao<SysUser> {
 
     Page<SysUser> findBy(QuerySysUserVo vo, int pageIndex, int pageSize);
+
 }

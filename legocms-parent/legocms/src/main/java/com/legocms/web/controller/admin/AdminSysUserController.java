@@ -2,6 +2,7 @@ package com.legocms.web.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.legocms.core.annotation.RequiresPermissions;
 import com.legocms.core.common.StringUtil;
 import com.legocms.core.dto.sys.SysUserInfo;
+import com.legocms.core.web.JsonResponse;
 import com.legocms.core.web.ViewResponse;
 import com.legocms.core.web.session.SessionController;
 import com.legocms.service.sys.ISysUserService;
@@ -63,5 +65,25 @@ public class AdminSysUserController extends SessionController {
     @RequiresPermissions("user")
     public ViewResponse init() {
         return ViewResponse.ok(AdminView.CMS_USER_LIST);
+    }
+
+    @GetMapping("/edit/{code}")
+    @RequiresPermissions("user-edit")
+    public ViewResponse edit(@PathVariable String code) {
+        return ViewResponse.ok(AdminView.CMS_USER_EDIT).put("code", code);
+    }
+
+    @PostMapping("/active")
+    @RequiresPermissions("user-edit")
+    public JsonResponse active(String code) {
+        userService.active(code);
+        return JsonResponse.ok();
+    }
+
+    @PostMapping("/invalid")
+    @RequiresPermissions("user-edit")
+    public JsonResponse invalid(String code) {
+        userService.invalid(code);
+        return JsonResponse.ok();
     }
 }

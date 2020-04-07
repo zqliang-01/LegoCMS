@@ -30,6 +30,8 @@ public class BaseEntity {
     @Column(nullable = false, unique = true)
     private String code;
 
+    private String name;
+
     private Date createDate;
 
     protected BaseEntity() { }

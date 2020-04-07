@@ -2,7 +2,6 @@ package com.legocms.core.web;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,10 +35,8 @@ public abstract class AbstractInterceptor extends SessionController implements I
                 return true;
             }
             AbstractController controller = (AbstractController) bean;
-            Map<?, ?> params = request.getParameterMap();
             log.debug("Controller: {}", controller.getClassName());
             log.debug("method: {}", handlerMethod.getMethod().getName());
-            log.debug("Param: {}", params);
             if (preprocess(request, response, handlerMethod)) {
                 checkPermission(handlerMethod);
                 return true;

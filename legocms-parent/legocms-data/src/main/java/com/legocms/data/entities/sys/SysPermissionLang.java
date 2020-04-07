@@ -20,6 +20,5 @@ public class SysPermissionLang extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "permission_id", nullable = false)
     private SysPermission module;
-    private String value;
 
 }

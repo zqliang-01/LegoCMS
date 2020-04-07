@@ -49,11 +49,10 @@ public class CommonDao implements ICommonDao, InitializingBean {
         return uniqueOrNull(query.getResultList());
     }
 
-    public <T extends BaseEntity> List<T> findAllEnable(Class<T> clazz) {
+    public <T extends BaseEntity> List<T> findAll(Class<T> clazz) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(clazz);
         Root<T> root = criteriaQuery.from(clazz);
-        criteriaQuery.where(criteriaBuilder.greaterThan(root.get("lifecycle").get("endTime"), Calendar.getInstance()));
         TypedQuery<T> query = entityManager.createQuery(criteriaQuery);
         return query.getResultList();
     }

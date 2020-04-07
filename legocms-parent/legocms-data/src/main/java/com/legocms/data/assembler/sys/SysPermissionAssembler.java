@@ -24,7 +24,7 @@ public class SysPermissionAssembler extends AbstractAssembler<SysPermissionInfo,
         SysPermissionInfo info = new SysPermissionInfo();
         info.setCode(entity.getCode());
         info.setIcon(entity.getIcon());
-        info.setName(moduleLang.getValue());
+        info.setName(moduleLang.getName());
         info.setSort(entity.getSort());
         info.setUrl(entity.getUrl());
         return info;

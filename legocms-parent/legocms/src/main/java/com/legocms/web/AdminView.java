@@ -11,4 +11,5 @@ public interface AdminView {
     String INDEX = "index";
 
     String CMS_USER_LIST = "cms_user/list";
+    String CMS_USER_EDIT = "cms_user/edit";
 }

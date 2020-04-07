@@ -25,4 +25,5 @@ public class SysPermissionService extends BaseService implements ISysPermissionS
         List<SysPermission> modules = permissionDao.findBy(userCode, parentCode, menu);
         return this.permissionAssembler.create(modules);
     }
+
 }

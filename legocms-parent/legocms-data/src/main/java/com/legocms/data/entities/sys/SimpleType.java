@@ -7,21 +7,12 @@ import com.legocms.data.base.BaseEntity;
 @MappedSuperclass
 public abstract class SimpleType extends BaseEntity {
 
-    private String name;
     private Integer sequence;
 
     protected SimpleType() { }
 
     public SimpleType(String code) {
         super(code);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Integer getSequence() {

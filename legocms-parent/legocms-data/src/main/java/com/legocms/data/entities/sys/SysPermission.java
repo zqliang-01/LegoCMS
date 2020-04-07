@@ -23,6 +23,6 @@ public class SysPermission extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id", referencedColumnName = "id")
     private SysPermission parent;
-    private Boolean menu;
+    private boolean menu;
     private int sort;
 }

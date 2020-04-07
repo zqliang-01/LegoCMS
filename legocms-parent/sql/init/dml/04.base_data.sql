@@ -29,9 +29,17 @@ CALL addPermission('user', 'admin', null, '/admin/user/init', 1, 2);
 
 CALL addPermissionLang('zh', '员工管理', 'user');
 
-CALL addPermission('user:query', 'user', null, null, 0, 3);
+CALL addPermission('user-query', 'user', null, null, 0, 3);
 
-CALL addPermissionLang('zh', '查询', 'user:query');
+CALL addPermissionLang('zh', '查询', 'user-query');
+
+CALL addPermission('user-edit', 'user', null, '/admin/user/edit', 0, 4);
+
+CALL addPermissionLang('zh', '修改', 'user-edit');
+
+CALL addPermission('user-delete', 'user', null, null, 0, 4);
+
+CALL addPermissionLang('zh', '删除', 'user-delete');
 
 CALL addRolePermission('super', 'root');
 
@@ -39,4 +47,8 @@ CALL addRolePermission('super', 'admin');
 
 CALL addRolePermission('super', 'user');
 
-CALL addRolePermission('super', 'user:query');
+CALL addRolePermission('super', 'user-query');
+
+CALL addRolePermission('super', 'user-edit');
+
+CALL addRolePermission('super', 'user-delete');

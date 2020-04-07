@@ -9,4 +9,8 @@ public interface ISysUserService {
     SysUserInfo findBy(String code);
 
     Page<SysUserInfo> findBy(QuerySysUserVo vo, int pageIndex, int pageSize);
+
+    void active(String code);
+
+    void invalid(String code);
 }

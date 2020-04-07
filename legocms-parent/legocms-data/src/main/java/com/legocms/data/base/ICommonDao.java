@@ -10,7 +10,7 @@ public interface ICommonDao {
 
     <T extends BaseEntity> T findByUnsureCode(Class<T> clazz, String code);
 
-    <T extends BaseEntity> List<T> findAllEnable(Class<T> clazz);
+    <T extends BaseEntity> List<T> findAll(Class<T> clazz);
 
     <T extends Dto> T findBeanBy(Class<T> clazz, String sql, Map<String, Object> parameters);
 

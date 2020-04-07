@@ -1,4 +1,10 @@
 /*==============================================================*/
+/* DBMS name:      MySQL 5.0                                    */
+/* Created on:     2020/4/17 10:03:25                           */
+/*==============================================================*/
+
+
+/*==============================================================*/
 /* Table: SYS_ORGANIZATION                                      */
 /*==============================================================*/
 create table SYS_ORGANIZATION
@@ -6,8 +12,8 @@ create table SYS_ORGANIZATION
    ID                   bigint(15) not null comment 'ID',
    VERSION              int(5) not null comment 'VERSION',
    CODE                 varchar(50) not null comment 'CODE',
-   CREATE_DATE          datetime not null comment '创建时间',
    NAME                 varchar(100) not null comment '名称',
+   CREATE_DATE          datetime not null comment '创建时间',
    STATUS               bigint(15) not null comment '状态',
    PARENT_ID            bigint(15) comment '上级部门',
    primary key (ID)
@@ -23,6 +29,7 @@ create table SYS_PERMISSION
    ID                   bigint(15) not null comment 'ID',
    VERSION              int(5) not null comment 'VERSION',
    CODE                 varchar(50) not null comment 'CODE',
+   NAME                 varchar(255) comment '名称',
    CREATE_DATE          datetime not null comment '创建时间',
    URL                  varchar(255) comment '链接地址',
    AUTHORIZED_URL       text comment '授权地址',
@@ -44,8 +51,8 @@ create table SYS_PERMISSION_LANG
    ID                   bigint(15) not null comment 'ID',
    VERSION              int(5) not null comment 'VERSION',
    CODE                 varchar(50) not null comment 'CODE',
+   NAME                 varchar(100) comment '值',
    CREATE_DATE          datetime not null comment '创建时间',
-   VALUE                varchar(100) comment '值',
    PERMISSION_ID        bigint(15) not null comment '授权模块ID',
    primary key (ID, PERMISSION_ID)
 );
@@ -87,8 +94,8 @@ create table SYS_SIMPLE_TYPE
    ID                   bigint(15) not null comment 'ID',
    VERSION              int(5) not null comment 'VERSION',
    CODE                 varchar(50) not null comment 'CODE',
-   CREATE_DATE          datetime not null comment '创建时间',
    NAME                 varchar(100) not null comment '名称',
+   CREATE_DATE          datetime not null comment '创建时间',
    CLASS_TYPE           varchar(50) not null comment '类型',
    SEQUENCE             int(10) not null comment '序号',
    primary key (ID)
@@ -104,8 +111,8 @@ create table SYS_THEME
    ID                   bigint(15) not null comment 'ID',
    VERSION              int(5) not null comment 'VERSION',
    CODE                 varchar(50) not null comment 'CODE',
-   CREATE_DATE          datetime not null comment '创建时间',
    NAME                 varchar(100) not null comment '名称',
+   CREATE_DATE          datetime not null comment '创建时间',
    TYPE                 bigint(15) not null comment '类型',
    primary key (ID)
 );
@@ -120,8 +127,8 @@ create table SYS_USER
    ID                   bigint(15) not null comment 'ID',
    VERSION              int(5) not null comment 'VERSION',
    CODE                 varchar(50) not null comment 'CODE',
-   CREATE_DATE          datetime not null comment '创建时间',
    NAME                 varchar(100) not null comment '名称',
+   CREATE_DATE          datetime not null comment '创建时间',
    PASSWORD             varchar(100) not null comment '密码',
    ORGANIZATION_ID      bigint(15) not null comment '部门',
    STATUS               bigint(15) not null comment '状态',

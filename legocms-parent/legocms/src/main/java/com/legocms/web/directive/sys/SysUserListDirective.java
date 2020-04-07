@@ -14,7 +14,7 @@ import com.legocms.service.sys.ISysUserService;
 import com.legocms.web.directive.AbstractTemplateDirective;
 
 @Component
-@RequiresPermissions("user:query")
+@RequiresPermissions("user-query")
 public class SysUserListDirective extends AbstractTemplateDirective {
 
     @Autowired

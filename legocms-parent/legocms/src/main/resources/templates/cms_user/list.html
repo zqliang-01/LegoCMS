@@ -33,7 +33,7 @@
 					<div class="page-title-wrapper">
 						<div class="form-inline">
 							<div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
-								<div class="btn date-inline selectdate">
+								<div class="btn date-inline selectdate" title="创建时间">
 									<i class="fa fa-calendar"></i>
 									<span></span>
 									<input type="hidden" name="createStart"  value="">
@@ -63,6 +63,7 @@
 	                                    <th>名称</th>
 	                                    <th class="text-center">部门</th>
 	                                    <th class="text-center">创建时间</th>
+	                                    <th class="text-center">状态</th>
 	                                    <th class="text-center">操作</th>
 	                                </tr>
 	                            </thead>
@@ -83,8 +84,20 @@
 					                                <td class="text-center">{$T.Result.organization.code}</td>
 					                                <td class="text-center">{$T.Result.createDate}</td>
 					                                <td class="text-center">
-					                                    <button href="javascript:void(0);" onclick="view('{$T.Result.code}')"  class="btn btn-primary btn-sm">编辑</button>
-					                                    <button href="javascript:void(0);" onclick="view('{$T.Result.code}')"  class="btn btn-primary btn-sm">冻结</button>
+					                                	{#if $T.Result.status.code == 'Using'}
+					                                		<div class="badge badge-info">{$T.Result.status.name}</div>
+					                                	{#else}
+					                                		<div class="badge badge-danger">{$T.Result.status.name}</div>
+					                                	{#/if}
+					                                </td>
+					                                <td class="text-center">
+					                                	<button onclick="window.parent.addTab('user-edit', '员工修改', '/admin/user/edit/{$T.Result.code}')" class="btn btn-primary btn-sm">修改</button>
+					                                	{#if $T.Result.status.code == 'Using'}
+					                                		<button onclick="invalid('{$T.Result.code}')" class="btn btn-primary btn-sm">注销</button>
+					                                	{#else}
+					                                		<button onclick="active('{$T.Result.code}')" class="btn btn-primary btn-sm">激活</button>
+					                                	{#/if}
+					                                	
 					                                </td>
 					                            </tr>
 					                        {#/for}
