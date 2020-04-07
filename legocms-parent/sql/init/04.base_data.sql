@@ -25,7 +25,17 @@ values
 insert into sys_permission
     (id, version, code, create_date, icon, menu, sort)
 values
-    (nextval('sys'), 1, 'admin', sysdate(), 'pe-7s-diamond', 1, 1);
+    (nextval('sys'), 1, 'root', sysdate(), 'pe-7s-diamond', 0, 1);
+
+insert into sys_permission_lang
+    (id, version, code, create_date, value, permission_id)
+values
+    (nextval('sys'), 1, 'zh', sysdate(), '根',(select p.id from sys_permission p where p.code = 'root'));
+
+insert into sys_permission
+    (id, version, code, create_date, icon, parent_id, menu, sort)
+values
+    (nextval('sys'), 1, 'admin', sysdate(), 'pe-7s-diamond', (select p.id from sys_permission p where p.code = 'root'), 1, 1);
 
 insert into sys_permission_lang
     (id, version, code, create_date, value, permission_id)
@@ -37,10 +47,20 @@ insert into sys_permission
 values
     (nextval('sys'), 1, 'user', sysdate(), '/admin/user/init', (select p.id from sys_permission p where p.code = 'admin'), 1, 2);
 
+insert into sys_permission
+    (id, version, code, create_date, parent_id, menu, sort)
+values
+    (nextval('sys'), 1, 'user:query', sysdate(), (select p.id from sys_permission p where p.code = 'user'), 0, 2);
+
 insert into sys_permission_lang
     (id, version, code, create_date, value, permission_id)
 values
     (nextval('sys'), 1, 'zh', sysdate(), '员工管理',(select p.id from sys_permission p where p.code = 'user'));
+
+insert sys_role_permission
+    (role_id, permission_id)
+values
+    ((select r.id from sys_role r where r.code = 'super'), (select p.id from sys_permission p where p.code = 'root'));
 
 insert sys_role_permission
     (role_id, permission_id)
@@ -51,3 +71,8 @@ insert sys_role_permission
     (role_id, permission_id)
 values
     ((select r.id from sys_role r where r.code = 'super'), (select p.id from sys_permission p where p.code = 'user'));
+    
+insert sys_role_permission
+    (role_id, permission_id)
+values
+    ((select r.id from sys_role r where r.code = 'super'), (select p.id from sys_permission p where p.code = 'user:query'));

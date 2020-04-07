@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 
 import com.legocms.core.common.ConstantEnum;
-import com.legocms.core.dto.sys.SysUserInfo;
 import com.legocms.core.exception.BusinessException;
 import com.legocms.core.web.AbstractInterceptor;
 import com.legocms.web.AdminView;
@@ -36,8 +35,7 @@ public class AdminInterceptor extends AbstractInterceptor {
 
     @Override
     protected List<String> permissionCodes() {
-        SysUserInfo user = getAttribute(AdminView.USER_SESSION_KEY);
-        return user.getPermissions();
+        return getPermissionCodes(AdminView.USER_SESSION_KEY);
     }
 
 }

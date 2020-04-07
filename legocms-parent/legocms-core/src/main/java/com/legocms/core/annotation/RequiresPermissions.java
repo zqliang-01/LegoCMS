@@ -10,4 +10,6 @@ import java.lang.annotation.Target;
 public @interface RequiresPermissions {
 
     String value() default "";
+
+    boolean skip() default false;
 }

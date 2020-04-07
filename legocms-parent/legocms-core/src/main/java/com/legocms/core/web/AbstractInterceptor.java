@@ -51,10 +51,11 @@ public abstract class AbstractInterceptor extends SessionController implements I
     private void checkPermission(HandlerMethod handlerMethod) {
         if (handlerMethod.hasMethodAnnotation(RequiresPermissions.class)) {
             RequiresPermissions permission = handlerMethod.getMethodAnnotation(RequiresPermissions.class);
-            if (!permissionCodes().contains(permission.value())) {
-                throw new BusinessException(ConstantEnum.AUTHORIZATION_INVALID);
+            if (permissionCodes().contains(permission.value()) || permission.skip()) {
+                return;
             }
         }
+        throw new BusinessException(ConstantEnum.AUTHORIZATION_INVALID);
     }
 
     protected abstract List<String> permissionCodes();
