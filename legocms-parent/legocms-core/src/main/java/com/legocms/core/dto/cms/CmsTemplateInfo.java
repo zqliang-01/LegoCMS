@@ -3,11 +3,11 @@ package com.legocms.core.dto.cms;
 import com.legocms.core.dto.Dto;
 import com.legocms.core.dto.TypeInfo;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@EqualsAndHashCode(callSuper = false)
+@Getter
+@Setter
 public class CmsTemplateInfo extends Dto {
 
     private static final long serialVersionUID = -1278841496174681951L;

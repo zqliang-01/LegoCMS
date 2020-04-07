@@ -5,11 +5,11 @@ import java.util.Date;
 import com.legocms.core.dto.Dto;
 import com.legocms.core.dto.TypeInfo;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@EqualsAndHashCode(callSuper = false)
+@Getter
+@Setter
 public class SysUserDetailInfo extends Dto {
 
     private static final long serialVersionUID = -538138738907890857L;

@@ -6,11 +6,11 @@ import com.legocms.core.common.StringUtil;
 import com.legocms.core.dto.Dto;
 import com.legocms.core.dto.TypeInfo;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@EqualsAndHashCode(callSuper=false)
+@Getter
+@Setter
 public class SysDomainInfo extends Dto {
 
     private static final long serialVersionUID = -5102622941953999741L;

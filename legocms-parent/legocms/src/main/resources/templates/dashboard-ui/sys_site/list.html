@@ -91,7 +91,7 @@
 					                                	{#/if}
 					                                </td>
 					                                <td class="text-center">
-					                                	<button onclick="window.parent.addTab('site-edit', '<@t.message 'title.site-modify'/>', '/admin/site/edit/{$T.Result.code}')" class="btn btn-primary btn-sm"><@t.page 'btn.edit'/></button>
+					                                	<button onclick="window.parent.addTab('site-edit-{$T.Result.code}', '<@t.message 'title.site-modify'/>({$T.Result.name})', '/admin/site/edit/{$T.Result.code}')" class="btn btn-primary btn-sm"><@t.page 'btn.edit'/></button>
 					                                	<button onclick="del('{$T.Result.code}')" class="btn btn-danger btn-sm"><@t.page 'btn.delete'/></button>
 					                                	{#if !$T.Result.manageSite}
 					                                		<button onclick="manage('{$T.Result.code}')" class="btn btn-primary btn-sm"><@t.page 'list.current-site'/></button>

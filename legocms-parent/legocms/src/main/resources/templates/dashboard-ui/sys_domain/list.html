@@ -75,7 +75,7 @@
 					                                <td class="text-center">{$T.Result.site.name}</td>
 					                                <td class="text-center">{$T.Result.createTime}</td>
 					                                <td class="text-center">
-					                                	<button onclick="window.parent.addTab('domain-edit', '<@t.message 'title.domain-modify'/>', '/admin/domain/edit/{$T.Result.code}')" class="btn btn-primary btn-sm"><@t.page 'btn.edit'/></button>
+					                                	<button onclick="window.parent.addTab('domain-edit-{$T.Result.code}', '<@t.message 'title.domain-modify'/>({$T.Result.name})', '/admin/domain/edit/{$T.Result.code}')" class="btn btn-primary btn-sm"><@t.page 'btn.edit'/></button>
 					                                	<button onclick="del('{$T.Result.code}')" class="btn btn-primary btn-sm"><@t.page 'btn.delete'/></button>
 					                                </td>
 					                            </tr>

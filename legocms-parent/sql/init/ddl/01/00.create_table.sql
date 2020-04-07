@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2020/6/8 19:14:57                            */
+/* Created on:     2020/6/29 10:27:16                           */
 /*==============================================================*/
 
 
@@ -43,6 +43,62 @@ create unique index PATH_UNIQUE_INDEX on CMS_FILE
 );
 
 /*==============================================================*/
+/* Table: CMS_MODEL                                             */
+/*==============================================================*/
+create table CMS_MODEL
+(
+   ID                   bigint(15) not null comment 'ID',
+   VERSION              int(5) not null comment 'VERSION',
+   CODE                 varchar(50) not null comment 'CODE',
+   NAME                 varchar(100) not null comment '名称',
+   CREATE_TIME          datetime not null comment '创建时间',
+   TEMPLATE_ID          bigint(15) comment '模板',
+   HAS_IMAGES           tinyint(1) comment '拥有图片列表',
+   HAS_FILES            tinyint(1) comment '拥有附件列表',
+   PARENT_ID            bigint(15) comment '上级模型',
+   SITE_ID              bigint(15) not null comment '站点',
+   primary key (ID)
+);
+
+alter table CMS_MODEL comment '内容模型';
+
+/*==============================================================*/
+/* Index: CODE_UNIQUE_INDEX                                     */
+/*==============================================================*/
+create unique index CODE_UNIQUE_INDEX on CMS_MODEL
+(
+   CODE
+);
+
+/*==============================================================*/
+/* Table: CMS_MODEL_ATTRIBUTE                                   */
+/*==============================================================*/
+create table CMS_MODEL_ATTRIBUTE
+(
+   ID                   bigint(15) not null comment 'ID',
+   VERSION              int(5) not null comment 'VERSION',
+   CODE                 varchar(50) not null comment 'CODE',
+   NAME                 varchar(100) not null comment '名称',
+   CREATE_TIME          datetime not null comment '创建时间',
+   MODEL_ID             bigint(15) not null comment '模型ID',
+   TEXT                 varchar(100) not null comment '文本',
+   REQUIRED             tinyint(1) not null default 0 comment '是否必须',
+   TYPE                 bigint(15) not null comment '编辑类型',
+   SORT                 int(5) not null comment '序号',
+   primary key (ID)
+);
+
+alter table CMS_MODEL_ATTRIBUTE comment '模型属性';
+
+/*==============================================================*/
+/* Index: CODE_UNIQUE_INDEX                                     */
+/*==============================================================*/
+create unique index CODE_UNIQUE_INDEX on CMS_MODEL_ATTRIBUTE
+(
+   CODE
+);
+
+/*==============================================================*/
 /* Table: CMS_PLACE                                             */
 /*==============================================================*/
 create table CMS_PLACE
@@ -56,6 +112,7 @@ create table CMS_PLACE
    TYPE_ID              bigint(15) not null comment '类型：file/dir',
    PARENT_ID            bigint(15) comment '父ID',
    SITE_ID              bigint(15) not null comment '站点ID',
+   CONTENT              text comment '内容',
    primary key (ID),
    unique key AK_UNIQUE_CODE (CODE)
 );
@@ -110,6 +167,7 @@ create table CMS_TEMPLATE
    TYPE_ID              bigint(15) not null comment '类型：file/dir',
    PARENT_ID            bigint(15) comment '父ID',
    SITE_ID              bigint(15) not null comment '站点ID',
+   CONTENT              text comment '内容',
    primary key (ID)
 );
 
@@ -348,6 +406,15 @@ alter table SYS_USER_ROLE comment '用户角色';
 
 alter table CMS_FILE add constraint FK_FILE_TYPE foreign key (TYPE_ID)
       references CMS_SIMPLE_TYPE (ID) on delete restrict on update restrict;
+
+alter table CMS_MODEL add constraint FK_MODEL_TEMPLATE foreign key (TEMPLATE_ID)
+      references CMS_TEMPLATE (ID) on delete restrict on update restrict;
+
+alter table CMS_MODEL_ATTRIBUTE add constraint FK_INPUT_TYPE foreign key (TYPE)
+      references CMS_SIMPLE_TYPE (ID) on delete restrict on update restrict;
+
+alter table CMS_MODEL_ATTRIBUTE add constraint FK_MODEL_ATTRIBUTE foreign key (MODEL_ID)
+      references CMS_MODEL (ID) on delete restrict on update restrict;
 
 alter table CMS_PLACE add constraint FK_PLACE_TYPE foreign key (TYPE_ID)
       references CMS_SIMPLE_TYPE (ID) on delete restrict on update restrict;

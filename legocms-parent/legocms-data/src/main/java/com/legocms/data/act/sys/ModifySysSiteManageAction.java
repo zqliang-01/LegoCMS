@@ -2,14 +2,11 @@ package com.legocms.data.act.sys;
 
 import com.legocms.core.vo.sys.SysPermissionCode;
 import com.legocms.data.act.ModifyAction;
-import com.legocms.data.dao.sys.ISysSiteDao;
 import com.legocms.data.entities.sys.SysUser;
 
 public class ModifySysSiteManageAction extends ModifyAction<SysUser> {
 
     private String siteCode;
-
-    private ISysSiteDao siteDao = getDao(ISysSiteDao.class);
 
     public ModifySysSiteManageAction(String operator, String siteCode, String userCode) {
         super(SysPermissionCode.SITE, operator);

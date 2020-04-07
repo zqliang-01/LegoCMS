@@ -11,6 +11,7 @@ import com.legocms.data.entities.sys.simpletype.ActionType;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
 @Entity

@@ -9,7 +9,6 @@ import com.legocms.core.vo.cms.CmsTemplateTypeCode;
 import com.legocms.core.vo.sys.SysPermissionCode;
 import com.legocms.data.act.AddAction;
 import com.legocms.data.dao.cms.ICmsPlaceDao;
-import com.legocms.data.dao.sys.ISysSiteDao;
 import com.legocms.data.entities.cms.CmsPlace;
 import com.legocms.data.entities.cms.simpletype.CmsPlaceType;
 import com.legocms.data.entities.sys.SysSite;
@@ -22,7 +21,6 @@ public class AddCmsPlaceAction extends AddAction<CmsPlace> {
     private CmsPlace parent;
     private CmsPlaceType type;
 
-    private ISysSiteDao siteDao = getDao(ISysSiteDao.class);
     private ICmsPlaceDao placeDao = getDao(ICmsPlaceDao.class);
 
     public AddCmsPlaceAction(String operator, CmsPlaceVo vo) {

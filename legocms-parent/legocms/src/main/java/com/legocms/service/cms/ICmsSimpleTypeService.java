@@ -11,4 +11,6 @@ public interface ICmsSimpleTypeService {
     List<TypeInfo> findPlaceType();
 
     List<TypeInfo> findFileType();
+
+    List<TypeInfo> findModelAttributeType();
 }

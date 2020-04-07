@@ -13,7 +13,6 @@ import com.legocms.core.vo.cms.CmsFileVo;
 import com.legocms.core.vo.sys.SysPermissionCode;
 import com.legocms.data.act.ModifyAction;
 import com.legocms.data.dao.cms.ICmsFileDao;
-import com.legocms.data.dao.sys.ISysSiteDao;
 import com.legocms.data.entities.cms.CmsFile;
 import com.legocms.data.entities.cms.simpletype.CmsFileType;
 import com.legocms.data.entities.sys.SysSite;
@@ -32,7 +31,6 @@ public class ModifyCmsFileAction extends ModifyAction<CmsFile> {
     private CmsFileType type;
     private FileHelper fileHelper;
 
-    private ISysSiteDao siteDao = getDao(ISysSiteDao.class);
     private ICmsFileDao fileDao = getDao(ICmsFileDao.class);
 
     public ModifyCmsFileAction(String operator, CmsFileVo vo, InputStream inputStream, FileHelper fileHelper) {

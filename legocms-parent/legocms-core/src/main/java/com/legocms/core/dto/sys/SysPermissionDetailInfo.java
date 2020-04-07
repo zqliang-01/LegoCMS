@@ -6,11 +6,11 @@ import java.util.List;
 
 import com.legocms.core.dto.TypeInfo;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@EqualsAndHashCode(callSuper = false)
+@Getter
+@Setter
 public class SysPermissionDetailInfo extends SysPermissionInfo {
 
     private static final long serialVersionUID = -6394862700783489411L;

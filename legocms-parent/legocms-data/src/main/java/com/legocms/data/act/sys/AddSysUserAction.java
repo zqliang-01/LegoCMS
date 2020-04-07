@@ -10,7 +10,6 @@ import com.legocms.core.vo.sys.SysUserVo;
 import com.legocms.data.act.AddAction;
 import com.legocms.data.dao.sys.ISysOrganizationDao;
 import com.legocms.data.dao.sys.ISysRoleDao;
-import com.legocms.data.dao.sys.ISysSiteDao;
 import com.legocms.data.entities.sys.SysOrganization;
 import com.legocms.data.entities.sys.SysUser;
 import com.legocms.data.entities.sys.simpletype.SysUserStatus;
@@ -22,7 +21,6 @@ public class AddSysUserAction extends AddAction<SysUser> {
     private SysUserStatus status;
     private SysOrganization organization;
 
-    private ISysSiteDao siteDao = getDao(ISysSiteDao.class);
     private ISysRoleDao roleDao = getDao(ISysRoleDao.class);
     private ISysOrganizationDao organizationDao = getDao(ISysOrganizationDao.class);
 

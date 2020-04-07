@@ -120,7 +120,7 @@
 					                                	{#/if}
 					                                </td>
 					                                <td class="text-center">
-					                                	<button onclick="window.parent.addTab('user-edit', '<@t.message 'title.user-modify'/>', '/admin/user/edit/{$T.Result.code}')" class="btn btn-primary btn-sm"><@t.page 'btn.edit'/></button>
+					                                	<button onclick="window.parent.addTab('user-edit-{$T.Result.code}', '<@t.message 'title.user-modify'/>({$T.Result.name})', '/admin/user/edit/{$T.Result.code}')" class="btn btn-primary btn-sm"><@t.page 'btn.edit'/></button>
 					                                	{#if $T.Result.status.code == 'Using'}
 					                                		<button onclick="invalid('{$T.Result.code}')" class="btn btn-primary btn-sm"><@t.page 'btn.invalid'/></button>
 					                                	{#else}

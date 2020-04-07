@@ -2,11 +2,11 @@ package com.legocms.core.dto.sys;
 
 import java.util.Date;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@EqualsAndHashCode(callSuper = false)
+@Getter
+@Setter
 public class SysOrganizationDetailInfo extends SysOrganizationInfo {
 
     private static final long serialVersionUID = 4007886977231122527L;

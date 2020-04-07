@@ -6,15 +6,12 @@ import com.legocms.core.common.StringUtil;
 import com.legocms.core.exception.BusinessException;
 import com.legocms.core.vo.sys.SysPermissionCode;
 import com.legocms.data.act.DeleteAction;
-import com.legocms.data.dao.sys.ISysSiteDao;
 import com.legocms.data.entities.sys.SysSite;
 import com.legocms.data.entities.sys.SysUser;
 
 public class DeleteSysSiteAction extends DeleteAction<SysSite> {
 
     private String code;
-
-    private ISysSiteDao siteDao = getDao(ISysSiteDao.class);
 
     public DeleteSysSiteAction(String operator, String code) {
         super(SysPermissionCode.SITE, operator);

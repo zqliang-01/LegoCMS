@@ -6,7 +6,6 @@ import com.legocms.core.vo.sys.SysDomainVo;
 import com.legocms.core.vo.sys.SysPermissionCode;
 import com.legocms.data.act.AddAction;
 import com.legocms.data.dao.sys.ISysDomainDao;
-import com.legocms.data.dao.sys.ISysSiteDao;
 import com.legocms.data.entities.sys.SysDomain;
 import com.legocms.data.entities.sys.SysSite;
 
@@ -16,7 +15,6 @@ public class AddSysDomainAction extends AddAction<SysDomain> {
 
     private SysSite site;
 
-    private ISysSiteDao siteDao = getDao(ISysSiteDao.class);
     private ISysDomainDao domainDao = getDao(ISysDomainDao.class);
 
     public AddSysDomainAction(String operator, SysDomainVo vo) {

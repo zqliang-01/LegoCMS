@@ -129,8 +129,7 @@
 				var nodes = getTree('placeTree').getSelectedNodes();
 				var form = $('#save-place-form');
 				form.resetForm();
-				if (nodes && nodes.length > 0) {
-					console.log(nodes);
+        		if (isNotEmpty(nodes)) {
 					form.find("input[name='parent.code']").val(nodes[0].code);
 				}
 				else {
@@ -178,7 +177,7 @@
 							<input name="site.code" type="hidden" required>
 							<input name="code" type="hidden" required>
 							<input name="parent.code" type="hidden" required>
-							<input name="action" type="hidden" required>
+							<input name="action" type="hidden" value="add" required>
 							<div class="position-relative row form-group">
 				                <div class="col-md-3">
 									<label class="col-form-label"><@t.page 'list.name'/></label>

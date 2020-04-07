@@ -42,4 +42,7 @@ public interface SysPermissionCode {
     String FILE_DELETE = "file-delete";
 
     String LOG = "log";
+
+    String MODEL = "model";
+    String MODEL_EDIT = "model-edit";
 }

@@ -10299,19 +10299,23 @@ if ( typeof noGlobal === strundefined ) {
 }
 
 jQuery.fn.setForm = function(jsonValue, prename) {
+    if (!jsonValue) {
+    	return;
+    }
     var obj=this;
     if (!prename) {
     	prename = '';
     }
     obj.removeClass('was-validated');
     $.each(jsonValue, function (name, ival) {
-    	var $oinput = obj.find("input[name='" + prename +  name + "']"); 
+    	var valName = prename +  name;
+    	var $oinput = obj.find("input[name='" + valName + "']"); 
     	if ($.isPlainObject(ival)) {
-    		obj.setForm(ival, name + '.');
+    		obj.setForm(ival, valName + '.');
     	}
     	else if ($.isArray(ival)) {
     		for(var i=0; i<ival.length; i++){
-    			obj.setForm(ival[i], name + '[' + i + '].');
+    			obj.setForm(ival[i], valName + '[' + i + '].');
     		}
     	}
     	else if ($oinput.attr("type")== "radio" || $oinput.attr("type")== "checkbox"){
@@ -10322,17 +10326,16 @@ jQuery.fn.setForm = function(jsonValue, prename) {
                              $(this).attr("checked", "checked");
                       }
     	 		 }else{
-                     if($(this).val()==ival)
-                        $(this).attr("checked", "checked");
+                     $(this).prop("checked", ival);
                  }
              });
     	}
     	else if($oinput.attr("type")== "textarea"){//多行文本框
-    		obj.find("[name='" + prename + name + "']").html(ival);
+    		obj.find("[name='" + valName + "']").html(ival);
     	}
     	else{
     		if (isNotEmpty(ival)) {
-                obj.find("[name='" + prename + name + "']").val(ival + '');
+                obj.find("[name='" + valName + "']").val(ival + '');
     		}
         }
    });
@@ -10343,7 +10346,15 @@ jQuery.fn.resetForm = function() {
 	var inputItems=submitForm.find("input");
 	$(inputItems).each(function getInputVal(index,element){
 		if (!$(element).hasAttr('data-noreset')) {
-			$(element).val("");
+	    	if ($(element).attr("type")== "radio" || $(element).attr("type")== "checkbox"){
+	    		$(element).prop("checked",false);
+	    	}
+	    	else if($(element).attr("type")== "textarea"){//多行文本框
+				$(element).html("");
+	    	}
+	    	else {
+				$(element).val("");
+	    	}
 		}
 	});
 	//获取指定Form下的所有select元素

@@ -6,7 +6,6 @@ import com.legocms.core.vo.sys.SysPermissionCode;
 import com.legocms.core.vo.sys.SysSiteVo;
 import com.legocms.data.act.ModifyAction;
 import com.legocms.data.dao.sys.ISysOrganizationDao;
-import com.legocms.data.dao.sys.ISysSiteDao;
 import com.legocms.data.entities.sys.SysOrganization;
 import com.legocms.data.entities.sys.SysSite;
 
@@ -15,7 +14,6 @@ public class ModifySysSiteAction extends ModifyAction<SysSite> {
     private SysSiteVo vo;
     private SysOrganization organization;
 
-    private ISysSiteDao siteDao = getDao(ISysSiteDao.class);
     private ISysOrganizationDao organizationDao = getDao(ISysOrganizationDao.class);
 
     public ModifySysSiteAction(String operator, SysSiteVo vo) {

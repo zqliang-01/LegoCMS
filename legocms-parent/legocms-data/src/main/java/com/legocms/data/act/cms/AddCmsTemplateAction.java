@@ -9,7 +9,6 @@ import com.legocms.core.vo.cms.CmsTemplateVo;
 import com.legocms.core.vo.sys.SysPermissionCode;
 import com.legocms.data.act.AddAction;
 import com.legocms.data.dao.cms.ICmsTemplateDao;
-import com.legocms.data.dao.sys.ISysSiteDao;
 import com.legocms.data.entities.cms.CmsTemplate;
 import com.legocms.data.entities.cms.simpletype.CmsTemplateType;
 import com.legocms.data.entities.sys.SysSite;
@@ -21,7 +20,6 @@ public class AddCmsTemplateAction extends AddAction<CmsTemplate> {
     private CmsTemplateType type;
 
     private CmsTemplateVo vo;
-    private ISysSiteDao siteDao = getDao(ISysSiteDao.class);
     private ICmsTemplateDao templateDao = getDao(ICmsTemplateDao.class);
 
     public AddCmsTemplateAction(String operator, CmsTemplateVo vo) {

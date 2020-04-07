@@ -11,7 +11,6 @@ import com.legocms.core.vo.sys.ActionTypeCode;
 import com.legocms.core.vo.sys.SysPermissionCode;
 import com.legocms.data.act.MaintainAction;
 import com.legocms.data.dao.cms.ICmsFileDao;
-import com.legocms.data.dao.sys.ISysSiteDao;
 import com.legocms.data.entities.cms.CmsFile;
 import com.legocms.data.entities.cms.simpletype.CmsFileType;
 import com.legocms.data.entities.sys.SysSite;
@@ -30,7 +29,6 @@ public class SynchronizeCmsFileAction extends MaintainAction<CmsFile> {
     private SysSite site;
     private FileHelper fileHelper;
 
-    private ISysSiteDao siteDao = getDao(ISysSiteDao.class);
     private ICmsFileDao fileDao = getDao(ICmsFileDao.class);
 
     public SynchronizeCmsFileAction(String operator, String parentCode, String siteCode, FileHelper fileHelper) {

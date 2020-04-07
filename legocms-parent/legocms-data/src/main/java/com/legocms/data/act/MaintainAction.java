@@ -12,6 +12,7 @@ import com.legocms.data.base.ICommonDao;
 import com.legocms.data.base.LegoBeanFactory;
 import com.legocms.data.dao.sys.ISysOperationLogDao;
 import com.legocms.data.dao.sys.ISysPermissionDao;
+import com.legocms.data.dao.sys.ISysSiteDao;
 import com.legocms.data.dao.sys.ISysUserDao;
 import com.legocms.data.entities.sys.SysOperationLog;
 import com.legocms.data.entities.sys.SysPermission;
@@ -28,6 +29,7 @@ public abstract class MaintainAction<T extends BaseEntity> {
 
     protected ICommonDao commonDao = getDao(ICommonDao.class);
     protected ISysUserDao userDao = getDao(ISysUserDao.class);
+    protected ISysSiteDao siteDao = getDao(ISysSiteDao.class);
     protected ISysPermissionDao permissionDao = getDao(ISysPermissionDao.class);
     protected ISysOperationLogDao operationLogDao = getDao(ISysOperationLogDao.class);
 

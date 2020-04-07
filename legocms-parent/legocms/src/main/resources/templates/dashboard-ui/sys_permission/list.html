@@ -55,7 +55,12 @@
 				var form = $('#save-permission-form');
 				form.resetForm();
 				form.find("input[name=code]").removeAttr("readonly");
-				form.find("input[name='parent.code']").val(nodes[0].code);
+        		if (isNotEmpty(nodes)) {
+					form.find("input[name='parent.code']").val(nodes[0].code);
+				}
+				else {
+					form.find("input[name='parent.code']").val('');
+				}
 				form.find("input[name='action']").val('add');
 				refreshIcon('');
 			});

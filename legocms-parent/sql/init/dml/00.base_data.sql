@@ -18,6 +18,12 @@ CALL addCmsSimpleType('dir', '目录', 'PlaceType', 2);
 CALL addCmsSimpleType('file', '文件', 'FileType', 1);
 CALL addCmsSimpleType('dir', '目录', 'FileType', 2);
 
+CALL addCmsSimpleType('text', '输入框', 'ModelAttributeType', 1);
+CALL addCmsSimpleType('textArea', '文本域', 'ModelAttributeType', 2);
+CALL addCmsSimpleType('edit', '编辑器', 'ModelAttributeType', 3);
+CALL addCmsSimpleType('picture', '图片选择', 'ModelAttributeType', 4);
+CALL addCmsSimpleType('dateTime', '日期选择', 'ModelAttributeType', 5);
+
 CALL addOrganization('root', '根部门', null);
 
 CALL addUser('admin', '管理员', '21232F297A57A5A743894A0E4A801FC3', 'root');
@@ -157,6 +163,19 @@ CALL addPermission('file-delete', 'file', null, null, 0, 2);
 CALL addPermissionLang('zh', '删除', 'file-delete');
 CALL addPermissionLang('en', 'delete', 'file-delete');
 
+/** =======内容维护====== */
+CALL addPermission('content-maintenance', 'root', 'pe-7s-browser', null, 1, 2);
+CALL addPermissionLang('zh', '内容维护', 'content-maintenance');
+CALL addPermissionLang('en', 'Site Maintenance', 'content-maintenance');
+
+CALL addPermission('model', 'content-maintenance', 'pe-7s-box2', '/admin/model/init', 1, 1);
+CALL addPermissionLang('zh', '内容模型管理', 'model');
+CALL addPermissionLang('en', 'Model Management', 'model');
+
+CALL addPermission('model-edit', 'model', null, null, 0, 1);
+CALL addPermissionLang('zh', '修改', 'model-edit');
+CALL addPermissionLang('en', 'edit', 'model-edit');
+
 CALL addRolePermission('super', 'root');
 CALL addRolePermission('super', 'admin');
 CALL addRolePermission('super', 'user');
@@ -189,3 +208,6 @@ CALL addRolePermission('super', 'file-edit');
 CALL addRolePermission('super', 'file-synchronize');
 CALL addRolePermission('super', 'file-delete');
 CALL addRolePermission('super', 'log');
+CALL addRolePermission('super', 'content-maintenance');
+CALL addRolePermission('super', 'model');
+CALL addRolePermission('super', 'model-edit');

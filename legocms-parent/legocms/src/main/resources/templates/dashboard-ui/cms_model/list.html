@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		<meta charset="utf-8">
+        <meta name="description" content="LegoCMS">
+        <#include "../include_page/link.html"/>
+        <script type="text/javascript">
+        $(function(){
+        	refreshTree();
+        	function refreshTree() {
+        		var treeUrl = ctx + "/admin/directive/cmsModelTree";
+        		ajaxSubmit(treeUrl, null, function(data) {
+        			var setting = {
+        				data: {
+        					simpleData: {
+        						enable: true,
+        						idKey : 'code',
+        						pIdKey : "parentCode"
+        					}
+        				},
+        				callback: {
+        					onClick: function(event, treeId, treeNode) {
+        						refreshForm(treeNode.code);
+        					}
+        				}
+        			};
+        			$.fn.zTree.init($("#modelTree"), setting, data.simpleTree);
+        		});
+        	}
+        	
+        	function refreshForm(code) {
+        		var detailUrl = ctx + "/admin/directive/cmsModel";
+        	    ajaxSubmit(detailUrl, 'code=' + code, function(data) {
+        	    	var model = data.model;
+        	    	var form = $('#save-model-form');
+        	    	form.resetForm();
+        	    	form.setForm(model);
+        	    	form.find("[name=code]").attr("readonly", "");
+            		form.find("input[name=action]").val('modify');
+        	    })
+        	}
+        	
+        	$('#add').click(function() {
+        		var nodes = getTree('modelTree').getSelectedNodes();
+        		var form = $('#save-model-form');
+        		form.resetForm();
+        		form.find("input[name=code]").removeAttr("readonly");
+        		form.find("input[name=action]").val('add');
+        		if (isNotEmpty(nodes)) {
+					form.find("input[name='parent.code']").val(nodes[0].code);
+				}
+				else {
+					form.find("input[name='parent.code']").val('');
+				}
+        	});
+        	
+        	$('#delete').click(function() {
+        		var code = $('#save-model-form').find("[name=code]").val();
+        		$('#save-model-form').find("input[name=action]").val('delete');
+        		if (isEmpty(code)) {
+        			showMsg("<@t.message 'verify.model-delete'/>", 5);
+        			return;
+        		}
+        		window.parent.showConfirm("<@t.message 'model.delete'/>", "<@t.message 'title.model-delete'/>", function(){
+        			var url = ctx + "/admin/model?action=delete";
+        			ajaxSubmit(url, "code=" + code, function() {
+        				$('#save-model-form').resetForm();
+        				refreshTree();
+        			});
+        		})
+        	});
+        	
+        	$("#select-template").click(function() {
+				var orgUrl = ctx + "/admin/directive/cmsTemplateTree";
+				ajaxSubmit(orgUrl, null, function(data) {
+					window.parent.showSimpleTree("<@t.message 'title.template-select'/>", data.simpleTree, function(treeNode){
+						if (!treeNode.isParent) {
+			        		$('#save-model-form').find("input[name='template.code']").val(treeNode.code);
+			        		$('#save-model-form').find("input[name='template.name']").val(treeNode.name);
+						}
+					})
+				});
+        	});
+        	
+        	ajaxForm($('#save-model-form'), function() {
+        		refreshTree();
+        		var code = $('#save-model-form').find("[name=code]").val();
+        		refreshForm(code);
+        	});
+        })
+        </script>
+    </head>
+    <body>
+       	<div class="row">
+			<div class="col-md-3">
+				<div class="main-card card">
+					<div class="card-body">
+						<ul id="modelTree" class="ztree"></ul>
+					</div>
+				</div>
+			</div>
+       		<div class="col-md-9">
+				<div class="main-card card">
+					<div class="card-body">
+		       			<form id="save-model-form" action="${ctx}/admin/model" onsubmit="return false;" class="needs-validation" novalidate>
+							<input name="action" type="hidden" value="add">
+							<input name="parent.code" type="hidden" data-noreset>
+			                <div class="form-inline">
+								<div class="form-group form-check-inline col-md-3">
+									<label class="mr-sm-2"><@t.page 'list.code'/></label>
+									<input class="form-control col-md-8" name="code" type="text" required>
+									<div class="invalid-feedback">
+                                		<@t.message 'verify.code'/>
+                                    </div>
+								</div>
+								<div class="form-group form-check-inline col-md-3">
+									<label class="mr-sm-2"><@t.page 'list.name'/></label>
+									<input class="form-control col-md-8" name="name" type="text" required>
+									<div class="invalid-feedback">
+                                		<@t.message 'verify.name'/>
+                                    </div>
+								</div>
+								<div class="form-group form-check-inline col-md-5">
+									<label class="mr-sm-2"><@t.page 'btn.template-fragment'/></label>
+									<input type="text" class="form-control col-md-5" name="template.name" required>
+									<input type="hidden" class="form-control" name="template.code">
+		                            <div class="input-group-append">
+		                                <span id="select-template" class="btn btn-secondary" style="text-align: center;border-radius: .25rem;font-size: 1rem;">
+		                                	<i id="select-template" class="pe-7s-search"></i>
+		                                </span>
+		                            </div>
+									<div class="invalid-feedback">
+		                                <@t.message 'verify.template'/>
+		                            </div>
+								</div>
+			                </div>
+			                <div class="form-inline">
+								<div class="ml-sm-2 form-group form-check-inline custom-checkbox col-md-3">
+									<input type="checkbox" name="hasFiles" id="hasFiles" class="custom-control-input form-check-input">
+									<label class="custom-control-label" for="hasFiles"><@t.page 'list.haspicture'/></label>
+								</div>
+								<div class="form-group form-check-inline custom-checkbox col-md-3">
+									<input type="checkbox" name="hasImages" id="hasImages" class="custom-control-input form-check-input">
+									<label class="custom-control-label" for="hasImages"><@t.page 'list.hasfile'/></label>
+								</div>
+							</div>
+							<div class="divider"></div>
+							
+							<@cmsModelAttributeTemplateList>
+								<#list attributeTemplates as attributeTemplate>
+									<div class="ml-sm-2 form-inline">
+										<input name="attributes[${attributeTemplate_index}].sort" type="hidden" value="${attributeTemplate_index}" data-noreset>
+										<div class="form-group form-check-inline custom-checkbox col-md-3">
+											<input type="checkbox" name="attributes[${attributeTemplate_index}].code" value="${attributeTemplate.code}" id="${attributeTemplate.code}" class="custom-control-input form-check-input">
+											<label class="custom-control-label mr-sm-2" for="${attributeTemplate.code}">${attributeTemplate.name}(${attributeTemplate.code})</label>
+										</div>
+										<div class="form-group form-check-inline col-md-3">
+											<label class="mr-sm-2"><@t.page 'list.text'/>：</label>
+											<input class="form-control col-md-8" name="attributes[${attributeTemplate_index}].name" value="${attributeTemplate.name}" type="text">
+										</div>
+										<div class="form-group form-check-inline col-md-4">
+											<label class="mr-sm-2"><@t.page 'list.edit-type'/>：</label>
+											<select name="attributes[${attributeTemplate_index}].type.code" class="form-control custom-select">
+												<@cmsModelAttributeType>
+													<#list types as type>
+														<option value="${type.code}">${type.name}</option>
+													</#list>
+												</@cmsModelAttributeType>
+											</select>
+										</div>
+										<div class="form-group form-check-inline custom-checkbox col-md-1">
+											<input type="checkbox" name="attributes[${attributeTemplate_index}].required" id="${attributeTemplate.code}-required" class="custom-control-input form-check-input">
+											<label class="custom-control-label mr-sm-2" for="${attributeTemplate.code}-required"><@t.page 'list.required'/></label>
+										</div>
+									</div>
+								</#list>
+							</@cmsModelAttributeTemplateList>
+							
+							<div class="divider"></div>
+							<div class="position-relative row form-check">
+								<div class="col-sm-10 offset-sm-2">
+									<button class="btn btn-info" type="submit"><@t.page 'btn.save'/></button>
+									<span class="btn btn-secondary" id="add"><@t.page 'btn.add'/></span>
+									<span class="btn btn-danger" id="delete"><@t.page 'btn.delete'/></span>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+       		</div>
+       	</div>
+    </body>
+</html>
