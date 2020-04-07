@@ -14,4 +14,6 @@ public interface AdminView {
     String CMS_USER_EDIT = "cms_user/edit";
 
     String CMS_PERMISSION_LIST = "cms_permission/list";
+
+    String CMS_ROLE_LIST = "cms_role/list";
 }

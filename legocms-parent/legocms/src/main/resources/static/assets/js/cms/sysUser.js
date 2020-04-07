@@ -1,7 +1,6 @@
 $(function() {
 	var url = ctx + "/admin/directive/sysUserList";
 	initMyPagination("MyPagination-user-list", "Template-user-list", url);
-
 })
 
 function active(code) {

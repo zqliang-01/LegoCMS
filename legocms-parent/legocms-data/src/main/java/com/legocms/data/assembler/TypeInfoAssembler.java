@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.legocms.core.dto.TypeCheckInfo;
 import com.legocms.core.dto.TypeInfo;
 import com.legocms.data.base.BaseEntity;
 
@@ -25,4 +26,16 @@ public class TypeInfoAssembler extends AbstractAssembler<TypeInfo, BaseEntity> {
         return infos;
     }
 
+    public List<TypeCheckInfo> createCheck(Collection<? extends BaseEntity> allEntities, List<? extends BaseEntity> entities) {
+        List<TypeCheckInfo> infos = new ArrayList<TypeCheckInfo>();
+        for (BaseEntity entity : allEntities) {
+            if (entities.contains(entity)) {
+                infos.add(new TypeCheckInfo(entity.getCode(), entity.getName(), true));
+            }
+            else {
+                infos.add(new TypeCheckInfo(entity.getCode(), entity.getName(), false));
+            }
+        }
+        return infos;
+    }
 }

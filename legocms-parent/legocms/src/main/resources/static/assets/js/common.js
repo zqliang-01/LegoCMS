@@ -126,7 +126,7 @@ function showFrame(data, callback) {
 		skin : 'layui-layer-rim', // 加上边框
 		area : [ '420px', '500px' ], // 宽高
 		content : content,
-		btn: ['yes', 'no'],
+		btn: ['确定', '取消'],
 		yes: function(index, layero){
 			console.log(layero);
 			callback();
@@ -158,6 +158,34 @@ function showSimpleTree(title, data, callBack) {
 				}
 			};
 			$.fn.zTree.init($("#simpleTree"), setting, data);
+		}
+	});
+}
+
+function showCheckTree(title, data, callBack) {
+	var index = layer.open({
+		type: 1,
+		title: title,
+		area : [ '300px', '400px' ],
+		content : '<ul id="checkTree" class="ztree"></ul>',
+		btn: ['确定', '取消'],
+		success: function(layero, index){
+			var setting = {
+				check: {enable: true},
+				data: {
+					simpleData: {
+						enable: true,
+						idKey : 'code',
+						pIdKey : "parentCode"
+					}
+				}
+			};
+			$.fn.zTree.init($("#checkTree"), setting, data);
+		},
+		yes: function() {
+			var nodes = getTree('checkTree').getCheckedNodes(true);
+			callBack(nodes);
+			layer.close(index);
 		}
 	});
 }

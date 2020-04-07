@@ -98,6 +98,9 @@ public class CollectionUtil {
 
     public static <T> List<T> createList(T... objects) {
         List<T> list = new ArrayList<T>();
+        if (isNil(objects)) {
+            return list;
+        }
         for (T obj : objects) {
             list.add(obj);
         }
@@ -160,6 +163,20 @@ public class CollectionUtil {
 
     public static <T> List<String> getCodes(Collection<T> c) throws Exception {
         List<String> codes = new ArrayList<String>();
+        if (isNil(c)) {
+            return codes;
+        }
+        for (T t : c) {
+            Class ownerClass = t.getClass();
+            Method m = ownerClass.getDeclaredMethod("getCode");
+            String property = (String) m.invoke(t);
+            codes.add(property);
+        }
+        return codes;
+    }
+
+    public static <T> Set<String> getUniqueCodes(Collection<T> c) throws Exception {
+        Set<String> codes = new HashSet<String>();
         if (isNil(c)) {
             return codes;
         }

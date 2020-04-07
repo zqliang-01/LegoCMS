@@ -49,6 +49,14 @@ CALL addPermission('permission-edit', 'permission', null, null, 0, 2);
 
 CALL addPermissionLang('zh', '修改', 'permission-edit');
 
+CALL addPermission('role', 'admin', null, '/admin/role/init', 1, 1);
+
+CALL addPermissionLang('zh', '角色管理', 'role');
+
+CALL addPermission('role-authorize', 'role', null, '/admin/role/init', 0, 2);
+
+CALL addPermissionLang('zh', '授权', 'role-authorize');
+
 CALL addRolePermission('super', 'root');
 
 CALL addRolePermission('super', 'admin');
@@ -64,3 +72,7 @@ CALL addRolePermission('super', 'user-delete');
 CALL addRolePermission('super', 'permission');
 
 CALL addRolePermission('super', 'permission-edit');
+
+CALL addRolePermission('super', 'role');
+
+CALL addRolePermission('super', 'role-authorize');

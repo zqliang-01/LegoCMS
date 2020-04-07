@@ -23,7 +23,7 @@ public class SysPermissionDao extends GenericDao<SysPermission> implements ISysP
                 " JOIN sys_role_permission rp ON rp.PERMISSION_ID = p.id " +
                 " JOIN sys_user_role ur ON ur.ROLE_ID = rp.ROLE_ID " +
                 " JOIN sys_user u ON u.ID = ur.USER_ID ";
-        QueryHandler<SysPermission> query = createQueryHandler(sql, SysPermission.class);
+        QueryHandler<SysPermission> query = createQueryHandler(sql);
         if (StringUtil.isNoneBlank(parentCode)) {
             query.condition("pp.code = :parentCode").setParameter("parentCode", parentCode);
         }
@@ -34,6 +34,27 @@ public class SysPermissionDao extends GenericDao<SysPermission> implements ISysP
         if (menu) {
             query.condition("p.menu = :menu").setParameter("menu", menu);
         }
+        query.order("p.sort");
+        return query.findSqlList();
+    }
+
+    @Override
+    public List<SysPermission> findAll() {
+        QueryHandler<SysPermission> query = createQueryHandler("FROM {0} p", SysPermission.class);
+        query.order("p.sort");
+        return query.findList();
+    }
+
+    @Override
+    public List<SysPermission> findAccessible(String roleCode) {
+        String sql =
+                " SELECT p.* FROM sys_permission p " +
+                " LEFT JOIN sys_permission pp ON pp.ID = p.PARENT_ID " +
+                " JOIN sys_role_permission rp ON rp.PERMISSION_ID = p.id " +
+                " JOIN sys_role r ON r.id = rp.role_id";
+        QueryHandler<SysPermission> query = createQueryHandler(sql);
+        query.condition("r.code = :roleCode").setParameter("roleCode", roleCode);
+        query.order("p.sort");
         return query.findSqlList();
     }
 

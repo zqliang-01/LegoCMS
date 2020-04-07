@@ -1,5 +1,7 @@
 package com.legocms.core.vo.sys;
 
+import java.util.List;
+
 import com.legocms.core.dto.TypeInfo;
 import com.legocms.core.vo.Vo;
 
@@ -16,5 +18,5 @@ public class SysUserVo extends Vo {
     private String name;
     private String status;
     private TypeInfo organization;
-
+    private List<String> roles;
 }

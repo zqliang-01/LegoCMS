@@ -6,23 +6,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.legocms.core.annotation.RequiresPermissions;
-import com.legocms.core.dto.sys.SysUserDetailInfo;
+import com.legocms.core.dto.sys.SysRoleInfo;
 import com.legocms.data.handler.RenderHandler;
-import com.legocms.service.sys.ISysUserService;
+import com.legocms.service.sys.ISysRoleService;
 import com.legocms.web.directive.AbstractTemplateDirective;
 
 @Component
 @RequiresPermissions(skip = true)
-public class SysUserDirective extends AbstractTemplateDirective {
+public class SysRoleDirective extends AbstractTemplateDirective {
 
     @Autowired
-    private ISysUserService userService;
+    private ISysRoleService roleService;
 
     @Override
     public void execute(RenderHandler handler) throws IOException, Exception {
         String code = handler.getString("code");
-        SysUserDetailInfo userInfo = userService.findDetail(code);
-        handler.put("userInfo", userInfo).render();
+        SysRoleInfo role = roleService.findByCode(code);
+        handler.put("role", role).render();
     }
 
 }

@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		<meta charset="utf-8">
+        <meta name="description" content="LegoCMS">
+        <#include "../include_page/link.html"/>
+		<script type="text/javascript" src="${res}/assets/js/cms/sysRole.js"></script>
+    </head>
+    <body>
+        <div class="app-main__inner" id="MyPagination-role-list">
+           	<form class="queryForm app-page-title" onsubmit="return false;" name="queryForm">
+               	<div class="page-title-wrapper">
+                     <div class="form-inline">
+		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+		                 	<input name="name" placeholder="name" type="text" class="form-control">
+		                 </div>
+		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+		                 	<input name="code" placeholder="code" type="text" class="form-control">
+		                 </div>
+		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+		                 	<button class="btn btn-primary query">查 询</button>
+		                 </div>
+		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+		                 	<button class="btn btn-info"onclick="edit()" data-toggle="modal" data-target="#role-modal">创 建</button>
+		                 </div>
+                     </div>
+                </div>
+           	</form>
+	        <div class="row row-fluid">
+	            <div class="col-md-12">
+	                <div class="main-card mb-3 card">
+	                    <div class="card-header">角色列表</div>
+	                    <div class="table-responsive">
+	                        <table role="grid" class="align-middle mb-0 table table-borderless table-striped table-hover mytab">
+	                            <thead>
+	                                <tr role="row">
+	                                    <th class="text-center">编码</th>
+	                                    <th>名称</th>
+	                                    <th class="text-center">创建时间</th>
+	                                    <th class="text-center">操作</th>
+	                                </tr>
+	                            </thead>
+                        		<tbody></tbody>
+	                        </table>
+	                    </div>
+	                    <div class="d-block text-center card-footer widget-content-rigth">
+	                    	<nav class="" aria-label="Page navigation example">
+	                    	<div class="tempContentDiv"></div>
+				   			<p style="display: none">
+					            <textarea id="Template-role-list" rows="0" cols="0">
+					                <!--
+					                    {#template MAIN}
+					                        {#foreach $T.page.result as Result}
+					                            <tr role="row" >
+					                                <td class="text-center text-muted">{$T.Result.code}</td>
+					                                <td>{$T.Result.name}</td>
+					                                <td class="text-center">{$T.Result.createDate}</td>
+					                                <td class="text-center">
+					                                	<button onclick="edit('{$T.Result.code}')" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#role-modal">修改</button>
+					                                	<button onclick="permission('{$T.Result.code}')" class="btn btn-primary btn-sm">授权</button>
+					                                	<button onclick="del('{$T.Result.code}')" class="btn btn-danger btn-sm">删除</button>
+					                                </td>
+					                            </tr>
+					                        {#/for}
+					                    {#/template MAIN}
+					                -->
+					            </textarea>
+				        	</p>
+	                    	</nav>
+	                   	</div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	    <!-- modal -->
+        <div id="role-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+		    <div class="modal-dialog modal-sm">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <h5 class="modal-title" id="modal-title">角色管理</h5>
+		                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		                    <span aria-hidden="true">&times;</span>
+		                </button>
+		            </div>
+			        <form id="save-role-form" action="${ctx}/admin/role/save" onsubmit="return false;" class="needs-validation" novalidate>
+			            <div class="modal-body">
+							<div class="position-relative row form-group">
+								<label class="col-sm-2 col-form-label">Code</label>
+								<div class="col-sm-10">
+								<input name="code" type="text" class="form-control" required>
+									<div class="invalid-feedback">
+		                                Please provide a valid code
+		                            </div>
+								</div>
+							</div>
+							<div class="position-relative row form-group">
+								<label class="col-sm-2 col-form-label">Name</label>
+								<div class="col-sm-10">
+									<input name="name" type="text" class="form-control" required>
+									<div class="invalid-feedback">
+		                                Please provide a valid name
+		                            </div>
+								</div>
+							</div>
+			            </div>
+			            <div class="modal-footer">
+			                <button class="btn btn-primary" type="submit">Save changes</button>
+			            </div>
+					</form>
+		        </div>
+		    </div>
+		</div>
+    </body>
+</html>

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.legocms.core.common.Constants;
+import com.legocms.core.dto.SimpleCheckTreeInfo;
 import com.legocms.core.dto.SimpleTreeInfo;
 import com.legocms.core.dto.TypeInfo;
 import com.legocms.core.dto.sys.SysPermissionDetailInfo;
@@ -57,7 +58,7 @@ public class SysPermissionAssembler extends AbstractAssembler<SysPermissionInfo,
         return info;
     }
 
-    public List<SimpleTreeInfo> createSimpleCheckTree(List<SysPermission> permissions, String lang) {
+    public List<SimpleTreeInfo> createSimpleTree(List<SysPermission> permissions, String lang) {
         List<SimpleTreeInfo> trees = new ArrayList<SimpleTreeInfo>();
         for (SysPermission permission : permissions) {
             SysPermissionLang permissionLang = permissionLangDao.findBy(permission, lang);
@@ -66,9 +67,34 @@ public class SysPermissionAssembler extends AbstractAssembler<SysPermissionInfo,
             if (permissionLang != null) {
                 tree.setName(permissionLang.getName());
             }
-            tree.setOpen(true);
             if (permission.getParent() != null) {
                 tree.setParentCode(permission.getParent().getCode());
+            }
+            else {
+                tree.setOpen(true);
+            }
+            trees.add(tree);
+        }
+        return trees;
+    }
+
+    public List<SimpleCheckTreeInfo> createSimpleCheckTree(List<SysPermission> permissions, List<SysPermission> accessibles, String lang) {
+        List<SimpleCheckTreeInfo> trees = new ArrayList<SimpleCheckTreeInfo>();
+        for (SysPermission permission : permissions) {
+            SysPermissionLang permissionLang = permissionLangDao.findBy(permission, lang);
+            SimpleCheckTreeInfo tree = new SimpleCheckTreeInfo();
+            tree.setCode(permission.getCode());
+            if (permissionLang != null) {
+                tree.setName(permissionLang.getName());
+            }
+            if (permission.getParent() != null) {
+                tree.setParentCode(permission.getParent().getCode());
+            }
+            else {
+                tree.setOpen(true);
+            }
+            if (accessibles.contains(permission)) {
+                tree.setChecked(true);
             }
             trees.add(tree);
         }

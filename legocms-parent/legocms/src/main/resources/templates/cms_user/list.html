@@ -34,7 +34,7 @@
 		                 	<button type="button" data-toggle="collapse" href="#advanced-search" class="btn btn-danger">高级查询</button>
 		                 </div>
 		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
-		                 	<button class="btn btn-info"onclick="window.parent.addTab('user-add', '创建员工', '/admin/user/edit/1')" >创 建</button>
+		                 	<button class="btn btn-info"onclick="window.parent.addTab('user-add', '创建员工', '/admin/user/edit/1_#')" >创 建</button>
 		                 </div>
                      </div>
                 </div>
@@ -91,7 +91,7 @@
 					                            <tr role="row" >
 					                                <td class="text-center text-muted">{$T.Result.code}</td>
 					                                <td>{$T.Result.name}</td>
-					                                <td class="text-center">{$T.Result.organization.code}</td>
+					                                <td class="text-center">{$T.Result.organization.name}</td>
 					                                <td class="text-center">{$T.Result.createDate}</td>
 					                                <td class="text-center">
 					                                	{#if $T.Result.status.code == 'Using'}
@@ -107,7 +107,6 @@
 					                                	{#else}
 					                                		<button onclick="active('{$T.Result.code}')" class="btn btn-primary btn-sm">激活</button>
 					                                	{#/if}
-					                                	
 					                                </td>
 					                            </tr>
 					                        {#/for}

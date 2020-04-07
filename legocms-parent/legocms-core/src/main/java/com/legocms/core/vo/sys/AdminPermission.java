@@ -8,4 +8,8 @@ public interface AdminPermission {
 
     String PERMISSION = "permission";
     String PERMISSION_EDIT = "permission-edit";
+
+    String ROLE = "role";
+    String ROLE_AUTHORIZE = "role-authorize";
+    String ROLE_EDIT = "role-edit";
 }

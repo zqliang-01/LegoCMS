@@ -10340,14 +10340,14 @@ jQuery.fn.resetForm = function() {
     var submitForm=this;
 	var inputItems=submitForm.find("input");
 	$(inputItems).each(function getInputVal(index,element){
-		if (!$(element).hasAttr('data-reset') || $(element).attr('data-reset')) {
+		if (!$(element).hasAttr('data-noreset')) {
 			$(element).val("");
 		}
 	});
 	//获取指定Form下的所有select元素
 	var selectItems=submitForm.find("select");
 	$(selectItems).each(function getInputVal(index,element){
-		if (!$(element).hasAttr('data-reset') || $(element).attr('data-reset')) {
+		if (!$(element).hasAttr('data-noreset')) {
 			$(element).val("");
 		}
 	});

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.legocms.core.dto.sys.SysUserDetailInfo;
 import com.legocms.core.dto.sys.SysUserInfo;
 import com.legocms.data.assembler.AbstractAssembler;
 import com.legocms.data.assembler.TypeInfoAssembler;
@@ -29,6 +30,16 @@ public class SysUserAssembler extends AbstractAssembler<SysUserInfo, SysUser> {
         userInfo.setOrganization(typeInfoAssembler.create(user.getOrganization()));
         userInfo.setStatus(typeInfoAssembler.create(user.getStatus()));
         userInfo.setPermissions(getPermissions(user.getRoles()));
+        return userInfo;
+    }
+
+    public SysUserDetailInfo createDetail(SysUser user) {
+        SysUserDetailInfo userInfo = new SysUserDetailInfo();
+        userInfo.setCode(user.getCode());
+        userInfo.setName(user.getName());
+        userInfo.setCreateDate(user.getCreateDate());
+        userInfo.setOrganization(typeInfoAssembler.create(user.getOrganization()));
+        userInfo.setStatus(typeInfoAssembler.create(user.getStatus()));
         return userInfo;
     }
 

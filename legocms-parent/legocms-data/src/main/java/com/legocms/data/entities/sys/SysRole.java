@@ -30,4 +30,13 @@ public class SysRole extends BaseEntity {
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JoinTable(name = "sys_role_permission", joinColumns = { @JoinColumn(name = "role_id") }, inverseJoinColumns = { @JoinColumn(name = "permission_id") })
     private List<SysPermission> permissions;
+
+    public SysRole() {
+        super();
+    }
+
+    public SysRole(String code) {
+        super(code);
+    }
+
 }

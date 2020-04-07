@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.legocms.core.common.StringUtil;
+import com.legocms.core.dto.SimpleCheckTreeInfo;
 import com.legocms.core.dto.SimpleTreeInfo;
 import com.legocms.core.dto.TypeInfo;
 import com.legocms.core.dto.sys.SysPermissionDetailInfo;
@@ -40,7 +41,14 @@ public class SysPermissionService extends BaseService implements ISysPermissionS
     @Override
     public List<SimpleTreeInfo> findSimpleTree(String lang) {
         List<SysPermission> permissions = permissionDao.findAll();
-        return permissionAssembler.createSimpleCheckTree(permissions, lang);
+        return permissionAssembler.createSimpleTree(permissions, lang);
+    }
+
+    @Override
+    public List<SimpleCheckTreeInfo> findSimpleCheckTree(String roleCode, String lang) {
+        List<SysPermission> accessibles = permissionDao.findAccessible(roleCode);
+        List<SysPermission> permissions = permissionDao.findAll();
+        return permissionAssembler.createSimpleCheckTree(permissions, accessibles, lang);
     }
 
     @Override
@@ -83,5 +91,4 @@ public class SysPermissionService extends BaseService implements ISysPermissionS
         permissionLangDao.deleteInBatch(permissionLangs);
         permissionDao.delete(permission);
     }
-
 }

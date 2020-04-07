@@ -8,4 +8,6 @@ import com.legocms.data.entities.sys.SysPermission;
 public interface ISysPermissionDao extends IGenericDao<SysPermission> {
 
     List<SysPermission> findBy(String userCode, String parentCode, boolean menu);
+
+    List<SysPermission> findAccessible(String roleCode);
 }
