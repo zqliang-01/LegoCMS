@@ -4,7 +4,22 @@
 		<meta charset="utf-8">
         <meta name="description" content="LegoCMS">
         <#include "../include_page/link.html"/>
-		<script type="text/javascript" src="${res}/assets/js/cms/sys-domain.js"></script>
+		<script type="text/javascript">
+		$(function() {
+			var url = ctx + "/admin/directive/sysDomainList";
+			initMyPagination("MyPagination-domain-list", "Template-domain-list", url);
+		})
+		function del(code) {
+			window.parent.showConfirm("<@t.message 'domain.delete'/>", "<@t.message 'title.domain-delete'/>", function(){
+				var url = ctx + "/admin/domain?action=delete";
+				ajaxSubmit(url, "code=" + code, function() {
+					showMsg("<@t.message 'success'/>", 1, function() {
+						myPagination.reload('MyPagination-domain-list');
+					})
+				});
+			})
+		}
+		</script>
     </head>
     <body>
         <div class="app-main__inner" id="MyPagination-domain-list">
@@ -21,7 +36,7 @@
 		                 	<button class="btn btn-primary query"><@t.page 'btn.query'/></button>
 		                 </div>
 		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
-		                 	<button class="btn btn-info"onclick="window.parent.addTab('domain-add', '创建域名', '/admin/domain/edit/1_#')" ><@t.page 'btn.create'/></button>
+		                 	<button class="btn btn-info"onclick="window.parent.addTab('domain-add', '<@t.message 'title.domain-create'/>', '/admin/domain/edit/1_#')" ><@t.page 'btn.create'/></button>
 		                 </div>
                      </div>
                 </div>
@@ -60,7 +75,7 @@
 					                                <td class="text-center">{$T.Result.site.name}</td>
 					                                <td class="text-center">{$T.Result.createTime}</td>
 					                                <td class="text-center">
-					                                	<button onclick="window.parent.addTab('domain-edit', '域名修改', '/admin/domain/edit/{$T.Result.code}')" class="btn btn-primary btn-sm"><@t.page 'btn.edit'/></button>
+					                                	<button onclick="window.parent.addTab('domain-edit', '<@t.message 'title.domain-modify'/>', '/admin/domain/edit/{$T.Result.code}')" class="btn btn-primary btn-sm"><@t.page 'btn.edit'/></button>
 					                                	<button onclick="del('{$T.Result.code}')" class="btn btn-primary btn-sm"><@t.page 'btn.delete'/></button>
 					                                </td>
 					                            </tr>

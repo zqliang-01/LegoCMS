@@ -7,77 +7,6 @@
         <#include "../include_page/code-link.html"/>
 		<script type="text/javascript">
 		$(function(){
-			var dummy = {
-		    	attrs: {
-		        	color: ["red", "green", "blue", "purple", "white", "black", "yellow"],
-		        	size: ["large", "medium", "small"],
-		        	description: null
-		        },
-		        children: []
-		    };
-			var tags = {
-				"!top": ["top"],
-				"!attrs": {
-					id: null,
-					class: ["A", "B", "C"]
-				},
-				top: {
-					attrs: {
-						lang: ["en", "de", "fr", "nl"],
-						freeform: null
-					},
-					children: ["animal", "plant"]
-				},
-				animal: {
-					attrs: {
-						name: null,
-						isduck: ["yes", "no"]
-					},
-					children: ["wings", "feet", "body", "head", "tail"]
-				},
-				plant: {
-					attrs: {
-						name: null
-					},
-					children: ["leaves", "stem", "flowers"]
-				},
-				wings: dummy,
-				feet: dummy,
-				body: dummy,
-				head: dummy,
-				tail: dummy,
-				leaves: dummy,
-				stem: dummy,
-				flowers: dummy
-			};
-
-			function completeAfter(cm, pred) {
-				var cur = cm.getCursor();
-				if (!pred || pred()) setTimeout(function() {
-					if (!cm.state.completionActive)
-						cm.showHint({
-							completeSingle: false
-						});
-				}, 100);
-				return CodeMirror.Pass;
-			}
-
-			function completeIfAfterLt(cm) {
-				return completeAfter(cm, function() {
-					var cur = cm.getCursor();
-					return cm.getRange(CodeMirror.Pos(cur.line, cur.ch - 1), cur) == "<";
-				});
-			}
-
-			function completeIfInTag(cm) {
-				return completeAfter(cm, function() {
-					var tok = cm.getTokenAt(cm.getCursor());
-					if (tok.type == "string" && (!/['"]/.test(tok.string.charAt(tok.string.length - 1)) || tok.string.length == 1))
-						return false;
-					var inner = CodeMirror.innerMode(cm.getMode(), tok.state).state;
-					return inner.tagName;
-				});
-			}
 			var editor = CodeMirror.fromTextArea(document.getElementById("content"), {
 		        lineNumbers: true,
 		        mode: "application/x-ejs",
@@ -135,13 +64,14 @@
 			    	form.setForm(data.place);
 			    	editor.setValue(data.place.content);
 			    	form.find("[name=code]").attr("readonly", "");
+					form.find("input[name='action']").val('modify');
 			    })
 			}
 
 			$('#add-place').click(function() {
 				var orgUrl = ctx + "/admin/directive/cmsPlaceTree";
 				ajaxSubmit(orgUrl, null, function(data) {
-					window.parent.showSimpleTree('片段选择', data.simpleTree, function(treeNode){
+					window.parent.showSimpleTree("<@t.message 'title.place-select'/>", data.simpleTree, function(treeNode){
 						if (!treeNode.isParent) {
 							var temp = '&lt;@includePlace code="' + treeNode.code + '" /&gt;&lt;!-- ' + treeNode.name + ' --&gt;';
 							temp = temp.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
@@ -154,10 +84,41 @@
 			$('#add-template').click(function() {
 				var orgUrl = ctx + "/admin/directive/cmsTemplateTree";
 				ajaxSubmit(orgUrl, null, function(data) {
-					window.parent.showSimpleTree('片段选择', data.simpleTree, function(treeNode){
+					window.parent.showSimpleTree("<@t.message 'title.template-select'/>", data.simpleTree, function(treeNode){
 						if (!treeNode.isParent) {
 							var temp = '&lt;@include code="' + treeNode.code + '" /&gt;&lt;!-- ' + treeNode.name + ' --&gt;';
 							temp = temp.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+						    editor.replaceSelection(temp);
+						}
+					})
+				});
+			});
+
+			$('#add-file').click(function() {
+				var orgUrl = ctx + "/admin/directive/cmsFileTree";
+				ajaxSubmit(orgUrl, null, function(data) {
+					window.parent.showSimpleTree("<@t.message 'title.site-file-select'/>", data.simpleTree, function(treeNode){
+						if (!treeNode.isParent) {
+							var fileType = getFileType(treeNode.name);
+							var temp;
+							if (fileType == 'js') {
+								temp = '&lt;script type="text/javascript" src="&dl;{site.path}' + treeNode.path + '"/&gt;';
+								temp = temp.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&dl;/g, '$');
+							}
+							else if (fileType == "css") {
+								temp = '&lt;link rel="stylesheet" href="&dl;{site.path}' + treeNode.path + '"/&gt;';
+								console.log(temp);
+								temp = temp.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&dl;/g, '$');
+							}
+							else if (isImage(fileType)) {
+								temp = '&lt;img rel="stylesheet" src="&dl;{site.path}' + treeNode.path + '"/&gt;';
+								temp = temp.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&dl;/g, '$');
+							}
+							else {
+								temp = '&lt;a rel="stylesheet" href="&dl;{site.path}' + treeNode.path + '"&gt;' + treeNode.name + '&lt;/a&gt;';
+								temp = temp.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&dl;/g, '$');
+							}
+							console.log(temp);
 						    editor.replaceSelection(temp);
 						}
 					})
@@ -168,7 +129,6 @@
 				var nodes = getTree('placeTree').getSelectedNodes();
 				var form = $('#save-place-form');
 				form.resetForm();
-				form.find("input[name=code]").removeAttr("readonly");
 				if (nodes && nodes.length > 0) {
 					console.log(nodes);
 					form.find("input[name='parent.code']").val(nodes[0].code);
@@ -176,17 +136,18 @@
 				else {
 					form.find("input[name='parent.code']").val('');
 				}
+				form.find("input[name='action']").val('add');
 				editor.setValue("");
 			});
 			
 			$('#delete').click(function() {
 				var code = $('#save-place-form').find("[name=code]").val();
 				if (isEmpty(code)) {
-					showMsg("请选择需要删除的模板信息", 5);
+					showMsg("<@t.message 'verify.place'/>", 5);
 					return;
 				}
-				window.parent.showConfirm("是否确认删除该模板信息！", '模板删除', function(){
-					var url = ctx + "/admin/place/delete";
+				window.parent.showConfirm("<@t.message 'place.delete'/>", "<@t.message 'title.place-delete'/>", function(){
+					var url = ctx + "/admin/place?action=delete";
 					ajaxSubmit(url, "code=" + code, function() {
 						$('#save-place-form').resetForm();
 						refreshTree();
@@ -194,10 +155,9 @@
 				})
 			});
 			
-			ajaxForm($('#save-place-form'), function() {
+			ajaxForm($('#save-place-form'), function(data) {
 				refreshTree();
-				var code = $('#save-place-form').find("[name=code]").val();
-				refreshForm(code);
+				refreshForm(data.result);
 			});
 		})
 		</script>
@@ -214,25 +174,20 @@
        		<div class="col-md-9">
 				<div class="main-card card">
 					<div class="card-body">
-		       			<form id="save-place-form" action="${ctx}/admin/place/save" onsubmit="return false;" class="needs-validation" novalidate>
+		       			<form id="save-place-form" action="${ctx}/admin/place" onsubmit="return false;" class="needs-validation" novalidate>
 							<input name="site.code" type="hidden" required>
+							<input name="code" type="hidden" required>
 							<input name="parent.code" type="hidden" required>
+							<input name="action" type="hidden" required>
 							<div class="position-relative row form-group">
-				                <div class="col-md-2">
-									<label class="col-form-label"><@t.page 'list.code'/></label>
-									<input name="code" type="text" class="form-control" required>
-									<div class="invalid-feedback">
-                                        Please provide a valid code
-                                    </div>
-				                </div>
 				                <div class="col-md-3">
 									<label class="col-form-label"><@t.page 'list.name'/></label>
 									<input name="name" type="text" class="form-control" required>
 									<div class="invalid-feedback">
-                                        Please provide a valid name
+                                		<@t.message 'verify.name'/>
                                     </div>
 				                </div>
-				                <div class="col-md-3">
+				                <div class="col-md-2">
 									<label class="col-form-label"><@t.page 'list.type'/></label>
 									<select name="type.code" class="custom-select" required>
 										<@cmsPlaceType>
@@ -242,14 +197,15 @@
 										</@cmsPlaceType>
 									</select>
 									<div class="invalid-feedback">
-                                        Please provide a valid sort
+                                		<@t.message 'verify.type'/>
                                     </div>
 				                </div>
-				                <div class="col-md-4">
+				                <div class="col-md-6">
 									<label class="col-form-label"><@t.page 'list.operation'/></label>
 									<div>
-										<span class="btn btn-info" id="add-template">模板片段</span>
-										<span class="btn btn-info" id="add-place">页面片段</span>
+										<span class="btn btn-info" id="add-template"><@t.page 'btn.template-fragment'/></span>
+										<span class="btn btn-info" id="add-place"><@t.page 'btn.place-fragment'/></span>
+										<span class="btn btn-info" id="add-file"><@t.page 'btn.site-file'/></span>
 									</div>
 				                </div>
 							</div>

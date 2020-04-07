@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		<meta charset="utf-8">
+        <meta name="description" content="LegoCMS">
+        <#include "../include_page/link.html"/>
+		<script type="text/javascript">
+		$(function() {
+			var url = ctx + "/admin/directive/sysOperationLogList";
+			initMyPagination("MyPagination-log-list", "Template-log-list", url);
+		})
+		function detail(value) {
+			window.parent.showTextDialog("<@t.page 'log.detail'/>", $(value).val());
+		}
+		</script>
+    </head>
+    <body>
+        <div class="app-main__inner" id="MyPagination-log-list">
+           	<form class="queryForm app-page-title" onsubmit="return false;">
+               	<div class="page-title-wrapper">
+                     <div class="form-inline">
+		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+		                 	<input name="userName" placeholder="<@t.page 'list.user'/>" type="text" class="form-control">
+		                 </div>
+		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+							<div class="form-inline">
+								<div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+									<div class="btn date-inline selectdate" title="<@t.page 'list.create-time'/>">
+										<i class="fa fa-calendar"></i>
+										<span></span>
+										<input type="hidden" name="createStart"  value="">
+										<input type="hidden" name="createEnd"  value="">
+									</div>
+								</div>
+							</div>
+		                 </div>
+		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+		                 	<button class="btn btn-primary query"><@t.page 'btn.query'/></button>
+		                 </div>
+                     </div>
+                </div>
+           	</form>
+	        <div class="row row-fluid">
+	            <div class="col-md-12">
+	                <div class="main-card mb-3 card">
+	                    <div class="card-header"><@t.page 'log.list'/></div>
+	                    <div class="table-responsive">
+	                        <table role="grid" class="align-middle mb-0 table table-borderless table-striped table-hover mytab">
+	                            <thead>
+	                                <tr role="row">
+	                                    <th class="text-center"><@t.page 'list.code'/></th>
+	                                    <th class="text-center"><@t.page 'list.user'/></th>
+	                                    <th class="text-center"><@t.page 'list.operation'/></th>
+	                                    <th class="text-center"><@t.page 'list.permission'/></th>
+	                                    <th class="text-center"><@t.page 'list.create-time'/></th>
+	                                    <th class="text-center"><@t.page 'list.content'/></th>
+	                                    <th class="text-center"><@t.page 'list.operation'/></th>
+	                                </tr>
+	                            </thead>
+                        		<tbody></tbody>
+	                        </table>
+	                    </div>
+	                    <div class="d-block text-center card-footer widget-content-rigth">
+	                    	<nav class="" aria-label="Page navigation example">
+	                    	<div class="tempContentDiv"></div>
+				   			<p style="display: none">
+					            <textarea id="Template-log-list" rows="0" cols="0">
+					                <!--
+					                    {#template MAIN}
+					                        {#foreach $T.page.result as Result}
+					                            <tr role="row">
+					                                <td class="text-center">{$T.Result.code}</td>
+					                                <td class="text-center">{$T.Result.user}</td>
+					                                <td class="text-center">{$T.Result.actionType}</td>
+					                                <td class="text-center">{$T.Result.permission}</td>
+					                                <td class="text-center">{$T.Result.createTime}</td>
+					                                <td class="text-left" title="{$T.Result.description}">{$T.Result.summary}</td>
+					                                <td class="text-center">
+					                                	<button value="{$T.Result.description}" class="btn btn-primary" onclick="detail(this)"><@t.page 'btn.view'/></button>
+					                                </td>
+					                            </tr>
+					                        {#/for}
+					                    {#/template MAIN}
+					                -->
+					            </textarea>
+				        	</p>
+	                    	</nav>
+	                   	</div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+    </body>
+</html>

@@ -7,9 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.legocms.core.annotation.RequiresPermissions;
-import com.legocms.core.common.StringUtil;
-import com.legocms.core.dto.sys.SysSiteInfo;
-import com.legocms.core.exception.BusinessException;
 import com.legocms.core.vo.cms.CmsPlaceVo;
 import com.legocms.core.vo.sys.SysPermissionCode;
 import com.legocms.core.web.JsonResponse;
@@ -31,22 +28,24 @@ public class AdminCmsPlaceController extends AdminController {
         return ViewResponse.ok(AdminView.CMS_PLACE_LIST);
     }
 
-    @PostMapping("/save")
+    @PostMapping(params = "action=add")
     @RequiresPermissions(SysPermissionCode.PLACE_EDIT)
-    public JsonResponse save(CmsPlaceVo vo) {
-        SysSiteInfo site = getAttribute(AdminView.SITE_SESSION_KEY);
-        if (site != null) {
-            vo.setSiteCode(site.getCode());
-        }
-        BusinessException.check(StringUtil.isNotBlank(vo.getSiteCode()), "当前无管理站点，保存失败！");
-        templateService.save(vo);
-        return JsonResponse.ok();
+    public JsonResponse add(CmsPlaceVo vo) {
+        vo.setSiteCode(getSiteCode());
+        return JsonResponse.ok(templateService.add(getUserCode(), vo));
     }
 
-    @PostMapping("/delete")
+    @PostMapping(params = "action=modify")
+    @RequiresPermissions(SysPermissionCode.PLACE_EDIT)
+    public JsonResponse modify(CmsPlaceVo vo) {
+        vo.setSiteCode(getSiteCode());
+        return JsonResponse.ok(templateService.modify(getUserCode(), vo));
+    }
+
+    @PostMapping(params = "action=delete")
     @RequiresPermissions(SysPermissionCode.PLACE_DELETE)
     public JsonResponse delete(String code) {
-        templateService.delete(code);
+        templateService.delete(getUserCode(), code);
         return JsonResponse.ok();
     }
 }

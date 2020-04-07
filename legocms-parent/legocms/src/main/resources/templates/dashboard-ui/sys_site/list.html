@@ -10,16 +10,16 @@
 			initMyPagination("MyPagination-site-list", "Template-site-list", url);
 		})
 		function manage(code) {
-			window.parent.showConfirm("是否设置管理当前站点！", '站点激活', function(){
-				var url = ctx + "/admin/site/manage";
+			window.parent.showConfirm("<@t.message 'site.manage'/>", "<@t.message 'title.site-active'/>", function(){
+				var url = ctx + "/admin/site?action=manage";
 				ajaxSubmit(url, "code=" + code, function() {
 					myPagination.reload('MyPagination-site-list');
 				});
 			})
 		}
 		function del(code) {
-			window.parent.showConfirm("是否删除当前站点！", '站点删除', function(){
-				var url = ctx + "/admin/site/delete";
+			window.parent.showConfirm("<@t.message 'site.delete'/>", "<@t.message 'title.site-delete'/>", function(){
+				var url = ctx + "/admin/site?action=delete";
 				ajaxSubmit(url, "code=" + code, function() {
 					myPagination.reload('MyPagination-site-list');
 				});
@@ -42,7 +42,7 @@
 		                 	<button class="btn btn-primary query"><@t.page 'btn.query'/></button>
 		                 </div>
 		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
-		                 	<button class="btn btn-info"onclick="window.parent.addTab('site-add', '<@t.page 'site.title.create'/>', '/admin/site/edit/1_#')"><@t.page 'btn.create'/></button>
+		                 	<button class="btn btn-info"onclick="window.parent.addTab('site-add', '<@t.message 'title.site-create'/>', '/admin/site/edit/1_#')"><@t.page 'btn.create'/></button>
 		                 </div>
                      </div>
                 </div>
@@ -91,7 +91,7 @@
 					                                	{#/if}
 					                                </td>
 					                                <td class="text-center">
-					                                	<button onclick="window.parent.addTab('site-edit', '<@t.page 'site.title.modify'/>', '/admin/site/edit/{$T.Result.code}')" class="btn btn-primary btn-sm"><@t.page 'btn.edit'/></button>
+					                                	<button onclick="window.parent.addTab('site-edit', '<@t.message 'title.site-modify'/>', '/admin/site/edit/{$T.Result.code}')" class="btn btn-primary btn-sm"><@t.page 'btn.edit'/></button>
 					                                	<button onclick="del('{$T.Result.code}')" class="btn btn-danger btn-sm"><@t.page 'btn.delete'/></button>
 					                                	{#if !$T.Result.manageSite}
 					                                		<button onclick="manage('{$T.Result.code}')" class="btn btn-primary btn-sm"><@t.page 'list.current-site'/></button>

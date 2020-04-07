@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import com.legocms.component.PlaceComponent;
 import com.legocms.core.annotation.RequiresPermissions;
 import com.legocms.data.handler.RenderHandler;
+import com.legocms.web.controller.admin.AdminView;
 import com.legocms.web.directive.ControllerTemplateDirective;
 
 @Component
@@ -21,6 +22,9 @@ public class IncludePlaceDirective extends ControllerTemplateDirective {
     @Override
     public void execute(RenderHandler handler) throws IOException, Exception {
         String code = handler.getString("code");
-        placeComponent.generateStringByWriter(handler.getWriter(), code, new HashMap<String, Object>());
+        HashMap<String, Object> param = new HashMap<String, Object>();
+        param.put(AdminView.SITE_SESSION_KEY, getSite());
+        param.put(AdminView.USER_SESSION_KEY, getUser());
+        placeComponent.generateStringByWriter(handler.getWriter(), code, param);
     }
 }

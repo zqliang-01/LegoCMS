@@ -1,6 +1,6 @@
 package com.legocms.core.vo.sys;
 
-public interface SysUserStatus {
+public interface SysUserStatusCode {
 
     String Using = "Using";
 

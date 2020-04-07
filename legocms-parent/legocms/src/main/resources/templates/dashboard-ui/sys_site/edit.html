@@ -12,7 +12,8 @@
 			$('#select-org').click(function(){
 				var orgUrl = ctx + "/admin/directive/sysOrganizationTree";
 				ajaxSubmit(orgUrl, null, function(data) {
-					window.parent.showSimpleTree('组织选择', data.simpleTree, function(treeNode){
+					data.simpleTree.selectParent = true;
+					window.parent.showSimpleTree("<@t.message 'title.organization-select'/>", data.simpleTree, function(treeNode){
 					    $("input[name='organization.name']").val(treeNode.name);
 					    $("input[name='organization.code']").val(treeNode.code);
 					})
@@ -27,44 +28,46 @@
 		<div class="main-card mb-3 card">
 			<div class="card-body">
 				<h5 class="card-title"><@t.page 'site.info'/></h5>
-				<form id="save-site-form" action="${ctx}/admin/site/save" ajax="true" onsubmit="return false;" class="needs-validation" novalidate>
+				<form id="save-site-form" action="${ctx}/admin/site" ajax="true" onsubmit="return false;" class="needs-validation" novalidate>
 					<div class="position-relative row form-group">
 						<label class="col-sm-2 col-form-label"><@t.page 'list.code'/></label>
 						<div class="col-sm-10">
-							<#if (site.code)??>
-								<input name="code" placeholder="Code" type="text" class="form-control" value="${(site.code)!''}" readonly required>
+							<#if (siteInfo.code)??>
+								<input name="code" placeholder="Code" type="text" class="form-control" value="${(siteInfo.code)!''}" readonly required>
+								<input name="action" type="hidden" value="modify">
 							<#else>
 								<input name="code" placeholder="Code" type="text" class="form-control" required>
+								<input name="action" type="hidden" value="add">
 							</#if>
 							<div class="invalid-feedback">
-                                Please provide a valid code
+                                <@t.message 'verify.code'/>
                             </div>
 						</div>
 					</div>
 					<div class="position-relative row form-group">
 						<label class="col-sm-2 col-form-label"><@t.page 'list.name'/></label>
 						<div class="col-sm-10">
-							<input name="name" placeholder="Name" type="text" class="form-control" value="${(site.name)!''}" required>
+							<input name="name" placeholder="Name" type="text" class="form-control" value="${(siteInfo.name)!''}" required>
 							<div class="invalid-feedback">
-                                Please provide a valid name
+                                <@t.message 'verify.name'/>
                             </div>
 						</div>
 					</div>
 					<div class="position-relative row form-group">
 						<label class="col-sm-2 col-form-label"><@t.page 'list.path'/></label>
 						<div class="col-sm-10">
-							<input name="path" placeholder="path" type="text" class="form-control" value="${(site.path)!''}" required>
+							<input name="path" placeholder="path" type="text" class="form-control" value="${(siteInfo.path)!''}" required>
 							<div class="invalid-feedback">
-                                Please provide a valid path
+                                <@t.message 'verify.path'/>
                             </div>
 						</div>
 					</div>
 					<div class="position-relative row form-group">
 						<label class="col-sm-2 col-form-label"><@t.page 'list.dynamic-path'/></label>
 						<div class="col-sm-10">
-							<input name="dynamicPath" placeholder="dynamicPath" type="text" class="form-control" value="${(site.dynamicPath)!''}" required>
+							<input name="dynamicPath" placeholder="dynamicPath" type="text" class="form-control" value="${(siteInfo.dynamicPath)!''}" required>
 							<div class="invalid-feedback">
-                                Please provide a valid Dynamic Path
+                                <@t.message 'verify.dynamic-path'/>
                             </div>
 						</div>
 					</div>
@@ -72,10 +75,13 @@
 						<label class="col-sm-2 col-form-label"><@t.page 'list.organization'/></label>
 						<div class="col-sm-10">
 							<div class="input-group">
-								<input type="text" class="form-control" name="organization.name" value="${(site.organization.name)!''}" readonly required>
-								<input type="hidden" class="form-control" name="organization.code" value="${(site.organization.code)!''}">
+								<input type="text" class="form-control" name="organization.name" value="${(siteInfo.organization.name)!''}" required>
+								<input type="hidden" class="form-control" name="organization.code" value="${(siteInfo.organization.code)!''}">
 	                            <div class="input-group-append">
 	                                <span id="select-org" class="btn btn-secondary"><@t.page 'btn.chose-organization'/></span>
+	                            </div>
+								<div class="invalid-feedback">
+	                                <@t.message 'verify.organization'/>
 	                            </div>
 							</div>
 						</div>
@@ -83,7 +89,7 @@
 					<div class="position-relative row form-group">
 						<label class="col-sm-2 col-form-label"><@t.page 'list.create-time'/></label>
 						<div class="col-sm-10">
-							<input placeholder="Create Date" class="form-control" value="${(site.createTime)!''}" disabled>
+							<input placeholder="Create Date" class="form-control" value="${(siteInfo.createTime)!''}" disabled>
 						</div>
 					</div>
 					<div class="position-relative row form-check">

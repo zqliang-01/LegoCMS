@@ -10,9 +10,11 @@ public interface ISysSiteService {
 
     Page<SysSiteInfo> findBy(String code, String name, String organization, String manageSite, int pageIndex, int pageSize);
 
-    void save(SysSiteVo vo);
+    void add(String operator, SysSiteVo vo);
 
-    void manage(String userCode, String code);
+    void modify(String operator, SysSiteVo vo);
 
-    void delete(String userCode, String code);
+    void manage(String operator, String userCode, String code);
+
+    void delete(String operator, String code);
 }

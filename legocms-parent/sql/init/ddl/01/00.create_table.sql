@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2020/5/29 16:24:46                           */
+/* Created on:     2020/6/8 19:14:57                            */
 /*==============================================================*/
 
 
@@ -19,7 +19,7 @@ create table CMS_FILE
    PARENT_ID            bigint(15) comment '父ID',
    SITE_ID              bigint(15) not null comment '站点ID',
    PATH                 varchar(255) not null comment '路径',
-   SIZE                 bigint not null comment '大小（）',
+   SIZE                 bigint not null comment '大小',
    primary key (ID)
 );
 
@@ -56,7 +56,6 @@ create table CMS_PLACE
    TYPE_ID              bigint(15) not null comment '类型：file/dir',
    PARENT_ID            bigint(15) comment '父ID',
    SITE_ID              bigint(15) not null comment '站点ID',
-   CONTENT              text comment '内容',
    primary key (ID),
    unique key AK_UNIQUE_CODE (CODE)
 );
@@ -111,7 +110,6 @@ create table CMS_TEMPLATE
    TYPE_ID              bigint(15) not null comment '类型：file/dir',
    PARENT_ID            bigint(15) comment '父ID',
    SITE_ID              bigint(15) not null comment '站点ID',
-   CONTENT              text comment '内容',
    primary key (ID)
 );
 
@@ -152,6 +150,27 @@ create unique index CODE_UNIQUE_INDEX on SYS_DOMAIN
 );
 
 /*==============================================================*/
+/* Table: SYS_OPERATION_LOG                                     */
+/*==============================================================*/
+create table SYS_OPERATION_LOG
+(
+   ID                   bigint(15) not null comment 'ID',
+   VERSION              int(5) not null comment 'VERSION',
+   CODE                 varchar(50) not null comment 'CODE',
+   NAME                 varchar(100) not null comment '名称',
+   CREATE_TIME          datetime not null comment '创建时间',
+   USER_ID              bigint(15) not null comment '操作人',
+   PERMISSION_ID        bigint(15) comment '功能',
+   DESCRIPTION          text comment '备注',
+   LOCATION             varchar(100) comment '操作地址',
+   ACTION_TYPE          bigint(15) comment '操作类型',
+   primary key (ID),
+   unique key AK_UNIQUE_CODE (CODE)
+);
+
+alter table SYS_OPERATION_LOG comment '操作日志';
+
+/*==============================================================*/
 /* Table: SYS_ORGANIZATION                                      */
 /*==============================================================*/
 create table SYS_ORGANIZATION
@@ -163,7 +182,8 @@ create table SYS_ORGANIZATION
    CREATE_TIME          datetime not null comment '创建时间',
    STATUS               bigint(15) not null comment '状态',
    PARENT_ID            bigint(15) comment '上级部门',
-   primary key (ID)
+   primary key (ID),
+   unique key AK_UNIQUE_CODE (CODE)
 );
 
 alter table SYS_ORGANIZATION comment '部门（用户一对一）';
@@ -217,7 +237,8 @@ create table SYS_ROLE
    CODE                 varchar(50) not null comment 'CODE',
    CREATE_TIME          datetime not null comment '创建时间',
    NAME                 varchar(100) not null comment '名称',
-   primary key (ID)
+   primary key (ID),
+   unique key AK_UNIQUE_CODE (CODE)
 );
 
 alter table SYS_ROLE comment '角色';
@@ -307,7 +328,8 @@ create table SYS_USER
    ORGANIZATION_ID      bigint(15) not null comment '部门',
    STATUS               bigint(15) not null comment '状态',
    SITE_ID              bigint(15) comment '当前管理站点',
-   primary key (ID)
+   primary key (ID),
+   unique key AK_UNIQUE_CODE (CODE)
 );
 
 alter table SYS_USER comment '用户';
@@ -338,6 +360,15 @@ alter table CMS_TEMPLATE add constraint FK_TEMPLATE_TYPE foreign key (TYPE_ID)
 
 alter table SYS_DOMAIN add constraint FK_DOMAIN_SITE foreign key (SITE_ID)
       references SYS_SITE (ID) on delete restrict on update restrict;
+
+alter table SYS_OPERATION_LOG add constraint FK_OPERATION_PERMISSION foreign key (PERMISSION_ID)
+      references SYS_PERMISSION (ID) on delete restrict on update restrict;
+
+alter table SYS_OPERATION_LOG add constraint FK_OPERATION_TYPE foreign key (ACTION_TYPE)
+      references SYS_SIMPLE_TYPE (ID) on delete restrict on update restrict;
+
+alter table SYS_OPERATION_LOG add constraint FK_OPERATION_USER foreign key (USER_ID)
+      references SYS_USER (ID) on delete restrict on update restrict;
 
 alter table SYS_ORGANIZATION add constraint FK_ORGANIZATION_STATUS foreign key (STATUS)
       references SYS_SIMPLE_TYPE (ID) on delete restrict on update restrict;

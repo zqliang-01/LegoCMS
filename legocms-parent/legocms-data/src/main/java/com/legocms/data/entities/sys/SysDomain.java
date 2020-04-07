@@ -1,5 +1,7 @@
 package com.legocms.data.entities.sys;
 
+import java.util.Map;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -27,5 +29,13 @@ public class SysDomain extends BaseEntity {
 
     public SysDomain(String code) {
         super(code);
+    }
+
+    @Override
+    protected void doBuildReadableSnapshot(Map<String, String> attributes) {
+        attributes.put("编码", getCode());
+        attributes.put("名称", getName());
+        attributes.put("地址", getPath());
+        attributes.put("站点", site.getName());
     }
 }

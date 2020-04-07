@@ -7,77 +7,6 @@
         <#include "../include_page/code-link.html"/>
 		<script type="text/javascript">
 		$(function(){
-			var dummy = {
-		    	attrs: {
-		        	color: ["red", "green", "blue", "purple", "white", "black", "yellow"],
-		        	size: ["large", "medium", "small"],
-		        	description: null
-		        },
-		        children: []
-		    };
-			var tags = {
-				"!top": ["top"],
-				"!attrs": {
-					id: null,
-					class: ["A", "B", "C"]
-				},
-				top: {
-					attrs: {
-						lang: ["en", "de", "fr", "nl"],
-						freeform: null
-					},
-					children: ["animal", "plant"]
-				},
-				animal: {
-					attrs: {
-						name: null,
-						isduck: ["yes", "no"]
-					},
-					children: ["wings", "feet", "body", "head", "tail"]
-				},
-				plant: {
-					attrs: {
-						name: null
-					},
-					children: ["leaves", "stem", "flowers"]
-				},
-				wings: dummy,
-				feet: dummy,
-				body: dummy,
-				head: dummy,
-				tail: dummy,
-				leaves: dummy,
-				stem: dummy,
-				flowers: dummy
-			};
-
-			function completeAfter(cm, pred) {
-				var cur = cm.getCursor();
-				if (!pred || pred()) setTimeout(function() {
-					if (!cm.state.completionActive)
-						cm.showHint({
-							completeSingle: false
-						});
-				}, 100);
-				return CodeMirror.Pass;
-			}
-
-			function completeIfAfterLt(cm) {
-				return completeAfter(cm, function() {
-					var cur = cm.getCursor();
-					return cm.getRange(CodeMirror.Pos(cur.line, cur.ch - 1), cur) == "<";
-				});
-			}
-
-			function completeIfInTag(cm) {
-				return completeAfter(cm, function() {
-					var tok = cm.getTokenAt(cm.getCursor());
-					if (tok.type == "string" && (!/['"]/.test(tok.string.charAt(tok.string.length - 1)) || tok.string.length == 1))
-						return false;
-					var inner = CodeMirror.innerMode(cm.getMode(), tok.state).state;
-					return inner.tagName;
-				});
-			}
 			var editor = CodeMirror.fromTextArea(document.getElementById("content"), {
 		        lineNumbers: true,
 		        mode: 'htmlmixed',
@@ -139,25 +68,25 @@
 			    	else {
 				    	$('#pre-view').attr('href', "");
 			    	}
+					form.find("input[name='action']").val('modify');
 			    	editor.setValue(data.template.content);
-			    	form.find("[name=code]").attr("readonly", "");
 			    })
 			}
 			
 			$('#pre-view').click(function() {
 				var url = $('#pre-view').attr('href');
 				if (url) {
-					window.parent.showIframe('模板预览', url);
+					window.parent.showIframe("<@t.message 'title.template-preview'/>", url);
 				}
 				else {
-					showMsg("请选择预览模板！", 2);
+					showMsg("<@t.message 'verify.template'/>", 2);
 				}
 			});
 			
 			$('#add-place').click(function() {
 				var orgUrl = ctx + "/admin/directive/cmsPlaceTree";
 				ajaxSubmit(orgUrl, null, function(data) {
-					window.parent.showSimpleTree('片段选择', data.simpleTree, function(treeNode){
+					window.parent.showSimpleTree("<@t.message 'title.place-select'/>", data.simpleTree, function(treeNode){
 						if (!treeNode.isParent) {
 							var temp = '&lt;@includePlace code="' + treeNode.code + '" /&gt;&lt;!-- ' + treeNode.name + ' --&gt;';
 							temp = temp.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
@@ -170,7 +99,7 @@
 			$('#add-template').click(function() {
 				var orgUrl = ctx + "/admin/directive/cmsTemplateTree";
 				ajaxSubmit(orgUrl, null, function(data) {
-					window.parent.showSimpleTree('片段选择', data.simpleTree, function(treeNode){
+					window.parent.showSimpleTree("<@t.message 'title.template-select'/>", data.simpleTree, function(treeNode){
 						if (!treeNode.isParent) {
 							var temp = '&lt;@include code="' + treeNode.code + '" /&gt;&lt;!-- ' + treeNode.name + ' --&gt;';
 							temp = temp.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
@@ -183,7 +112,7 @@
 			$('#add-file').click(function() {
 				var orgUrl = ctx + "/admin/directive/cmsFileTree";
 				ajaxSubmit(orgUrl, null, function(data) {
-					window.parent.showSimpleTree('站点文件选择', data.simpleTree, function(treeNode){
+					window.parent.showSimpleTree("<@t.message 'title.site-file-select'/>", data.simpleTree, function(treeNode){
 						if (!treeNode.isParent) {
 							var fileType = getFileType(treeNode.name);
 							var temp;
@@ -215,25 +144,25 @@
 				var nodes = getTree('templateTree').getSelectedNodes();
 				var form = $('#save-template-form');
 				form.resetForm();
-				form.find("input[name=code]").removeAttr("readonly");
+				form.find("input[name=code]").val('');
 				if (nodes && nodes.length > 0) {
-					console.log(nodes);
 					form.find("input[name='parent.code']").val(nodes[0].code);
 				}
 				else {
 					form.find("input[name='parent.code']").val('');
 				}
+				form.find("input[name='action']").val('add');
 				editor.setValue("");
 			});
 			
 			$('#delete').click(function() {
 				var code = $('#save-template-form').find("[name=code]").val();
 				if (isEmpty(code)) {
-					showMsg("请选择需要删除的模板信息", 5);
+					showMsg("<@t.message 'verify.template'/>", 5);
 					return;
 				}
-				window.parent.showConfirm("是否确认删除该模板信息！", '模板删除', function(){
-					var url = ctx + "/admin/template/delete";
+				window.parent.showConfirm("<@t.message 'template.delete'/>", "<@t.message 'title.template-delete'/>", function(){
+					var url = ctx + "/admin/template?action=delete";
 					ajaxSubmit(url, "code=" + code, function() {
 						$('#save-template-form').resetForm();
 						refreshTree();
@@ -241,10 +170,9 @@
 				})
 			});
 			
-			ajaxForm($('#save-template-form'), function() {
+			ajaxForm($('#save-template-form'), function(data) {
 				refreshTree();
-				var code = $('#save-template-form').find("[name=code]").val();
-				refreshForm(code);
+				refreshForm(data.result);
 			});
 		})
 		</script>
@@ -261,22 +189,17 @@
        		<div class="col-md-9">
 				<div class="main-card card">
 					<div class="card-body">
-		       			<form id="save-template-form" action="${ctx}/admin/template/save" onsubmit="return false;" class="needs-validation" novalidate>
+		       			<form id="save-template-form" action="${ctx}/admin/template" onsubmit="return false;" class="needs-validation" novalidate>
 							<input name="site.code" type="hidden" required>
 							<input name="parent.code" type="hidden" required>
+							<input name="code" type="hidden" required>
+							<input name="action" type="hidden" required>
 							<div class="position-relative row form-group">
-				                <div class="col-md-2">
-									<label class="col-form-label"><@t.page 'list.code'/></label>
-									<input name="code" type="text" class="form-control" required>
-									<div class="invalid-feedback">
-                                        Please provide a valid code
-                                    </div>
-				                </div>
 				                <div class="col-md-3">
 									<label class="col-form-label"><@t.page 'list.name'/></label>
 									<input name="name" type="text" class="form-control" required>
 									<div class="invalid-feedback">
-                                        Please provide a valid name
+                                		<@t.message 'verify.name'/>
                                     </div>
 				                </div>
 				                <div class="col-md-2">
@@ -289,16 +212,16 @@
 										</@cmsTemplateType>
 									</select>
 									<div class="invalid-feedback">
-                                        Please provide a valid sort
+                                		<@t.message 'verify.type'/>
                                     </div>
 				                </div>
-				                <div class="col-md-5">
+				                <div class="col-md-6">
 									<label class="col-form-label"><@t.page 'list.operation'/></label>
 									<div>
-										<span class="btn btn-info" id="add-template">模板片段</span>
-										<span class="btn btn-info" id="add-place">页面片段</span>
-										<span class="btn btn-info" id="add-file">站点文件</span>
-										<span class="btn btn-info" id="pre-view">预览</span>
+										<span class="btn btn-info" id="add-template"><@t.page 'btn.template-fragment'/></span>
+										<span class="btn btn-info" id="add-place"><@t.page 'btn.place-fragment'/></span>
+										<span class="btn btn-info" id="add-file"><@t.page 'btn.site-file'/></span>
+										<span class="btn btn-info" id="pre-view"><@t.page 'btn.preview'/></span>
 									</div>
 				                </div>
 							</div>

@@ -12,7 +12,9 @@ public interface ICmsTemplateService {
 
     CmsTemplateInfo findBy(String code);
 
-    void save(CmsTemplateVo vo);
+    String add(String operator, CmsTemplateVo vo);
 
-    void delete(String code);
+    String modify(String operator, CmsTemplateVo vo);
+
+    void delete(String operator, String code);
 }

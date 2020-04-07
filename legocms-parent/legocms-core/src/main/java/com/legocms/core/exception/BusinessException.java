@@ -1,5 +1,7 @@
 package com.legocms.core.exception;
 
+import java.text.MessageFormat;
+
 import com.legocms.core.common.ConstantEnum;
 
 public class BusinessException extends RuntimeException {
@@ -33,8 +35,10 @@ public class BusinessException extends RuntimeException {
         this.code = code;
     }
 
-    public static void check(boolean condition, String message) {
-        if (!condition) throw new BusinessException(message);
+    public static void check(boolean condition, String message, Object... arguments) {
+        if (!condition) {
+            throw new BusinessException(MessageFormat.format(message, arguments));
+        }
     }
 
     public static void check(boolean condition, ConstantEnum error) {

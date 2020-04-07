@@ -12,7 +12,9 @@ public interface ISysDomainService {
 
     Page<SysDomainInfo> findBy(String code, String name, String siteCode, int pageIndex, int pageSize);
 
-    void save(SysDomainVo vo);
+    void add(String operator, SysDomainVo vo);
 
-    void delete(String code);
+    void modify(String operator, SysDomainVo vo);
+
+    void delete(String operator, String code);
 }

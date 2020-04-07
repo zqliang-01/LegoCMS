@@ -21,8 +21,12 @@ import com.legocms.core.exception.CoreException;
 public class StringUtil extends StringUtils {
     private static final String charset = "UTF-8";
 
-    public static boolean isNil(Collection<String> strings) {
+    public static boolean isBlank(Collection<String> strings) {
         return strings == null || strings.size() == 0;
+    }
+
+    public static boolean isNotBlank(Collection<String> strings) {
+        return strings != null;
     }
 
     public static String objToStr(Object obj) {
@@ -94,7 +98,7 @@ public class StringUtil extends StringUtils {
             }
             buf.append(Integer.toHexString(i));
         }
-        return buf.toString();
+        return buf.toString().toUpperCase();
     }
 
     /**

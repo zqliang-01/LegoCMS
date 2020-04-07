@@ -17,7 +17,7 @@ public class SysOrganizationDao extends GenericDao<SysOrganization> implements I
 
     @Override
     public List<SysOrganization> findChildren(String parentCode) {
-        QueryHandler<SysOrganization> query = this.createQueryHandler("FROM {0} o", SysOrganization.class);
+        QueryHandler<SysOrganization> query = this.createQueryHandler("FROM {0} o");
         query.condition("o.parent.code = :parentCode").setParameter("parentCode", parentCode);
         return query.findList();
     }

@@ -3,6 +3,7 @@ package com.legocms.data.entities.cms;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -63,5 +64,20 @@ public class CmsFile extends BaseEntity {
             list.addAll(children.getAllChildren());
         }
         return list;
+    }
+
+    @Override
+    protected void doBuildReadableSnapshot(Map<String, String> attributes) {
+        attributes.put("编码", getCode());
+        attributes.put("名称", getName());
+        attributes.put("路径", path);
+        attributes.put("大小", size + "B");
+        attributes.put("类型", type.getName());
+        String parentName = "";
+        if (parent != null) {
+            parentName = parent.getName();
+        }
+        attributes.put("上级目录", parentName);
+        attributes.put("所属站点", site.getName());
     }
 }

@@ -1,6 +1,8 @@
 package com.legocms.data.entities.sys;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,7 +31,7 @@ public class SysRole extends BaseEntity {
     @Fetch(FetchMode.SUBSELECT)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JoinTable(name = "sys_role_permission", joinColumns = { @JoinColumn(name = "role_id") }, inverseJoinColumns = { @JoinColumn(name = "permission_id") })
-    private List<SysPermission> permissions;
+    private List<SysPermission> permissions = new ArrayList<SysPermission>();
 
     public SysRole() {
         super();
@@ -39,4 +41,14 @@ public class SysRole extends BaseEntity {
         super(code);
     }
 
+    @Override
+    protected void doBuildReadableSnapshot(Map<String, String> attributes) {
+        attributes.put("编码", getCode());
+        attributes.put("名称", getName());
+        List<String> permissionCodes = new ArrayList<String>();
+        for (SysPermission permission : permissions) {
+            permissionCodes.add(permission.getCode());
+        }
+        attributes.put("授权", permissionCodes.toString());
+    }
 }

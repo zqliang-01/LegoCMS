@@ -32,18 +32,26 @@ public class AdminSysPermissionController extends AdminController {
         return ViewResponse.ok(AdminView.SYS_PERMISSION_LIST).put("langTypes", SysPermissionLangCode.ALL_TYPE);
     }
 
-    @PostMapping("/save")
+    @PostMapping(params = "action=add")
     @RequiresPermissions(SysPermissionCode.PERMISSION_EDIT)
-    public JsonResponse save(SysPermissionVo vo) {
-        log.debug("save:{}", vo);
-        permissionService.save(vo);
+    public JsonResponse add(SysPermissionVo vo) {
+        log.debug("add:{}", vo);
+        permissionService.add(getUserCode(), vo);
         return JsonResponse.ok();
     }
 
-    @PostMapping("/delete")
+    @PostMapping(params = "action=modify")
+    @RequiresPermissions(SysPermissionCode.PERMISSION_EDIT)
+    public JsonResponse modify(SysPermissionVo vo) {
+        log.debug("add:{}", vo);
+        permissionService.modify(getUserCode(), vo);
+        return JsonResponse.ok();
+    }
+
+    @PostMapping(params = "action=delete")
     @RequiresPermissions(SysPermissionCode.PERMISSION_DELETE)
     public JsonResponse delete(String code) {
-        permissionService.delete(code);
+        permissionService.delete(getUserCode(), code);
         return JsonResponse.ok();
     }
 

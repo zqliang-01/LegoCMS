@@ -10,9 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.legocms.core.annotation.RequiresPermissions;
 import com.legocms.core.common.StringUtil;
 import com.legocms.core.dto.sys.SysUserInfo;
-import com.legocms.core.exception.BusinessException;
 import com.legocms.core.vo.sys.SysPermissionCode;
-import com.legocms.core.vo.sys.SysUserStatus;
+import com.legocms.core.vo.sys.SysUserStatusCode;
 import com.legocms.core.vo.sys.SysUserVo;
 import com.legocms.core.web.JsonResponse;
 import com.legocms.core.web.ViewResponse;
@@ -53,7 +52,7 @@ public class AdminSysUserController extends AdminController {
             view.put("msg", "密码错误，登录失败！");
             return view;
         }
-        if (SysUserStatus.Terminated.equals(user.getStatus().getCode())) {
+        if (SysUserStatusCode.Terminated.equals(user.getStatus().getCode())) {
             view.put("msg", "员工已停用！");
             return view;
         }
@@ -82,36 +81,42 @@ public class AdminSysUserController extends AdminController {
         return ViewResponse.ok(AdminView.SYS_USER_EDIT).put("code", code);
     }
 
-    @PostMapping("/active")
+    @PostMapping(params = "action=active")
     @RequiresPermissions(SysPermissionCode.USER_EDIT)
     public JsonResponse active(String code) {
-        userService.active(code);
+        userService.active(getUserCode(), code);
         return JsonResponse.ok();
     }
 
-    @PostMapping("/invalid")
+    @PostMapping(params = "action=invalid")
     @RequiresPermissions(SysPermissionCode.USER_EDIT)
     public JsonResponse invalid(String code) {
-        userService.invalid(code);
+        userService.invalid(getUserCode(), code);
         return JsonResponse.ok();
     }
 
-    @PostMapping("/save")
+    @PostMapping(params = "action=add")
     @RequiresPermissions(SysPermissionCode.USER_EDIT)
-    public JsonResponse save(SysUserVo vo) {
-        log.debug("保存客户信息：{}", vo);
-        userService.save(vo);
+    public JsonResponse add(SysUserVo vo) {
+        vo.setSiteCode(getSiteCode());
+        userService.add(getUserCode(), vo);
+        refreshUser();
+        return JsonResponse.ok();
+    }
+
+    @PostMapping(params = "action=modify")
+    @RequiresPermissions(SysPermissionCode.USER_EDIT)
+    public JsonResponse modify(SysUserVo vo) {
+        vo.setSiteCode(getSiteCode());
+        userService.modify(getUserCode(), vo);
         refreshUser();
         return JsonResponse.ok();
     }
 
     @PostMapping("/changePassword")
     @RequiresPermissions(skip = true)
-    public JsonResponse changePassword(String originalPassword, String newPassword, String repeatPassword) {
-        BusinessException.check(repeatPassword.equals(newPassword), "重复密码不一致！");
-        SysUserInfo user = userService.findBy(getUserCode());
-        BusinessException.check(user.getPassword().equals(originalPassword), "原密码错误！");
-        userService.changePassword(user.getCode(), newPassword);
+    public JsonResponse changePassword(String originalPassword, String newPassword) {
+        userService.changePassword(getUserCode(), getUserCode(), originalPassword, newPassword);
         return JsonResponse.ok();
     }
 }

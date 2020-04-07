@@ -22,7 +22,7 @@ public class SysSiteDirective extends ControllerTemplateDirective {
     public void execute(RenderHandler handler) throws IOException, Exception {
         String code = handler.getString("code");
         SysSiteInfo site = siteService.findBy(code);
-        handler.put("site", site).render();
+        handler.put("siteInfo", site).render();
     }
 
 }

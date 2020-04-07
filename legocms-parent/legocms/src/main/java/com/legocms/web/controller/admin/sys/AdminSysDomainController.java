@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.legocms.core.annotation.RequiresPermissions;
-import com.legocms.core.common.StringUtil;
-import com.legocms.core.exception.BusinessException;
 import com.legocms.core.vo.sys.SysDomainVo;
 import com.legocms.core.vo.sys.SysPermissionCode;
 import com.legocms.core.web.JsonResponse;
@@ -37,22 +35,26 @@ public class AdminSysDomainController extends AdminController {
         return ViewResponse.ok(AdminView.SYS_DOMAIN_EDIT).put("code", code);
     }
 
-    @PostMapping("/save")
+    @PostMapping(params = "action=add")
     @RequiresPermissions(SysPermissionCode.DOMAIN_EDIT)
-    public JsonResponse save(SysDomainVo vo) {
-        String siteCode = getSiteCode();
-        if (StringUtil.isBlank(vo.getSiteCode()) && StringUtil.isNotBlank(siteCode)) {
-            vo.setSiteCode(siteCode);
-        }
-        BusinessException.check(StringUtil.isNotBlank(vo.getSiteCode()), "当前无管理站点，保存失败！");
-        domainService.save(vo);
+    public JsonResponse add(SysDomainVo vo) {
+        vo.setSiteCode(getSiteCode());
+        domainService.add(getUserCode(), vo);
         return JsonResponse.ok();
     }
 
-    @PostMapping("/delete")
+    @PostMapping(params = "action=modify")
+    @RequiresPermissions(SysPermissionCode.DOMAIN_EDIT)
+    public JsonResponse modify(SysDomainVo vo) {
+        vo.setSiteCode(getSiteCode());
+        domainService.modify(getUserCode(), vo);
+        return JsonResponse.ok();
+    }
+
+    @PostMapping(params = "action=delete")
     @RequiresPermissions(SysPermissionCode.DOMAIN_DELETE)
     public JsonResponse delete(String code) {
-        domainService.delete(code);
+        domainService.delete(getUserCode(), code);
         return JsonResponse.ok();
     }
 

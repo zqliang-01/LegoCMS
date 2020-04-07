@@ -27,4 +27,6 @@ public interface Constants {
     String COMMA_DELIMITED = ",";
 
     String ROOT_PATH = "/legocms";
+
+    String DEFAULT_USER_PASSWORD = "123456";
 }

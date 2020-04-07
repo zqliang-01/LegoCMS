@@ -48,4 +48,11 @@ public class SysUserDao extends GenericDao<SysUser> implements ISysUserDao {
         return query.findList();
     }
 
+    @Override
+    public List<SysUser> findBySite(String siteCode) {
+        QueryHandler<SysUser> query = createQueryHandler("FROM {0} u");
+        query.condition("u.site.code = :siteCode").setParameter("siteCode", siteCode);
+        return query.findList();
+    }
+
 }

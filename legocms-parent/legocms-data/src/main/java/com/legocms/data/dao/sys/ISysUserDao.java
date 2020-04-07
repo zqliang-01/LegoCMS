@@ -13,4 +13,6 @@ public interface ISysUserDao extends IGenericDao<SysUser> {
 
     List<SysUser> findBy(String organizationCode);
 
+    List<SysUser> findBySite(String siteCode);
+
 }

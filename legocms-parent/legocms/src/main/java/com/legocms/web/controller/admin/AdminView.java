@@ -27,6 +27,8 @@ public interface AdminView {
     String SYS_DOMAIN_LIST = UI_TYPE + "sys_domain/list";
     String SYS_DOMAIN_EDIT = UI_TYPE + "sys_domain/edit";
 
+    String SYS_LOG_LIST = UI_TYPE + "sys_log/list";
+
     String CMS_TEMPLATE_LIST = UI_TYPE + "cms_template/list";
 
     String CMS_PLACE_LIST = UI_TYPE + "cms_place/list";

@@ -36,5 +36,8 @@ public interface SysPermissionCode {
 
     String FILE = "file";
     String FILE_EDIT = "file-edit";
+    String FILE_SYNCHRONIZE = "file-synchronize";
     String FILE_DELETE = "file-delete";
+
+    String LOG = "log";
 }

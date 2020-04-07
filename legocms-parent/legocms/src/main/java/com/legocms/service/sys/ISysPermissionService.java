@@ -18,8 +18,10 @@ public interface ISysPermissionService {
 
     SysPermissionDetailInfo findDetailBy(String code);
 
-    void save(SysPermissionVo vo);
+    void add(String operator, SysPermissionVo vo);
 
-    void delete(String code);
+    void modify(String operator, SysPermissionVo vo);
+
+    void delete(String operator, String code);
 
 }

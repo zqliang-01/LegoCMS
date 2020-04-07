@@ -17,7 +17,7 @@
 			}
 			function createFile() {
 				var parentCode = $('.queryForm').find("input[name='parentCode']").val();
-				window.parent.showFormDialog('<@t.page "file.add-file"/>', $('#add-file-modal'), function(form) {
+				window.parent.showFormDialog("<@t.message 'title.file-add'/>", $('#add-file-modal'), function(form) {
 					form.setForm({parentCode : parentCode});
 				}, function() {
 	    			$('.query').click();
@@ -25,7 +25,7 @@
 			}
 			function createDir() {
 				var parentCode = $('.queryForm').find("input[name='parentCode']").val();
-				window.parent.showFormDialog('<@t.page "file.add-dir"/>', $('#add-dir-modal'), function(form) {
+				window.parent.showFormDialog("<@t.message 'title.dir-add'/>", $('#add-dir-modal'), function(form) {
 					form.setForm({parentCode : parentCode});
 				}, function() {
 	    			$('.query').click();
@@ -33,14 +33,14 @@
 			}
 			function uploadFile() {
 				var parentCode = $('.queryForm').find("input[name='parentCode']").val();
-				window.parent.showFormDialog('<@t.page "file.upload"/>', $('#upload-modal'), function(form) {
+				window.parent.showFormDialog("<@t.message 'title.file-upload'/>", $('#upload-modal'), function(form) {
 					form.setForm({parentCode : parentCode});
 				}, function() {
 	    			$('.query').click();
 				});
 			}
 			function del(code) {
-				window.parent.showConfirm('是否确认删除该文件？', '<@t.page "file.delete"/>', function() {
+				window.parent.showConfirm("<@t.message 'file.delete'/>", "<@t.message 'title.file-delete'/>", function() {
 					var url = ctx + "/admin/file/delete";
 					window.parent.ajaxSubmit(url, {code: code}, function() {
 		    			$('.query').click();
@@ -51,7 +51,7 @@
 				var parentCode = $(".queryForm").find("input[name='parentCode']").val();
 				var url = ctx + "/admin/file/synchronize";
 				window.parent.ajaxSubmit(url, {parentCode : parentCode}, function() {
-					window.parent.showMsg("操作成功！", 1, function() {
+					window.parent.showMsg("<@t.message 'success'/>", 1, function() {
 		    			$('.query').click();
 					});
 				});
@@ -65,16 +65,16 @@
 	           	<div class="page-title-wrapper">
 					<div class="form-inline">
 						<div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
-							<span class="btn btn-info" onclick="createFile()" ><@t.page 'file.add-file'/></span>
+							<span class="btn btn-info" onclick="createFile()" ><@t.page 'btn.add-file'/></span>
 						</div>
 						<div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
-							<span class="btn btn-info" onclick="createDir()" ><@t.page 'file.add-dir'/></span>
+							<span class="btn btn-info" onclick="createDir()" ><@t.page 'btn.add-dir'/></span>
 						</div>
 						<div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
-							<span class="btn btn-info" onclick="uploadFile()" ><@t.page 'file.upload'/></span>
+							<span class="btn btn-info" onclick="uploadFile()" ><@t.page 'btn.upload'/></span>
 						</div>
 						<div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
-							<span class="btn btn-info" onclick='refresh()'><@t.page 'file.refresh'/></span>
+							<span class="btn btn-info" onclick='refresh()'><@t.page 'btn.refresh'/></span>
 						</div>
 						<span class="query"></span>
 					</div>
@@ -110,7 +110,7 @@
 					                        {#if $T.page.param.parentCode != '-'}
 					                            <tr role="row" >
 					                                <td class="text-center" style="font-size: 1.5rem;"><i id="icon-view" class="pe-7s-back"></i></td>
-					                                <td class="text-left"><a href="#" onclick="query({$T.page.param.parentCode})">返回上级</a></td>
+					                                <td class="text-left"><a href="#" onclick="query({$T.page.param.parentCode})"><@t.page 'btn.back'/></a></td>
 					                                <td class="text-center"></td>
 					                                <td class="text-center"></td>
 					                                <td class="text-center"></td>
@@ -139,7 +139,7 @@
 					                                <td class="text-center">
 					                                	{#if $T.Result.type.code == 'file'}
 					                                		{#if $T.Result.editable}
-					                                			<button class="btn btn-primary btn-sm" onclick="window.parent.addTab('file-add', '<@t.page 'file.add-file'/>', '/admin/file/edit/{$T.Result.code}')"><@t.page 'btn.edit'/></button>
+					                                			<button class="btn btn-primary btn-sm" onclick="window.parent.addTab('file-add', '<@t.message 'title.file-modify'/>', '/admin/file/edit/{$T.Result.code}')"><@t.page 'btn.edit'/></button>
 					                                		{#else}
 					                                			<a class="btn btn-primary btn-sm" href="${site.path}{$T.Result.path}" target="_blank"><@t.page 'btn.view'/></a>
 					                                		{#/if}

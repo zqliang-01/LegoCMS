@@ -41,7 +41,7 @@ public class SysPermissionDao extends GenericDao<SysPermission> implements ISysP
 
     @Override
     public List<SysPermission> findAll() {
-        QueryHandler<SysPermission> query = createQueryHandler("FROM {0} p", SysPermission.class);
+        QueryHandler<SysPermission> query = createQueryHandler("FROM {0} p");
         query.order("p.sort");
         return query.findList();
     }

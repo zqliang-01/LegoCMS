@@ -18,9 +18,11 @@ public interface ICmsFileService {
 
     Page<CmsFileInfo> findBy(String parentCode, String siteCode, int pageIndex, int pageSize);
 
-    void save(CmsFileVo vo, InputStream ins);
+    void add(String operator, CmsFileVo vo, InputStream ins);
 
-    void delete(String code, String siteCode);
+    void modify(String operator, CmsFileVo vo, InputStream ins);
 
-    void synchronizeDirectory(String parentCode, String siteCode);
+    void delete(String operator, String code, String siteCode);
+
+    void synchronizeDirectory(String operator, String parentCode, String siteCode);
 }

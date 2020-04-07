@@ -14,11 +14,13 @@ public interface ISysUserService {
 
     Page<SysUserInfo> findBy(QuerySysUserVo vo, int pageIndex, int pageSize);
 
-    void active(String code);
+    void active(String operator, String code);
 
-    void invalid(String code);
+    void invalid(String operator, String code);
 
-    void save(SysUserVo vo);
+    void add(String operator, SysUserVo vo);
 
-    void changePassword(String code, String newPassword);
+    void modify(String operator, SysUserVo vo);
+
+    void changePassword(String operator, String userCode, String originalPassword, String newPassword);
 }

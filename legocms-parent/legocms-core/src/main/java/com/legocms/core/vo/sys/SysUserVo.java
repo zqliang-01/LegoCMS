@@ -17,6 +17,7 @@ public class SysUserVo extends Vo {
     private String code;
     private String name;
     private String status;
+    private String siteCode;
     private TypeInfo organization;
     private List<String> roles;
 }

@@ -5,11 +5,11 @@ import javax.persistence.Entity;
 
 @Entity
 @DiscriminatorValue("OrganizationStatus")
-public class OrganizationStatus extends SysSimpleType {
+public class SysOrganizationStatus extends SysSimpleType {
 
-    public OrganizationStatus() { }
+    public SysOrganizationStatus() { }
 
-    public OrganizationStatus(String code, String name, int sequence) {
+    public SysOrganizationStatus(String code, String name, int sequence) {
         super(code, name, sequence);
     }
 }

@@ -12,6 +12,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
 import com.legocms.core.common.DateUtil;
+import com.legocms.core.common.StringUtil;
 import com.legocms.core.exception.CoreException;
 import com.legocms.core.vo.Vo;
 import com.legocms.data.sql.IdGenerator;
@@ -40,7 +41,7 @@ public class BaseEntity {
     protected BaseEntity(String code) {
         super();
         this.id = IdGenerator.getCurrent().nextId(this);
-        this.code = (code == null ? id.toString() : code);
+        this.code = (StringUtil.isBlank(code) ? id.toString() : code);
         this.setVersion(1);
         this.createTime = DateUtil.getCurrentDate();
     }
@@ -97,7 +98,7 @@ public class BaseEntity {
     }
 
     protected void doBuildReadableSnapshot(Map<String, String> attributes) {
-        throw new CoreException("未实现");
+        throw new CoreException("未实现 Snapshot");
     }
 
     public void checkVersion(Integer version) {

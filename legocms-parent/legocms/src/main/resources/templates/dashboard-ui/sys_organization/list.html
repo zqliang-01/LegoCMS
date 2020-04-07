@@ -4,7 +4,78 @@
 		<meta charset="utf-8">
         <meta name="description" content="LegoCMS">
         <#include "../include_page/link.html"/>
-        <script type="text/javascript" src="${res}/assets/js/cms/sys-organization.js"></script>
+        <script type="text/javascript">
+        $(function(){
+        	refreshTree();
+        	function refreshTree() {
+        		var treeUrl = ctx + "/admin/directive/sysOrganizationTree";
+        		ajaxSubmit(treeUrl, null, function(data) {
+        			var setting = {
+        				data: {
+        					simpleData: {
+        						enable: true,
+        						idKey : 'code',
+        						pIdKey : "parentCode"
+        					}
+        				},
+        				callback: {
+        					onClick: function(event, treeId, treeNode) {
+        						refreshForm(treeNode.code);
+        					}
+        				}
+        			};
+        			$.fn.zTree.init($("#organizationTree"), setting, data.simpleTree);
+        		});
+        	}
+        	
+        	function refreshForm(code) {
+        		var detailUrl = ctx + "/admin/directive/sysOrganization";
+        	    ajaxSubmit(detailUrl, 'code=' + code, function(data) {
+        	    	var organization = data.organization;
+        	    	var form = $('#save-organization-form');
+        	    	form.resetForm();
+        	    	form.setForm(organization);
+        	    	form.find("[name=code]").attr("readonly", "");
+            		form.find("input[name=action]").val('modify');
+        	    })
+        	}
+        	
+        	$('#add').click(function() {
+        		var nodes = getTree('organizationTree').getSelectedNodes();
+        		if (isEmpty(nodes)) {
+        			showMsg("<@t.message 'verify.parent-organization'/>", 5);
+        			return;
+        		}
+        		var form = $('#save-organization-form');
+        		form.resetForm();
+        		form.find("input[name=code]").removeAttr("readonly");
+        		form.find("input[name=action]").val('add');
+        		form.find("input[name='parent.code']").val(nodes[0].code);
+        	});
+        	
+        	$('#delete').click(function() {
+        		var code = $('#save-organization-form').find("[name=code]").val();
+        		$('#save-organization-form').find("input[name=action]").val('delete');
+        		if (isEmpty(code)) {
+        			showMsg("<@t.message 'verify.organization-delete'/>", 5);
+        			return;
+        		}
+        		window.parent.showConfirm("<@t.message 'organization.delete'/>", "<@t.message 'title.organization-delete'/>", function(){
+        			var url = ctx + "/admin/organization?action=delete";
+        			ajaxSubmit(url, "code=" + code, function() {
+        				$('#save-organization-form').resetForm();
+        				refreshTree();
+        			});
+        		})
+        	});
+        	
+        	ajaxForm($('#save-organization-form'), function() {
+        		refreshTree();
+        		var code = $('#save-organization-form').find("[name=code]").val();
+        		refreshForm(code);
+        	});
+        })
+        </script>
     </head>
     <body>
        	<div class="row">
@@ -18,13 +89,14 @@
        		<div class="col-md-9">
 				<div class="main-card card">
 					<div class="card-body">
-		       			<form id="save-organization-form" action="${ctx}/admin/organization/save" onsubmit="return false;" class="needs-validation" novalidate>
+		       			<form id="save-organization-form" action="${ctx}/admin/organization" onsubmit="return false;" class="needs-validation" novalidate>
+							<input name="action" type="hidden">
 							<div class="position-relative row form-group">
 								<label class="col-sm-2 col-form-label"><@t.page 'list.code'/></label>
 								<div class="col-sm-10">
 									<input name="code" type="text" class="form-control" required>
 									<div class="invalid-feedback">
-                                        Please provide a valid Code
+                                        <@t.message 'verify.code'/>
                                     </div>
 								</div>
 							</div>
@@ -33,7 +105,7 @@
 								<div class="col-sm-10">
 									<input name="name" type="text" class="form-control" required>
 									<div class="invalid-feedback">
-                                        Please provide a valid name
+                                        <@t.message 'verify.name'/>
                                     </div>
 								</div>
 							</div>
@@ -48,7 +120,7 @@
 										</@sysOrganizationStatus>
 									</select>
 									<div class="invalid-feedback">
-                                        Please provide a valid status
+                                        <@t.message 'verify.status'/>
                                     </div>
 								</div>
 							</div>

@@ -12,7 +12,9 @@ public interface ICmsPlaceService {
 
     CmsPlaceInfo findBy(String code);
 
-    void save(CmsPlaceVo vo);
+    String add(String operator, CmsPlaceVo vo);
 
-    void delete(String code);
+    String modify(String operator, CmsPlaceVo vo);
+
+    void delete(String operator, String code);
 }

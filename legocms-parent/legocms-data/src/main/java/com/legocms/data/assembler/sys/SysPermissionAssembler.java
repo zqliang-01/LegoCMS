@@ -52,7 +52,7 @@ public class SysPermissionAssembler extends AbstractAssembler<SysPermissionInfo,
         info.setCreateTime(entity.getCreateTime());
         info.setSort(entity.getSort());
         if (entity.getParent() != null) {
-            info.setParent(typeInfoAssembler.create(entity));
+            info.setParent(typeInfoAssembler.create(entity.getParent()));
         }
         List<SysPermissionLang> langs = permissionLangDao.findBy(entity);
         info.setLang(typeInfoAssembler.create(langs));

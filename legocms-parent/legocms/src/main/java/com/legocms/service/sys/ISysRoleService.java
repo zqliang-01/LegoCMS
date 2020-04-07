@@ -12,11 +12,13 @@ public interface ISysRoleService {
 
     Page<SysRoleInfo> findBy(String code, String name, int pageIndex, int pageSize);
 
-    void authorize(String roleCode, List<String> permissionCodes);
+    void authorize(String operator, String roleCode, List<String> permissionCodes);
 
-    void save(String code, String name);
+    void add(String operator, String code, String name);
 
-    void delete(String code);
+    void modify(String operator, String code, String name);
+
+    void delete(String operator, String code);
 
     SysRoleInfo findByCode(String code);
 }

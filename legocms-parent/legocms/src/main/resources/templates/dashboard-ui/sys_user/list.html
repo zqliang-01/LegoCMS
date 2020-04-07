@@ -4,7 +4,33 @@
 		<meta charset="utf-8">
         <meta name="description" content="LegoCMS">
         <#include "../include_page/link.html"/>
-		<script type="text/javascript" src="${res}/assets/js/cms/sys-user.js"></script>
+		<script type="text/javascript">
+		$(function() {
+			var url = ctx + "/admin/directive/sysUserList";
+			initMyPagination("MyPagination-user-list", "Template-user-list", url);
+		})
+
+		function active(code) {
+			window.parent.showConfirm("<@t.message 'user.active'/>", "<@t.message 'title.user-active'/>", function(){
+				var url = ctx + "/admin/user?action=active";
+				ajaxSubmit(url, "code=" + code, function() {
+					showMsg("<@t.message 'success'/>", 1, function() {
+						myPagination.reload('MyPagination-user-list');
+					});
+				});
+			})
+		}
+		function invalid(code) {
+			window.parent.showConfirm("<@t.message 'user.invalid'/>", "<@t.message 'title.user-invalid'/>", function(){
+				var url = ctx + "/admin/user?action=invalid";
+				ajaxSubmit(url, "code=" + code, function() {
+					showMsg("<@t.message 'success'/>", 1, function() {
+						myPagination.reload('MyPagination-user-list');
+					});
+				});
+			})
+		}
+		</script>
     </head>
     <body>
         <div class="app-main__inner" id="MyPagination-user-list">
@@ -34,7 +60,7 @@
 		                 	<button type="button" data-toggle="collapse" href="#advanced-search" class="btn btn-danger"><@t.page 'btn.advance-query'/></button>
 		                 </div>
 		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
-		                 	<button class="btn btn-info"onclick="window.parent.addTab('user-add', '创建员工', '/admin/user/edit/1_#')" ><@t.page 'btn.create'/></button>
+		                 	<button class="btn btn-info"onclick="window.parent.addTab('user-add', '<@t.message 'title.user-create'/>', '/admin/user/edit/1_#')" ><@t.page 'btn.create'/></button>
 		                 </div>
                      </div>
                 </div>
@@ -43,7 +69,7 @@
 					<div class="page-title-wrapper">
 						<div class="form-inline">
 							<div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
-								<div class="btn date-inline selectdate" title="创建时间">
+								<div class="btn date-inline selectdate" title="<@t.page 'list.create-time'/>">
 									<i class="fa fa-calendar"></i>
 									<span></span>
 									<input type="hidden" name="createStart"  value="">
@@ -94,7 +120,7 @@
 					                                	{#/if}
 					                                </td>
 					                                <td class="text-center">
-					                                	<button onclick="window.parent.addTab('user-edit', '员工修改', '/admin/user/edit/{$T.Result.code}')" class="btn btn-primary btn-sm"><@t.page 'btn.edit'/></button>
+					                                	<button onclick="window.parent.addTab('user-edit', '<@t.message 'title.user-modify'/>', '/admin/user/edit/{$T.Result.code}')" class="btn btn-primary btn-sm"><@t.page 'btn.edit'/></button>
 					                                	{#if $T.Result.status.code == 'Using'}
 					                                		<button onclick="invalid('{$T.Result.code}')" class="btn btn-primary btn-sm"><@t.page 'btn.invalid'/></button>
 					                                	{#else}

@@ -1,6 +1,8 @@
 package com.legocms.data.entities.sys;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,7 +18,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import com.legocms.data.base.BaseEntity;
-import com.legocms.data.entities.sys.simpletype.UserStatus;
+import com.legocms.data.entities.sys.simpletype.SysUserStatus;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -37,11 +39,11 @@ public class SysUser extends BaseEntity {
     @Fetch(FetchMode.SUBSELECT)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JoinTable(name = "sys_user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
-    private List<SysRole> roles;
+    private List<SysRole> roles = new ArrayList<SysRole>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "status", nullable = false)
-    private UserStatus status;
+    private SysUserStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "site_id")
@@ -51,5 +53,24 @@ public class SysUser extends BaseEntity {
 
     public SysUser(String code) {
         super(code);
+    }
+
+    @Override
+    protected void doBuildReadableSnapshot(Map<String, String> attributes) {
+        attributes.put("账号", getCode());
+        attributes.put("用户名", getName());
+        attributes.put("密码", password);
+        attributes.put("部门 ", organization.getName());
+        attributes.put("状态", status.getName());
+        List<String> roleNames = new ArrayList<String>();
+        for (SysRole role : roles) {
+            roleNames.add(role.getName());
+        }
+        attributes.put("角色", roleNames.toString());
+        String siteName = "";
+        if (site != null) {
+            siteName = site.getName();
+        }
+        attributes.put("管理站点", siteName);
     }
 }

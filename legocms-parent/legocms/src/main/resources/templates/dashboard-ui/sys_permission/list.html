@@ -4,7 +4,93 @@
 		<meta charset="utf-8">
         <meta name="description" content="LegoCMS">
         <#include "../include_page/link.html"/>
-		<script type="text/javascript" src="${res}/assets/js/cms/sys-permission.js"></script>
+		<script type="text/javascript">
+		$(function(){
+			refreshTree();
+			function refreshTree() {
+				var treeUrl = ctx + "/admin/directive/sysPermissionTree";
+				ajaxSubmit(treeUrl, null, function(data) {
+					var setting = {
+						data: {
+							simpleData: {
+								enable: true,
+								idKey : 'code',
+								pIdKey : "parentCode"
+							}
+						},
+						callback: {
+							onClick: function(event, treeId, treeNode) {
+								refreshForm(treeNode.code);
+							}
+						}
+					};
+					$.fn.zTree.init($("#permissionTree"), setting, data.simpleTree);
+				});
+			}
+			
+			function refreshForm(code) {
+				var detailUrl = ctx + "/admin/directive/sysPermission";
+			    ajaxSubmit(detailUrl, 'code=' + code, function(data) {
+			    	var permission = data.permission;
+			    	var form = $('#save-permission-form');
+			    	form.resetForm();
+			    	form.setForm(permission);
+			    	form.find("input[name=code]").attr("readonly", "");
+					form.find("input[name='action']").val('modify');
+			    	refreshIcon(permission.icon);
+			    })
+			}
+			
+			function refreshIcon(icon) {
+		    	$('#icon-view').removeClass();
+		    	$('#icon-view').addClass(icon);
+			}
+			
+			$('#add').click(function() {
+				var nodes = getTree('permissionTree').getSelectedNodes();
+				if (isEmpty(nodes)) {
+					showMsg("<@t.message 'verify.parent-permission'/>", 5);
+					return;
+				}
+				var form = $('#save-permission-form');
+				form.resetForm();
+				form.find("input[name=code]").removeAttr("readonly");
+				form.find("input[name='parent.code']").val(nodes[0].code);
+				form.find("input[name='action']").val('add');
+				refreshIcon('');
+			});
+			
+			$('#delete').click(function() {
+				var code = $('#save-permission-form').find("[name=code]").val();
+				if (isEmpty(code)) {
+					showMsg("<@t.message 'verify.permission-delete'/>", 5);
+					return;
+				}
+				window.parent.showConfirm("<@t.message 'permission.delete'/>", "<@t.message 'title.permission-delete'/>", function(){
+					var url = ctx + "/admin/permission?action=delete";
+					ajaxSubmit(url, "code=" + code, function() {
+						$('#save-permission-form').resetForm();
+						refreshTree();
+						refreshIcon('');
+					});
+				})
+			});
+			
+			$('#chose-icon').click(function(){
+				window.parent.showSimpleDialog("<@t.message 'title.icon-select'/>", $('#icon-modal'), function(id){
+					var form = $('#save-permission-form');
+					form.find("input[name='icon']").val(id.find('p').html());
+					refreshIcon(id.find('p').html());
+				})
+			})
+			
+			ajaxForm($('#save-permission-form'), function() {
+				refreshTree();
+				var code = $('#save-permission-form').find("[name=code]").val();
+				refreshForm(code);
+			});
+		});
+		</script>
     </head>
     <body>
        	<div class="row">
@@ -18,13 +104,14 @@
        		<div class="col-md-9">
 				<div class="main-card card">
 					<div class="card-body">
-		       			<form id="save-permission-form" action="${ctx}/admin/permission/save" onsubmit="return false;" class="needs-validation" novalidate>
+		       			<form id="save-permission-form" action="${ctx}/admin/permission" onsubmit="return false;" class="needs-validation" novalidate>
+							<input name="action" type="hidden">
 							<div class="position-relative row form-group">
 								<label class="col-sm-2 col-form-label"><@t.page 'list.code'/></label>
 								<div class="col-sm-10">
 									<input name="code" type="text" class="form-control" required>
 									<div class="invalid-feedback">
-                                        Please provide a valid Code
+                                        <@t.message 'verify.code'/>
                                     </div>
 								</div>
 							</div>
@@ -38,7 +125,7 @@
 												<input name="lang[${langType_index}].name" type="text" required>
 				                            </div>
 											<div class="invalid-feedback">
-		                                        Please provide a valid name
+                                        		<@t.message 'verify.name'/>
 		                                    </div>
 	                                    </div>
 					                </div>
@@ -58,7 +145,7 @@
 										<option value="false"><@t.page 'select.false'/></option>
 									</select>
 									<div class="invalid-feedback">
-                                        Please provide a valid menu
+                                     	<@t.message 'verify.menu'/>
                                     </div>
 								</div>
 							</div>
@@ -67,7 +154,7 @@
 								<div class="col-sm-10">
 									<input name="sort" type="text" class="form-control" required>
 									<div class="invalid-feedback">
-                                        Please provide a valid sort
+                                     	<@t.message 'verify.sort'/>
                                     </div>
 								</div>
 							</div>
@@ -78,10 +165,13 @@
 			                            <div style="text-align: center;border: #e9ecef solid 1px;border-radius: .25rem;padding: 0px 10px;font-size: 1.5rem;">
 											<i id="icon-view" class="pe-7s-bandaid"></i>
 										</div>
-										<input type="text" name="icon" class="form-control" readonly>
+										<input type="text" name="icon" class="form-control">
 			                            <div class="input-group-append">
 			                                <span class="btn btn-secondary" id="chose-icon"><@t.page 'btn.chose-icon'/></span>
 			                            </div>
+										<div class="invalid-feedback">
+                                     		<@t.message 'verify.icon'/>
+	                                    </div>
 									</div>
 								</div>
 							</div>

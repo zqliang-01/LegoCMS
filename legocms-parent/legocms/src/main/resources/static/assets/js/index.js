@@ -1,6 +1,9 @@
 $(function(){
 	initDatepicker($('.selectdate'), 2);
     initDatepicker($('.singledate'), 1);
+	$('.multiple').select2({
+		width: '100%'
+	});
     function initDatepicker(obj, isone) {
         if (isone == 2) {
             var options = {};

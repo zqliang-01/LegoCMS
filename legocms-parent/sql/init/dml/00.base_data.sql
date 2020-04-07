@@ -6,6 +6,10 @@ CALL addSysSimpleType('Using', '在用', 'UserStatus', 1);
 CALL addSysSimpleType('Terminated', '停用', 'UserStatus', 2);
 CALL addSysSimpleType('Using', '在用', 'OrganizationStatus', 1);
 CALL addSysSimpleType('Terminated', '停用', 'OrganizationStatus', 2);
+CALL addSysSimpleType('add', '增加', 'ActionType', 1);
+CALL addSysSimpleType('modify', '修改', 'ActionType', 2);
+CALL addSysSimpleType('delete', '删除', 'ActionType', 3);
+CALL addSysSimpleType('synchronize', '同步', 'ActionType', 4);
 
 CALL addCmsSimpleType('file', '文件', 'TemplateType', 1);
 CALL addCmsSimpleType('dir', '目录', 'TemplateType', 2);
@@ -32,7 +36,7 @@ CALL addPermissionLang('en', 'System Management', 'admin');
 
 CALL addPermission('user', 'admin', 'pe-7s-add-user', '/admin/user/init', 1, 1);
 CALL addPermissionLang('zh', '用户管理', 'user');
-CALL addPermissionLang('en', 'Employee Management', 'user');
+CALL addPermissionLang('en', 'User Management', 'user');
 
 CALL addPermission('user-edit', 'user', null, null, 0, 2);
 CALL addPermissionLang('zh', '修改', 'user-edit');
@@ -78,7 +82,11 @@ CALL addPermission('permission-delete', 'permission', null, null, 0, 2);
 CALL addPermissionLang('zh', '删除', 'permission-delete');
 CALL addPermissionLang('en', 'delete', 'permission-delete');
 
-/** =======系统管理====== */
+CALL addPermission('log', 'admin', 'pe-7s-server', '/admin/log/init', 1, 4);
+CALL addPermissionLang('zh', '操作日志', 'log');
+CALL addPermissionLang('en', 'Operation Log', 'log');
+
+/** =======站点维护====== */
 CALL addPermission('site-maintenance', 'root', 'pe-7s-tools', null, 1, 2);
 CALL addPermissionLang('zh', '站点维护', 'site-maintenance');
 CALL addPermissionLang('en', 'Site Maintenance', 'site-maintenance');
@@ -141,6 +149,10 @@ CALL addPermission('file-edit', 'file', null, null, 0, 1);
 CALL addPermissionLang('zh', '修改', 'file-edit');
 CALL addPermissionLang('en', 'edit', 'file-edit');
 
+CALL addPermission('file-synchronize', 'file', null, null, 0, 1);
+CALL addPermissionLang('zh', '同步', 'file-synchronize');
+CALL addPermissionLang('en', 'synchronize', 'file-synchronize');
+
 CALL addPermission('file-delete', 'file', null, null, 0, 2);
 CALL addPermissionLang('zh', '删除', 'file-delete');
 CALL addPermissionLang('en', 'delete', 'file-delete');
@@ -174,4 +186,6 @@ CALL addRolePermission('super', 'place-edit');
 CALL addRolePermission('super', 'place-delete');
 CALL addRolePermission('super', 'file');
 CALL addRolePermission('super', 'file-edit');
+CALL addRolePermission('super', 'file-synchronize');
 CALL addRolePermission('super', 'file-delete');
+CALL addRolePermission('super', 'log');

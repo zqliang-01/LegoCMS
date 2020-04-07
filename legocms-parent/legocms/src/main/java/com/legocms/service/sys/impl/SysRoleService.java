@@ -8,11 +8,13 @@ import org.springframework.stereotype.Service;
 import com.legocms.core.dto.Page;
 import com.legocms.core.dto.TypeCheckInfo;
 import com.legocms.core.dto.sys.SysRoleInfo;
+import com.legocms.data.act.sys.AddSysRoleAction;
+import com.legocms.data.act.sys.DeleteSysRoleAction;
+import com.legocms.data.act.sys.ModifySysRoleAction;
+import com.legocms.data.act.sys.ModifySysRoleAuthorizeAction;
 import com.legocms.data.assembler.TypeInfoAssembler;
 import com.legocms.data.assembler.sys.SysRoleAssembler;
-import com.legocms.data.dao.sys.ISysPermissionDao;
 import com.legocms.data.dao.sys.ISysRoleDao;
-import com.legocms.data.entities.sys.SysPermission;
 import com.legocms.data.entities.sys.SysRole;
 import com.legocms.service.BaseService;
 import com.legocms.service.sys.ISysRoleService;
@@ -22,9 +24,6 @@ public class SysRoleService extends BaseService implements ISysRoleService {
 
     @Autowired
     private ISysRoleDao roleDao;
-
-    @Autowired
-    private ISysPermissionDao permissionDao;
 
     @Autowired
     private SysRoleAssembler roleAssembler;
@@ -46,27 +45,23 @@ public class SysRoleService extends BaseService implements ISysRoleService {
     }
 
     @Override
-    public void authorize(String roleCode, List<String> permissionCodes) {
-        SysRole role = roleDao.findByCode(roleCode);
-        List<SysPermission> permissions = permissionDao.findByCodes(permissionCodes);
-        role.setPermissions(permissions);
-        roleDao.save(role);
+    public void authorize(String operator, String roleCode, List<String> permissionCodes) {
+        new ModifySysRoleAuthorizeAction(operator, roleCode, permissionCodes).run();
     }
 
     @Override
-    public void save(String code, String name) {
-        SysRole role = roleDao.findByUnsureCode(code);
-        if (role == null) {
-            role = new SysRole(code);
-        }
-        role.setName(name);
-        roleDao.save(role);
+    public void add(String operator, String code, String name) {
+        new AddSysRoleAction(operator, code, name).run();
     }
 
     @Override
-    public void delete(String code) {
-        SysRole role = roleDao.findByCode(code);
-        roleDao.delete(role);
+    public void modify(String operator, String code, String name) {
+        new ModifySysRoleAction(operator, code, name).run();
+    }
+
+    @Override
+    public void delete(String operator, String code) {
+        new DeleteSysRoleAction(operator, code).run();
     }
 
     @Override

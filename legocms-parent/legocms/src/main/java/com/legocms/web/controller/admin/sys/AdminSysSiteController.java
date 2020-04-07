@@ -39,23 +39,31 @@ public class AdminSysSiteController extends AdminController {
         return ViewResponse.ok(AdminView.SYS_SITE_EDIT).put("code", code);
     }
 
-    @PostMapping("/manage")
+    @PostMapping(params = "action=manage")
     @RequiresPermissions(SysPermissionCode.SITE_EDIT)
     public JsonResponse manage(String code) {
-        siteService.manage(getUserCode(), code);
+        siteService.manage(getUserCode(), getUserCode(), code);
         refreshUser();
         return JsonResponse.ok();
     }
 
-    @PostMapping("/save")
+    @PostMapping(params = "action=add")
     @RequiresPermissions(SysPermissionCode.SITE_EDIT)
-    public JsonResponse save(SysSiteVo vo) {
-        siteService.save(vo);
+    public JsonResponse add(SysSiteVo vo) {
+        siteService.add(getUserCode(), vo);
         refreshUser();
         return JsonResponse.ok();
     }
 
-    @PostMapping("/delete")
+    @PostMapping(params = "action=modify")
+    @RequiresPermissions(SysPermissionCode.SITE_EDIT)
+    public JsonResponse modify(SysSiteVo vo) {
+        siteService.modify(getUserCode(), vo);
+        refreshUser();
+        return JsonResponse.ok();
+    }
+
+    @PostMapping(params = "action=delete")
     @RequiresPermissions(SysPermissionCode.SITE_DELETE)
     public JsonResponse delete(String code) {
         siteService.delete(getUserCode(), code);

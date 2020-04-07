@@ -28,18 +28,26 @@ public class AdminSysOrganizationController extends AdminController {
         return ViewResponse.ok(AdminView.SYS_ORGANIZATION_LIST);
     }
 
-    @PostMapping("/save")
+    @PostMapping(params = "action=add")
     @RequiresPermissions(SysPermissionCode.ORGANIZATION_EDIT)
-    public JsonResponse save(SysOrganizationVo vo) {
-        organizationService.save(vo);
+    public JsonResponse add(SysOrganizationVo vo) {
+        organizationService.add(getUserCode(), vo);
         refreshUser();
         return JsonResponse.ok();
     }
 
-    @PostMapping("/delete")
+    @PostMapping(params = "action=modify")
+    @RequiresPermissions(SysPermissionCode.ORGANIZATION_EDIT)
+    public JsonResponse modify(SysOrganizationVo vo) {
+        organizationService.modify(getUserCode(), vo);
+        refreshUser();
+        return JsonResponse.ok();
+    }
+
+    @PostMapping(params = "action=delete")
     @RequiresPermissions(SysPermissionCode.ORGANIZATION_DELETE)
     public JsonResponse delete(String code) {
-        organizationService.delete(code);
+        organizationService.delete(getUserCode(), code);
         return JsonResponse.ok();
     }
 

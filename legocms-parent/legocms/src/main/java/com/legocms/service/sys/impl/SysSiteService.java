@@ -6,13 +6,13 @@ import org.springframework.stereotype.Service;
 import com.legocms.core.dto.Page;
 import com.legocms.core.dto.sys.SysSiteInfo;
 import com.legocms.core.vo.sys.SysSiteVo;
+import com.legocms.data.act.sys.AddSysSiteAction;
+import com.legocms.data.act.sys.DeleteSysSiteAction;
+import com.legocms.data.act.sys.ModifySysSiteAction;
+import com.legocms.data.act.sys.ModifySysSiteManageAction;
 import com.legocms.data.assembler.sys.SysSiteAssembler;
-import com.legocms.data.dao.sys.ISysOrganizationDao;
 import com.legocms.data.dao.sys.ISysSiteDao;
-import com.legocms.data.dao.sys.ISysUserDao;
-import com.legocms.data.entities.sys.SysOrganization;
 import com.legocms.data.entities.sys.SysSite;
-import com.legocms.data.entities.sys.SysUser;
 import com.legocms.service.BaseService;
 import com.legocms.service.sys.ISysSiteService;
 
@@ -21,12 +21,6 @@ public class SysSiteService extends BaseService implements ISysSiteService {
 
     @Autowired
     private ISysSiteDao siteDao;
-
-    @Autowired
-    private ISysUserDao userDao;
-
-    @Autowired
-    private ISysOrganizationDao organizationDao;
 
     @Autowired
     private SysSiteAssembler siteAssembler;
@@ -47,35 +41,22 @@ public class SysSiteService extends BaseService implements ISysSiteService {
     }
 
     @Override
-    public void save(SysSiteVo vo) {
-        SysSite site = siteDao.findByUnsureCode(vo.getCode());
-        if (site == null) {
-            site = new SysSite(vo.getCode());
-        }
-        site.setName(vo.getName());
-        site.setPath(vo.getPath());
-        site.setDynamicPath(vo.getDynamicPath());
-        SysOrganization organization = organizationDao.findByCode(vo.getOrganization().getCode());
-        site.setOrganization(organization);
-        siteDao.save(site);
+    public void add(String operator, SysSiteVo vo) {
+        new AddSysSiteAction(operator, vo).run();
     }
 
     @Override
-    public void manage(String userCode, String code) {
-        SysUser user = userDao.findByCode(userCode);
-        SysSite site = siteDao.findByCode(code);
-        user.setSite(site);
-        userDao.save(user);
+    public void modify(String operator, SysSiteVo vo) {
+        new ModifySysSiteAction(operator, vo).run();
     }
 
     @Override
-    public void delete(String userCode, String code) {
-        SysSite site = siteDao.findByCode(code);
-        SysUser user = userDao.findByCode(userCode);
-        if (site.equals(user.getSite())) {
-            user.setSite(null);
-        }
-        userDao.save(user);
-        siteDao.delete(site);
+    public void manage(String operator, String userCode, String code) {
+        new ModifySysSiteManageAction(operator, code, userCode).run();
+    }
+
+    @Override
+    public void delete(String operator, String code) {
+        new DeleteSysSiteAction(operator, code).run();
     }
 }

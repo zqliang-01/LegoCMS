@@ -8,19 +8,18 @@
 		$(function(){
 			ajaxForm($('#save-user-form'), function() {
 		    	$('#save-user-form').find("[name=code]").attr("readonly", "");
+		    	$('#save-user-form').find("[name=action]").val('modify');
 			});
 			$('#select-org').click(function(){
 				var orgUrl = ctx + "/admin/directive/sysOrganizationTree";
 				ajaxSubmit(orgUrl, null, function(data) {
-					window.parent.showSimpleTree('组织选择', data.simpleTree, function(treeNode){
+					data.simpleTree.selectParent = true;
+					window.parent.showSimpleTree("<@t.message 'title.organization-select'/>", data.simpleTree, function(treeNode){
 					    $("input[name='organization.name']").val(treeNode.name);
 					    $("input[name='organization.code']").val(treeNode.code);
 					})
 				});
 			})
-			$('.multiple').select2({
-				width: '100%'
-			});
 		});
 	</script>
 </head>
@@ -30,17 +29,19 @@
 		<div class="main-card mb-3 card">
 			<div class="card-body">
 				<h5 class="card-title"><@t.page 'employee.info'/></h5>
-				<form id="save-user-form" action="${ctx}/admin/user/save" ajax="true" onsubmit="return false;" class="needs-validation" novalidate>
+				<form id="save-user-form" action="${ctx}/admin/user" ajax="true" onsubmit="return false;" class="needs-validation" novalidate>
 					<div class="position-relative row form-group">
 						<label class="col-sm-2 col-form-label"><@t.page 'list.code'/></label>
 						<div class="col-sm-10">
 							<#if (userInfo.code)??>
+								<input name="action" type="hidden" value="modify" required>
 								<input name="code" placeholder="Code" type="text" class="form-control" value="${(userInfo.code)!''}" readonly required>
 							<#else>
+								<input name="action" type="hidden" value="add" required>
 								<input name="code" placeholder="Code" type="text" class="form-control" required>
 							</#if>
 							<div class="invalid-feedback">
-                                Please provide a valid code
+                                <@t.message 'verify.code'/>
                             </div>
 						</div>
 					</div>
@@ -49,7 +50,7 @@
 						<div class="col-sm-10">
 							<input name="name" placeholder="Name" type="text" class="form-control" value="${(userInfo.name)!''}" required>
 							<div class="invalid-feedback">
-                                Please provide a valid name
+                                <@t.message 'verify.name'/>
                             </div>
 						</div>
 					</div>
@@ -68,7 +69,7 @@
 								</@sysUserStatus>
 							</select>
 							<div class="invalid-feedback">
-                                Please provide a valid status
+                                <@t.message 'verify.status'/>
                             </div>
 						</div>
 					</div>
@@ -76,10 +77,13 @@
 						<label class="col-sm-2 col-form-label"><@t.page 'list.organization'/></label>
 						<div class="col-sm-10">
 							<div class="input-group">
-								<input type="text" class="form-control" name="organization.name" value="${(userInfo.organization.name)!''}" readonly required>
+								<input type="text" class="form-control" name="organization.name" value="${(userInfo.organization.name)!''}" required>
 								<input type="hidden" class="form-control" name="organization.code" value="${(userInfo.organization.code)!''}">
 	                            <div class="input-group-append">
 	                                <span id="select-org" class="btn btn-secondary"><@t.page 'btn.chose-organization'/></span>
+	                            </div>
+								<div class="invalid-feedback">
+	                                <@t.message 'verify.organization'/>
 	                            </div>
 							</div>
 						</div>

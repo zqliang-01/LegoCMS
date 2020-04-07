@@ -1,5 +1,7 @@
 package com.legocms.data.entities.sys;
 
+import java.util.Map;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -26,5 +28,12 @@ public class SysPermissionLang extends BaseEntity {
     public SysPermissionLang(SysPermission permission, String code) {
         super(code);
         this.permission = permission;
+    }
+
+    @Override
+    protected void doBuildReadableSnapshot(Map<String, String> attributes) {
+        attributes.put("编码", getCode());
+        attributes.put("名称", getName());
+        attributes.put("所属授权", permission.getCode());
     }
 }

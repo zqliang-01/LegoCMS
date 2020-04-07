@@ -1,18 +1,19 @@
 <noscript id="role-modal" data-form="#save-role-form" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-	<form id="save-role-form" action="${ctx}/admin/role/save" onsubmit="return false;" class="needs-validation" novalidate>
+	<form id="save-role-form" action="${ctx}/admin/role" onsubmit="return false;" class="needs-validation" novalidate>
 		<div class="modal-body">
+			<input name="action" type="hidden">
 			<div class="position-relative row form-group">
 				<label class="col-sm-3 col-form-label"><@t.page 'list.code'/></label>
 				<div class="col-sm-9">
 					<input name="code" type="text" class="form-control" required>
-					<div class="invalid-feedback">Please provide a valid code</div>
+					<div class="invalid-feedback"><@t.message 'verify.code'/></div>
 				</div>
 			</div>
 			<div class="position-relative row form-group">
 				<label class="col-sm-3 col-form-label"><@t.page 'list.name'/></label>
 				<div class="col-sm-9">
 					<input name="name" type="text" class="form-control" required>
-					<div class="invalid-feedback">Please provide a valid name</div>
+					<div class="invalid-feedback"><@t.message 'verify.name'/></div>
 				</div>
 			</div>
 		</div>

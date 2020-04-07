@@ -4,7 +4,53 @@
 		<meta charset="utf-8">
         <meta name="description" content="LegoCMS">
         <#include "../include_page/link.html"/>
-		<script type="text/javascript" src="${res}/assets/js/cms/sys-role.js"></script>
+		<script type="text/javascript">
+		$(function() {
+			var url = ctx + "/admin/directive/sysRoleList";
+			initMyPagination("MyPagination-role-list", "Template-role-list", url);
+		})
+		function permission(code, title) {
+			var url = ctx + "/admin/directive/sysPermissionCheckTree";
+			ajaxSubmit(url, "roleCode=" + code, function(data) {
+				window.parent.showCheckTree(title, data.simpleCheckTree, function(nodes){
+					var permissionCodes = new Array();
+					$.each(nodes, function(index,value){
+						permissionCodes.push(value.code);
+					});
+					var url = ctx + "/admin/role?action=authorize";
+					ajaxSubmit(url, { permisisons : permissionCodes, roleCode : code});
+				});
+			});
+		}
+		function edit(code, title) {
+			window.parent.showFormDialog(title, $('#role-modal'), function(form) {
+				var url = ctx + "/admin/directive/sysRole";
+				ajaxSubmit(url, "code=" + code, function(data) {
+					form.resetForm();
+					if (data.role) {
+						form.setForm(data.role);
+				    	form.find("[name=code]").attr("readonly", "");
+				    	form.find("[name=action]").val("modify");
+					}
+					else {
+						form.find("input[name=code]").removeAttr("readonly");
+				    	form.find("[name=action]").val("add");
+					}
+				});
+			},
+			function() {
+				myPagination.reload('MyPagination-role-list');
+			});
+		}
+		function del(code, title, tips) {
+			var url = ctx + "/admin/role?action=delete";
+			window.parent.showConfirm(tips, title, function(){
+				ajaxSubmit(url, "code=" + code, function(){
+					myPagination.reload('MyPagination-role-list');
+				});
+			});
+		}
+		</script>
     </head>
     <body>
         <div class="app-main__inner" id="MyPagination-role-list">
@@ -21,7 +67,7 @@
 		                 	<button class="btn btn-primary query"><@t.page 'btn.query'/></button>
 		                 </div>
 		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
-		                 	<button class="btn btn-info"onclick="edit('', '<@t.page 'role.title.create'/>')"><@t.page 'btn.create'/></button>
+		                 	<button class="btn btn-info"onclick="edit('', '<@t.message 'title.role-create'/>')"><@t.page 'btn.create'/></button>
 		                 </div>
                      </div>
                 </div>
@@ -56,9 +102,9 @@
 					                                <td>{$T.Result.name}</td>
 					                                <td class="text-center">{$T.Result.createTime}</td>
 					                                <td class="text-center">
-					                                	<button onclick="edit('{$T.Result.code}', '<@t.page 'role.title.modify'/>')" class="btn btn-primary btn-sm"><@t.page 'btn.edit'/></button>
-					                                	<button onclick="permission('{$T.Result.code}', '<@t.page 'role.title.permission'/>')" class="btn btn-primary btn-sm"><@t.page 'btn.authorization'/></button>
-					                                	<button onclick="del('{$T.Result.code}', '<@t.page 'role.title.delete'/>', '<@t.message 'tips.role.delete'/>')" class="btn btn-danger btn-sm"><@t.page 'btn.delete'/></button>
+					                                	<button onclick="edit('{$T.Result.code}', '<@t.message 'title.role-modify'/>')" class="btn btn-primary btn-sm"><@t.page 'btn.edit'/></button>
+					                                	<button onclick="permission('{$T.Result.code}', '<@t.message 'title.permission-select'/>')" class="btn btn-primary btn-sm"><@t.page 'btn.authorization'/></button>
+					                                	<button onclick="del('{$T.Result.code}', '<@t.message 'title.role-delete'/>', '<@t.message 'role.delete'/>')" class="btn btn-danger btn-sm"><@t.page 'btn.delete'/></button>
 					                                </td>
 					                            </tr>
 					                        {#/for}

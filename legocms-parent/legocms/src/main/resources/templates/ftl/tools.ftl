@@ -1,6 +1,5 @@
 <#ftl>
-<#macro message code>${springMacroRequestContext.getMessage(code)}</#macro>
-<#macro ma code args><#if args?is_enumerable>${springMacroRequestContext.getMessage(code, args)}<#else>${springMacroRequestContext.getMessage(code, [args])}</#if></#macro>
+<#macro message code args=''><#if args?is_enumerable>${springMacroRequestContext.getMessage('message.'+code)}<#elseif args?has_content>${springMacroRequestContext.getMessage('message.'+code, [args])}<#else>${springMacroRequestContext.getMessage('message.'+code)}</#if></#macro>
 <#macro menu code args=''><#if args?is_enumerable>${springMacroRequestContext.getMessage('menu.'+code)}<#elseif args?has_content>${springMacroRequestContext.getMessage('menu.'+code, [args])}<#else>${springMacroRequestContext.getMessage('menu.'+code)}</#if></#macro>
 <#macro page code args=''><#if args?is_enumerable>${springMacroRequestContext.getMessage('page.'+code)}<#elseif args?has_content>${springMacroRequestContext.getMessage('page.'+code, [args])}<#else>${springMacroRequestContext.getMessage('page.'+code)}</#if></#macro>
 <#macro cut string l=50 append=''>${string[0..*l]}<#if string?length gt l>${append}</#if></#macro>

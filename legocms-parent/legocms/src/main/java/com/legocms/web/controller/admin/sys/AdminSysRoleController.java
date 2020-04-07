@@ -34,25 +34,32 @@ public class AdminSysRoleController extends AdminController {
         return ViewResponse.ok(AdminView.SYS_ROLE_LIST);
     }
 
-    @PostMapping("/authorize")
+    @PostMapping(params = "action=authorize")
     @RequiresPermissions(SysPermissionCode.ROLE_AUTHORIZE)
-    public JsonResponse authorize(@RequestParam("permisisons[]") List<String> permisisons, String roleCode) {
-        roleService.authorize(roleCode, permisisons);
+    public JsonResponse authorize(@RequestParam(value = "permisisons[]", required = false) List<String> permisisons, String roleCode) {
+        roleService.authorize(getUserCode(), roleCode, permisisons);
         refreshUser();
         return JsonResponse.ok();
     }
 
-    @PostMapping("/save")
+    @PostMapping(params = "action=add")
     @RequiresPermissions(SysPermissionCode.ROLE_EDIT)
-    public JsonResponse edit(String code, String name) {
-        roleService.save(code, name);
+    public JsonResponse add(String code, String name) {
+        roleService.add(getUserCode(), code, name);
         return JsonResponse.ok();
     }
 
-    @PostMapping("/delete")
+    @PostMapping(params = "action=modify")
+    @RequiresPermissions(SysPermissionCode.ROLE_EDIT)
+    public JsonResponse modify(String code, String name) {
+        roleService.modify(getUserCode(), code, name);
+        return JsonResponse.ok();
+    }
+
+    @PostMapping(params = "action=delete")
     @RequiresPermissions(SysPermissionCode.ROLE_DELETE)
     public JsonResponse delete(String code) {
-        roleService.delete(code);
+        roleService.delete(getUserCode(), code);
         refreshUser();
         return JsonResponse.ok();
     }

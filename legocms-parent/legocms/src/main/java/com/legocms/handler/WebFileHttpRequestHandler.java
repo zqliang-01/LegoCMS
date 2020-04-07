@@ -53,15 +53,23 @@ public class WebFileHttpRequestHandler extends ResourceHttpRequestHandler {
 
     @Override
     protected Resource getResource(HttpServletRequest request) throws IOException {
+        try {
+            return parseResource(request);
+        }
+        catch(Exception e) {
+            log.error(e.getMessage(), e);
+            return null;
+        }
+    }
+
+    private Resource parseResource(HttpServletRequest request) {
         String resourcePath = getUrlPathHelper().getLookupPathForRequest(request);
         log.debug("resourcePath:{}", resourcePath);
         SysDomainInfo domain = getDomain(request.getServerName());
         BusinessException.check(domain != null, "域名未配置，资源获取失败！");
         String path = FileUtil.getAbsolutePath(domain.getPath() + resourcePath, domain.getSite().getCode());
         CmsFileInfo file = fileService.findByPath(resourcePath, domain.getSite().getCode());
-        if (file == null) {
-            return null;
-        }
+        BusinessException.check(domain != null, "查询不到资源文件！");
         InputStream inputStream = fileHelper.get(FileUtil.getPath(path), FileUtil.getFile(path));
         Resource resource = new StaticFileResource(inputStream, file);
         if (resource.exists()) {

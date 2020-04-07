@@ -52,7 +52,7 @@ public class AdminCmsFileController extends AdminController {
         if (StringUtil.isNotBlank(vo.getContent())) {
             ins = new ByteArrayInputStream(vo.getContent().getBytes());
         }
-        fileService.save(vo, ins);
+        fileService.modify(getUserCode(), vo, ins);
         return JsonResponse.ok();
     }
 
@@ -64,21 +64,21 @@ public class AdminCmsFileController extends AdminController {
         vo.setParentCode(parentCode);
         vo.setSiteCode(getSiteCode());
         vo.setType(CmsFileTypeCode.FILE);
-        fileService.save(vo, file.getInputStream());
+        fileService.add(getUserCode(), vo, file.getInputStream());
         return JsonResponse.ok();
     }
 
     @PostMapping("/delete")
     @RequiresPermissions(SysPermissionCode.FILE_DELETE)
     public JsonResponse delete(String code) {
-        fileService.delete(code, getSiteCode());
+        fileService.delete(getUserCode(), code, getSiteCode());
         return JsonResponse.ok();
     }
 
     @PostMapping("/synchronize")
-    @RequiresPermissions(SysPermissionCode.FILE_EDIT)
+    @RequiresPermissions(SysPermissionCode.FILE_SYNCHRONIZE)
     public JsonResponse synchronize(String parentCode) {
-        fileService.synchronizeDirectory(parentCode, getSiteCode());
+        fileService.synchronizeDirectory(getUserCode(), parentCode, getSiteCode());
         return JsonResponse.ok();
     }
 }

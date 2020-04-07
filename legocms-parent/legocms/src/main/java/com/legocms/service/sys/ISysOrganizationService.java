@@ -12,7 +12,9 @@ public interface ISysOrganizationService {
 
     SysOrganizationDetailInfo findDetailBy(String code);
 
-    void save(SysOrganizationVo vo);
+    void add(String operator, SysOrganizationVo vo);
 
-    void delete(String code);
+    void modify(String operator, SysOrganizationVo vo);
+
+    void delete(String operator, String code);
 }

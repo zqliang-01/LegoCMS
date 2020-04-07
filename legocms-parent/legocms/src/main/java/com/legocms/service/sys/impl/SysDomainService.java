@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 import com.legocms.core.dto.Page;
 import com.legocms.core.dto.sys.SysDomainInfo;
 import com.legocms.core.vo.sys.SysDomainVo;
+import com.legocms.data.act.sys.AddSysDomainAction;
+import com.legocms.data.act.sys.DeleteSysDomainAction;
+import com.legocms.data.act.sys.ModifySysDomainAction;
 import com.legocms.data.assembler.sys.SysDomainAssembler;
 import com.legocms.data.dao.sys.ISysDomainDao;
 import com.legocms.data.dao.sys.ISysSiteDao;
@@ -50,20 +53,17 @@ public class SysDomainService extends BaseService implements ISysDomainService {
     }
 
     @Override
-    public void save(SysDomainVo vo) {
-        SysDomain domain = domainDao.findByUnsureCode(vo.getCode());
-        if (domain == null) {
-            domain = new SysDomain(vo.getCode());
-        }
-        domain.setName(vo.getName());
-        domain.setPath(vo.getPath());
-        domain.setSite(siteDao.findByCode(vo.getSiteCode()));
-        domainDao.save(domain);
+    public void add(String operator, SysDomainVo vo) {
+        new AddSysDomainAction(operator, vo).run();
     }
 
     @Override
-    public void delete(String code) {
-        SysDomain domain = domainDao.findByCode(code);
-        domainDao.delete(domain);
+    public void modify(String operator, SysDomainVo vo) {
+        new ModifySysDomainAction(operator, vo).run();
+    }
+
+    @Override
+    public void delete(String operator, String code) {
+        new DeleteSysDomainAction(operator, code).run();
     }
 }
