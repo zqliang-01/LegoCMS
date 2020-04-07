@@ -53,4 +53,10 @@ public class CmsModelService extends BaseService implements ICmsModelService {
         new DeleteCmsModelAction(operator, code).run();
     }
 
+    @Override
+    public List<CmsModelInfo> findByParent(String parentCode) {
+        List<CmsModel> models = modelDao.findByParent(parentCode);
+        return modelAssembler.create(models);
+    }
+
 }

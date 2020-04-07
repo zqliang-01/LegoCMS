@@ -16,7 +16,7 @@ BEGIN
     SELECT s.id INTO vStatusId FROM sys_simple_type s WHERE s.CODE = 'Using' AND s.CLASS_TYPE = 'UserStatus';
 
 	 INSERT INTO sys_user
-	     (id, version, code, create_time, name, password, organization_id, status)
+	     (id, version, code, create_time, name, password, organization_id, status_id)
 	 VALUES
 	     (vUserId, 1, userCode, sysdate(), userName, password, vOrganizationId, vStatusId);
 END;

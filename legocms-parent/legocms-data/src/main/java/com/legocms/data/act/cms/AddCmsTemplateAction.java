@@ -31,7 +31,6 @@ public class AddCmsTemplateAction extends AddAction<CmsTemplate> {
     protected void preprocess() {
         BusinessException.check(StringUtil.isNotBlank(vo.getName()), "模板名称不能为空，模板创建失败！");
         BusinessException.check(StringUtil.isNotBlank(vo.getSiteCode()), "无在用站点，模板创建失败！");
-        BusinessException.check(StringUtil.isNotBlank(vo.getContent()), "模板内容不能为空，模板创建失败！");
         BusinessException.check(StringUtil.isNotBlank(vo.getType().getCode()), "模板类型不能为空，模板创建失败！");
 
         site = siteDao.findByCode(vo.getSiteCode());

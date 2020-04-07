@@ -24,6 +24,12 @@ CALL addCmsSimpleType('edit', '编辑器', 'ModelAttributeType', 3);
 CALL addCmsSimpleType('picture', '图片选择', 'ModelAttributeType', 4);
 CALL addCmsSimpleType('dateTime', '日期选择', 'ModelAttributeType', 5);
 
+CALL addCmsSimpleType('Normal', '正常', 'CategoryStatus', 1);
+CALL addCmsSimpleType('Inactive', '停用', 'CategoryStatus', 2);
+
+CALL addCmsSimpleType('General', '普通类型', 'CategoryType', 1);
+CALL addCmsSimpleType('Article', '文章类型', 'CategoryType', 2);
+
 CALL addOrganization('root', '根部门', null);
 
 CALL addUser('admin', '管理员', '21232F297A57A5A743894A0E4A801FC3', 'root');
@@ -164,7 +170,7 @@ CALL addPermissionLang('zh', '删除', 'file-delete');
 CALL addPermissionLang('en', 'delete', 'file-delete');
 
 /** =======内容维护====== */
-CALL addPermission('content-maintenance', 'root', 'pe-7s-browser', null, 1, 2);
+CALL addPermission('content-maintenance', 'root', 'pe-7s-browser', null, 1, 3);
 CALL addPermissionLang('zh', '内容维护', 'content-maintenance');
 CALL addPermissionLang('en', 'Site Maintenance', 'content-maintenance');
 
@@ -175,6 +181,19 @@ CALL addPermissionLang('en', 'Model Management', 'model');
 CALL addPermission('model-edit', 'model', null, null, 0, 1);
 CALL addPermissionLang('zh', '修改', 'model-edit');
 CALL addPermissionLang('en', 'edit', 'model-edit');
+
+CALL addPermission('model-delete', 'model', null, null, 0, 2);
+CALL addPermissionLang('zh', '删除', 'model-delete');
+CALL addPermissionLang('en', 'delete', 'model-delete');
+
+CALL addPermission('category', 'content-maintenance', 'pe-7s-keypad', '/admin/category/init', 1, 2);
+CALL addPermissionLang('zh', '分类管理', 'category');
+CALL addPermissionLang('en', 'Category Management', 'category');
+
+CALL addPermission('category-edit', 'category', null, null, 0, 1);
+CALL addPermissionLang('zh', '修改', 'category-edit');
+CALL addPermissionLang('en', 'edit', 'category-edit');
+
 
 CALL addRolePermission('super', 'root');
 CALL addRolePermission('super', 'admin');
@@ -211,3 +230,6 @@ CALL addRolePermission('super', 'log');
 CALL addRolePermission('super', 'content-maintenance');
 CALL addRolePermission('super', 'model');
 CALL addRolePermission('super', 'model-edit');
+CALL addRolePermission('super', 'model-delete');
+CALL addRolePermission('super', 'category');
+CALL addRolePermission('super', 'category-edit');

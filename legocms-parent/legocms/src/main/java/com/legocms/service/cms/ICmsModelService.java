@@ -17,4 +17,6 @@ public interface ICmsModelService {
     String modify(String operator, String siteCode, CmsModelVo vo);
 
     void delete(String operator, String code);
+
+    List<CmsModelInfo> findByParent(String parentCode);
 }

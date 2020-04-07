@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.legocms.core.dto.TypeInfo;
 import com.legocms.data.assembler.TypeInfoAssembler;
+import com.legocms.data.entities.cms.simpletype.CmsCategoryStatus;
+import com.legocms.data.entities.cms.simpletype.CmsCategoryType;
 import com.legocms.data.entities.cms.simpletype.CmsFileType;
 import com.legocms.data.entities.cms.simpletype.CmsModelAttributeType;
 import com.legocms.data.entities.cms.simpletype.CmsPlaceType;
@@ -42,6 +44,18 @@ public class CmsSimpleTypeService extends BaseService implements ICmsSimpleTypeS
     public List<TypeInfo> findModelAttributeType() {
         List<CmsModelAttributeType> attributeTypes = commonDao.findAll(CmsModelAttributeType.class);
         return typeInfoAssembler.create(attributeTypes);
+    }
+
+    @Override
+    public List<TypeInfo> findCategoryStatus() {
+        List<CmsCategoryStatus> status = commonDao.findAll(CmsCategoryStatus.class);
+        return typeInfoAssembler.create(status);
+    }
+
+    @Override
+    public List<TypeInfo> findCategoryTypes() {
+        List<CmsCategoryType> types = commonDao.findAll(CmsCategoryType.class);
+        return typeInfoAssembler.create(types);
     }
 
 }

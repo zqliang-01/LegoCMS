@@ -122,7 +122,6 @@
 							}
 							else if (fileType == "css") {
 								temp = '&lt;link rel="stylesheet" href="&dl;{site.path}' + treeNode.path + '"/&gt;';
-								console.log(temp);
 								temp = temp.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&dl;/g, '$');
 							}
 							else if (isImage(fileType)) {

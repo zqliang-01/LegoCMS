@@ -45,4 +45,8 @@ public interface SysPermissionCode {
 
     String MODEL = "model";
     String MODEL_EDIT = "model-edit";
+    String MODEL_DELETE = "model-delete";
+
+    String CATEGORY = "category";
+    String CATEGORY_EDIT = "category-edit";
 }

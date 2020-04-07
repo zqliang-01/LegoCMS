@@ -42,7 +42,7 @@ public class AdminCmsModelController extends AdminController {
     }
 
     @RequestMapping(params = "action=delete")
-    @RequiresPermissions(SysPermissionCode.MODEL_EDIT)
+    @RequiresPermissions(SysPermissionCode.MODEL_DELETE)
     public JsonResponse delete(String code) {
         modelService.delete(getUserCode(), code);
         return JsonResponse.ok(code);

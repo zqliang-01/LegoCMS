@@ -21,7 +21,7 @@ import lombok.EqualsAndHashCode;
 public class SysOrganization extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "status", referencedColumnName = "id")
+    @JoinColumn(name = "status_id", referencedColumnName = "id")
     private SysOrganizationStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)

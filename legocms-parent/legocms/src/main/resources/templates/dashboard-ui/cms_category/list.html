@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		<meta charset="utf-8">
+        <meta name="description" content="LegoCMS">
+        <#include "../include_page/link.html"/>
+        <script type="text/javascript">
+        $(function(){
+
+			var url = ctx + "/admin/directive/cmsCategoryList";
+			initMyPagination("MyPagination-category-list", "Template-category-list", url);
+			
+        	refreshTree();
+        	function refreshTree() {
+        		var treeUrl = ctx + "/admin/directive/cmsCategoryTree";
+        		ajaxSubmit(treeUrl, null, function(data) {
+        			var setting = {
+        				data: {
+        					simpleData: {
+        						enable: true,
+        						idKey : 'code',
+        						pIdKey : "parentCode"
+        					}
+        				},
+        				callback: {
+        					onClick: function(event, treeId, treeNode) {
+        						refreshForm(treeNode.code);
+        					}
+        				}
+        			};
+        			$.fn.zTree.init($("#categoryTree"), setting, data.simpleTree);
+        		});
+        	}
+        	
+        	function refreshForm(code) {
+        		$('.queryForm').find("input[name='parentCode']").val(code);
+        		$(".query").click();
+        	}
+
+        	$('#add').click(function() {
+        		var parentCode = $('.queryForm').find("input[name=parentCode]").val();
+        		if (isEmpty(parentCode)) {
+        			parentCode = "2_*";
+        		}
+        		window.parent.addTab("category-add", "<@t.message 'title.category-create'/>", "/admin/category/edit/1_*/" + parentCode);
+        	});
+        })
+        </script>
+    </head>
+    <body>
+       	<div class="row">
+			<div class="col-md-3">
+				<div class="main-card card">
+					<div class="card-body">
+						<ul id="categoryTree" class="ztree"></ul>
+					</div>
+				</div>
+			</div>
+       		<div class="col-md-9">
+				<div class="main-card card">
+					<div class="card-body">
+						<div class="row row-fluid">
+				            <div class="col-md-12" id="MyPagination-category-list">
+				            	<form class="card-header queryForm" onsubmit="return false;">
+           							<input type="hidden" name="parentCode"/>
+					            	<div class="mb-2 mr-sm-2">
+					                 	<input name="name" placeholder="<@t.page 'list.name'/>" type="text" class="form-control">
+					                </div>
+					                <div class="mb-2 mr-sm-2">
+					                 	<input name="code" placeholder="<@t.page 'list.code'/>" type="text" class="form-control">
+					                </div>
+					            	<div class="mb-2 mr-sm-2">
+										<select name="status" id="status" class="form-control custom-select">
+											<option value=""><@t.page 'list.status'/></option>
+											<@cmsCategoryStatus>
+												<#list status as state>
+													<option value="${state.code}">${state.name}</option>
+												</#list>
+											</@cmsCategoryStatus>
+										</select>
+					                 </div>
+				            		<div class="mb-2 mr-sm-2">
+				            			<button class="btn btn-primary query"><@t.page 'btn.query'/></button>
+				            		</div>
+				            		<div class="mb-2 mr-sm-2">
+				            			<button class="btn btn-info" id="add"><@t.page 'btn.create'/></button>
+				            		</div>
+			                    </form>
+			                    <div class="table-responsive">
+			                        <table role="grid" class="align-middle mb-0 table table-borderless table-striped table-hover mytab">
+			                            <thead>
+			                                <tr role="row">
+			                                    <th class="text-center"><@t.page 'list.code'/></th>
+			                                    <th class="text-center"><@t.page 'list.name'/></th>
+			                                    <th class="text-center"><@t.page 'list.type'/></th>
+			                                    <th class="text-center"><@t.page 'list.page-size'/></th>
+			                                    <th class="text-center"><@t.page 'list.status'/></th>
+			                                    <th class="text-center"><@t.page 'list.operation'/></th>
+			                                </tr>
+			                            </thead>
+		                        		<tbody></tbody>
+			                        </table>
+			                    </div>
+			                    <div class="d-block text-center card-footer widget-content-rigth">
+			                    	<nav class="" aria-label="Page navigation example">
+			                    	<div class="tempContentDiv"></div>
+						   			<p style="display: none">
+							            <textarea id="Template-category-list" rows="0" cols="0">
+							                <!--
+							                    {#template MAIN}
+							                        {#foreach $T.page.result as Result}
+							                            <tr role="row" >
+							                                <td class="text-center">{$T.Result.code}</td>
+							                                <td class="text-center">{$T.Result.name}</td>
+							                                <td class="text-center">{$T.Result.type.name}</td>
+							                                <td class="text-center">{$T.Result.pageSize}</td>
+							                                <td class="text-center">{$T.Result.status.name}</td>
+							                                <td class="text-center">
+							                                	<button class="btn btn-primary btn-sm" onclick="window.parent.addTab('category-modify-{$T.Result.code}', '<@t.message 'title.category-modify'/>({$T.Result.name})', '/admin/category/edit/{$T.Result.code}/2_*')"><@t.page 'btn.edit'/></button>
+							                                	<button class="btn btn-danger btn-sm" onclick="del({$T.Result.code})"><@t.page 'btn.delete'/></button>
+							                                </td>
+							                            </tr>
+							                        {#/for}
+							                    {#/template MAIN}
+							                -->
+							            </textarea>
+						        	</p>
+			                    	</nav>
+			                   	</div>
+			                </div>
+				        </div>
+					</div>
+				</div>
+       		</div>
+       	</div>
+    </body>
+</html>

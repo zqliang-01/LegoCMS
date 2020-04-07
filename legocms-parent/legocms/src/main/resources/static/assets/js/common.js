@@ -56,8 +56,8 @@ function showFormDialog(title, id, init, callback) {
 	});
 }
 
-function showTextDialog(title, text) {
-	layer.open({
+function showTextDialog(title, text, callback) {
+	var index = layer.open({
 		type: 1,
 		title: title,
 		area : [ '550px', '400px' ],
@@ -70,7 +70,7 @@ function showSimpleDialog(title, id, callback) {
 	layer.open({
 		type: 1,
 		title: title,
-		area : [ '520px', '600px'],
+		area : [ '520px', '400px'],
 		content : id.html(),
 		success: function(layero, index){
 			$(id.attr('data-form')).click(function() {

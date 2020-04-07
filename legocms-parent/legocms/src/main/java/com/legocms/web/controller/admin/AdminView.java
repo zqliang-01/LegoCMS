@@ -37,4 +37,7 @@ public interface AdminView {
     String CMS_FILE_EDIT = UI_TYPE + "cms_file/edit";
 
     String CMS_MODEL_LIST = UI_TYPE + "cms_model/list";
+
+    String CMS_CATEGORY_LIST = UI_TYPE + "cms_category/list";
+    String CMS_CATEGORY_EDIT = UI_TYPE + "cms_category/edit";
 }

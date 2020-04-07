@@ -1,0 +1,32 @@
+<#macro modelView parentCode top>
+	<@cmsModelList parentCode=parentCode top=top>
+		<div class="ml-sm-5">
+	        <#if (models?size gt 0)>
+				<#list models as model>
+						<#if top>
+							<div class="form-group form-check-inline custom-checkbox">
+								<#if (category.modelCodes)?? && category.modelCodes?seq_contains(model.code)>
+									<input type="checkbox" checked="checked" name="modelCodes[${model_index}]" value="${model.code}" id="${model.code}" class="custom-control-input form-check-input">
+								<#else>
+									<input type="checkbox" name="modelCodes[${model_index}]" value="${model.code}" id="${model.code}" class="custom-control-input form-check-input">
+								</#if>
+								<label class="custom-control-label mr-sm-2" for="${model.code}">${model.name}(${model.code})</label>
+							</div>
+						<#else>
+							<label class="mr-sm-2" for="${model.code}">${model.name}(${model.code})</label>
+						</#if>
+	  					<div class="form-group form-check-inline">
+							<input type="text" class="form-control" value="${(model.template.name)!''}" readonly>
+                            <div class="input-group-append">
+                                <span class="btn btn-secondary select-template" style="text-align: center;border-radius: .25rem;font-size: 1rem;">
+                        			<i class="pe-7s-search"></i>
+                                </span>
+                            </div>
+						</div>
+					<@modelView parentCode=model.code top=false/>
+		   		</#list>
+	        </#if>
+		</div>
+	</@cmsModelList>
+</#macro>
+<@modelView parentCode='' top=true/>

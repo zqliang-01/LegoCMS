@@ -42,7 +42,7 @@ public class SysUser extends BaseEntity {
     private List<SysRole> roles = new ArrayList<SysRole>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "status", nullable = false)
+    @JoinColumn(name = "status_id", nullable = false)
     private SysUserStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)

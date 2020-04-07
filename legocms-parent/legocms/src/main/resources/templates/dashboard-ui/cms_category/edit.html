@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="LegoCMS">
+	<#include "../include_page/link.html"/>
+	<script type="text/javascript">
+		$(function(){
+			ajaxForm($('#save-category-form'), function() {
+		    	$('#save-category-form').find("[name=code]").attr("readonly", "");
+		    	$('#save-category-form').find("[name=action]").val('modify');
+			});
+
+			$('#select-template').click(function() {
+				var orgUrl = ctx + "/admin/directive/cmsTemplateTree";
+				ajaxSubmit(orgUrl, null, function(data) {
+					window.parent.showSimpleTree("<@t.message 'title.template-select'/>", data.simpleTree, function(treeNode){
+						if (!treeNode.isParent) {
+							$('#save-category-form').find("[name='template.name']").val(treeNode.name);
+							$('#save-category-form').find("[name='template.code']").val(treeNode.code);
+						}
+					})
+				});
+			});
+			
+			$('#select-path').click(function() {
+				window.parent.showSimpleDialog("<@t.message 'title.category-path'/>", $('#add-path-modal'), function(path){
+					$('#save-category-form').find("[name=path]").val(path.attr('data-val').replace(/&dl;/g, '$'));
+				})
+			});
+			
+			$('#select-content-path').click(function() {
+				window.parent.showSimpleDialog("<@t.message 'title.category-path'/>", $('#add-content-path-modal'), function(path){
+					$('#save-category-form').find("[name=contentPath]").val(path.attr('data-val').replace(/&dl;/g, '$'));
+				})
+			});
+		});
+	</script>
+</head>
+<body>
+	<div class="app-main__inner" id="MyPagination-user-list">
+		<@cmsCategory code=code>
+			<div class="main-card mb-3 card">
+				<div class="card-body">
+					<form id="save-category-form" action="${ctx}/admin/category" ajax="true" onsubmit="return false;" class="needs-validation" novalidate>
+		                <ul class="nav nav-tabs">
+		                    <li class="nav-item"><a data-toggle="tab" href="#base-info" class="active nav-link"><@t.message 'title.category-base-info'/></a></li>
+		                    <li class="nav-item"><a data-toggle="tab" href="#content-model" class="nav-link"><@t.message 'title.category-content-model'/></a></li>
+		                </ul>
+		                <div class="tab-content">
+		                    <div class="tab-pane active" id="base-info" role="tabpanel">
+			                    <div class="position-relative row form-group">
+					                <div class="col-md-3">
+										<label class="col-form-label"><@t.page 'list.parent-category'/></label>
+										<#if (parent.code)??>
+											<input name="parent.code" type="hidden" value="${parent.code}">
+											<input name="parent.name" type="text" class="form-control" value="${(parent.name)!''}" readonly>
+										<#else>
+											<input name="parent.code" type="hidden" value="${(category.parent.code)!''}">
+											<input name="parent.name" type="text" class="form-control" value="${(category.parent.name)!''}" readonly>
+										</#if>
+									</div>
+					                <div class="col-md-3">
+										<label class="col-form-label"><@t.page 'list.code'/></label>
+										<#if (category.code)??>
+											<input name="action" type="hidden" value="modify" required />
+											<input name="code" placeholder="<@t.page 'list.code'/>" type="text" class="form-control" value="${(category.code)!''}" readonly required />
+										<#else>
+											<input name="action" type="hidden" value="add" required />
+											<input name="code" placeholder="<@t.page 'list.code'/>" type="text" class="form-control" required />
+										</#if>
+										<div class="invalid-feedback">
+		                               		<@t.message 'verify.code'/>
+		                                </div>
+					                </div>
+					                <div class="col-md-3">
+										<label class="col-form-label"><@t.page 'list.name'/></label>
+										<input name="name" placeholder="<@t.page 'list.name'/>" type="text" class="form-control" value="${(category.name)!''}" required>
+										<div class="invalid-feedback">
+			                               <@t.message 'verify.name'/>
+			                          	</div>
+									</div>
+					                <div class="col-md-3">
+										<label class="col-form-label"><@t.page 'list.status'/></label>
+										<select name="status" class="form-control custom-select" required>
+											<@cmsCategoryStatus>
+												<#list status as state>
+													<#if (category.status.code)??&&state.code == category.status.code>
+														<option selected="selected" value="${state.code}">${state.name}</option>
+													<#else>
+														<option value="${state.code}">${state.name}</option>
+													</#if>
+												</#list>
+											</@cmsCategoryStatus>
+										</select>
+										<div class="invalid-feedback">
+			                               <@t.message 'verify.status'/>
+			                           </div>
+									</div>
+				                </div>
+								<div class="position-relative row form-group">
+					                <div class="col-md-3">
+										<label class="col-form-label"><@t.page 'list.template'/></label>
+										<div class="input-group-append">
+											<input name="template.name" placeholder="<@t.page 'list.template'/>" type="text" class="form-control" value="${(category.template.name)!''}" required>
+											<input name="template.code" type="hidden" value="${(category.template.code)!''}" />
+			                                <span id="select-template" class="btn btn-secondary" style="text-align: center;border-radius: .25rem;font-size: 1rem;margin:0px">
+			                                	<i class="pe-7s-search"></i>
+			                                </span>
+											<div class="invalid-feedback">
+				                               <@t.message 'verify.template'/>
+				                          	</div>
+										</div>
+									</div>
+					                <div class="col-md-3">
+										<label class="col-form-label"><@t.page 'list.type'/></label>
+										<select name="type.code" class="form-control custom-select" required>
+											<@cmsCategoryType>
+												<#list types as type>
+													<#if (category.type.code)??&&type.code == category.type.code>
+														<option selected="selected" value="${type.code}">${type.name}</option>
+													<#else>
+														<option value="${type.code}">${type.name}</option>
+													</#if>
+												</#list>
+											</@cmsCategoryType>
+										</select>
+										<div class="invalid-feedback">
+			                               <@t.message 'verify.type'/>
+			                           </div>
+					                </div>
+					                <div class="col-md-3">
+										<label class="col-form-label"><@t.page 'list.page-size'/></label>
+										<input name="pageSize" placeholder="<@t.page 'list.page-size'/>" type="text" class="form-control" value="${(category.pageSize)!''}" required>
+										<div class="invalid-feedback">
+			                               <@t.message 'verify.page-size'/>
+			                          	</div>
+									</div>
+					                <div class="col-md-3">
+										<label class="col-form-label"><@t.page 'list.sort'/></label>
+										<input name="sort" placeholder="<@t.page 'list.sort'/>" type="text" class="form-control" value="${(category.sort)!''}" required>
+										<div class="invalid-feedback">
+			                               <@t.message 'verify.sort'/>
+			                          	</div>
+					                </div>
+								</div>
+				                <div class="position-relative row form-group">
+					                <div class="col-md-8">
+										<label class="col-form-label"><@t.page 'list.path'/></label>
+										<div class="input-group-append">
+											<input name="path" placeholder="Path" type="text" class="form-control" value="${(category.path)!''}" required>
+			                                <span id="select-path" class="btn btn-secondary" style="text-align: center;border-radius: .25rem;font-size: 1rem;margin:0px">
+			                                	<i class="pe-7s-search"></i>
+			                                </span>
+											<div class="invalid-feedback">
+				                               <@t.message 'verify.path'/>
+				                          	</div>
+										</div>
+									</div>
+				                </div>
+								<div class="position-relative row form-group">
+									<div class="col-md-8">
+										<label class="col-form-label mr-sm-2"><@t.page 'list.content-path'/></label>
+										<div class="input-group-append">
+											<input name="contentPath" placeholder="<@t.page 'list.content-path'/>" type="text" class="form-control" value="${(category.contentPath)!''}" required>
+											<span id="select-content-path" class="btn btn-secondary" style="text-align: center;border-radius: .25rem;font-size: 1rem;margin:0px">
+												<i class="pe-7s-search"></i>
+											</span>
+											<div class="invalid-feedback">
+											    <@t.message 'verify.content-path'/>
+											</div>
+										</div>
+									</div>
+								</div>
+		                    </div>
+		                    <div class="tab-pane" id="content-model" role="tabpanel">
+								<#include "edit-model.html"/>
+		                    </div>
+		                </div>
+						<div class="position-relative row form-check">
+							<div class="col-sm-10 offset-sm-2">
+								<button class="btn btn-secondary"><@t.page 'btn.save'/></button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</@cmsCategory>
+	</div>
+	<#include "add-path-modal.html"/>
+	<#include "add-content-path-modal.html"/>
+</body>
+</html>

@@ -18,6 +18,14 @@ public class TypeInfoAssembler extends AbstractAssembler<TypeInfo, BaseEntity> {
         return new TypeInfo(entity.getCode(), entity.getName());
     }
 
+    public List<String> codes(Collection<? extends BaseEntity> entities) {
+        List<String> codes = new ArrayList<String>();
+        for (BaseEntity entity : entities) {
+            codes.add(entity.getCode());
+        }
+        return codes;
+    }
+
     public List<TypeInfo> create(Collection<? extends BaseEntity> entities) {
         List<TypeInfo> infos = new ArrayList<TypeInfo>();
         for (BaseEntity entity : entities) {
