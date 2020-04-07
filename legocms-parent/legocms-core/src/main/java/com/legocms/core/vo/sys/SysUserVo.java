@@ -1,7 +1,6 @@
 package com.legocms.core.vo.sys;
 
-import java.util.Date;
-
+import com.legocms.core.dto.TypeInfo;
 import com.legocms.core.vo.Vo;
 
 import lombok.Data;
@@ -9,13 +8,13 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class QuerySysUserVo extends Vo {
+public class SysUserVo extends Vo {
 
-    private static final long serialVersionUID = 1070444377374111579L;
+    private static final long serialVersionUID = 8048869132754698516L;
 
     private String code;
     private String name;
     private String status;
-    private Date createStart;
-    private Date createEnd;
+    private TypeInfo organization;
+
 }

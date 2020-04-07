@@ -14,11 +14,17 @@ import lombok.EqualsAndHashCode;
 @Data
 @Entity
 @Table(name = "sys_permission_lang")
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class SysPermissionLang extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "permission_id", nullable = false)
-    private SysPermission module;
+    private SysPermission permission;
 
+    protected SysPermissionLang() { }
+
+    public SysPermissionLang(SysPermission permission, String code) {
+        super(code);
+        this.permission = permission;
+    }
 }

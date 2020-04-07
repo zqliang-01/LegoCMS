@@ -7,7 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.legocms.core.common.Constants;
+import com.legocms.core.dto.SimpleTreeInfo;
+import com.legocms.core.dto.TypeInfo;
+import com.legocms.core.dto.sys.SysPermissionDetailInfo;
 import com.legocms.core.dto.sys.SysPermissionInfo;
+import com.legocms.core.vo.sys.SysPermissionLangCode;
 import com.legocms.data.assembler.AbstractAssembler;
 import com.legocms.data.dao.sys.ISysPermissionLangDao;
 import com.legocms.data.entities.sys.SysPermission;
@@ -20,7 +24,7 @@ public class SysPermissionAssembler extends AbstractAssembler<SysPermissionInfo,
     private ISysPermissionLangDao permissionLangDao;
 
     public SysPermissionInfo create(SysPermission entity, String lang) {
-        SysPermissionLang moduleLang = this.permissionLangDao.findBy(entity, lang);
+        SysPermissionLang moduleLang = permissionLangDao.findBy(entity, lang);
         SysPermissionInfo info = new SysPermissionInfo();
         info.setCode(entity.getCode());
         info.setIcon(entity.getIcon());
@@ -30,23 +34,50 @@ public class SysPermissionAssembler extends AbstractAssembler<SysPermissionInfo,
         return info;
     }
 
+    public SysPermissionDetailInfo createDetail(SysPermission entity) {
+        SysPermissionDetailInfo info = new SysPermissionDetailInfo();
+        info.setCode(entity.getCode());
+        info.setIcon(entity.getIcon());
+        info.setSort(entity.getSort());
+        info.setUrl(entity.getUrl());
+        info.setMenu(entity.isMenu());
+        info.setCreateDate(entity.getCreateDate());
+        info.setSort(entity.getSort());
+        if (entity.getParent() != null) {
+            info.setParent(typeInfoAssembler.create(entity));
+        }
+        List<SysPermissionLang> langs = permissionLangDao.findBy(entity);
+        info.setLang(typeInfoAssembler.create(langs));
+        List<String> langCodes = createCodes(langs);
+        for (String langCode : SysPermissionLangCode.ALL) {
+            if (!langCodes.contains(langCode)) {
+                info.addLang(new TypeInfo(langCode));
+            }
+        }
+        return info;
+    }
+
+    public List<SimpleTreeInfo> createSimpleCheckTree(List<SysPermission> permissions, String lang) {
+        List<SimpleTreeInfo> trees = new ArrayList<SimpleTreeInfo>();
+        for (SysPermission permission : permissions) {
+            SysPermissionLang permissionLang = permissionLangDao.findBy(permission, lang);
+            SimpleTreeInfo tree = new SimpleTreeInfo();
+            tree.setCode(permission.getCode());
+            if (permissionLang != null) {
+                tree.setName(permissionLang.getName());
+            }
+            tree.setOpen(true);
+            if (permission.getParent() != null) {
+                tree.setParentCode(permission.getParent().getCode());
+            }
+            trees.add(tree);
+        }
+        return trees;
+    }
+
+    @Override
     public SysPermissionInfo create(SysPermission entity) {
         return create(entity, Constants.DEFAULT_LANG);
     }
 
-    public List<SysPermissionInfo> create(List<SysPermission> entities) {
-        List<SysPermissionInfo> infos = new ArrayList<SysPermissionInfo>();
-        for (SysPermission entity : entities) {
-            infos.add(create(entity));
-        }
-        return super.create(entities);
-    }
-
-    public List<SysPermissionInfo> create(List<SysPermission> entities, String lang) {
-        List<SysPermissionInfo> infos = new ArrayList<SysPermissionInfo>();
-        for (SysPermission entity : entities) {
-            infos.add(create(entity, lang));
-        }
-        return super.create(entities);
-    }
 }

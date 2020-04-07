@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.legocms.core.annotation.RequiresPermissions;
 import com.legocms.core.dto.sys.SysPermissionInfo;
 import com.legocms.core.dto.sys.SysUserInfo;
 import com.legocms.data.handler.RenderHandler;
@@ -14,6 +15,7 @@ import com.legocms.web.AdminView;
 import com.legocms.web.directive.AbstractTemplateDirective;
 
 @Component
+@RequiresPermissions(skip = false)
 public class SysPermissionListDirective extends AbstractTemplateDirective {
 
     @Autowired

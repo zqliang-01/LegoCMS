@@ -10250,8 +10250,6 @@ jQuery.fn.size = function() {
 jQuery.fn.andSelf = jQuery.fn.addBack;
 
 
-
-
 // Register as a named AMD module, since jQuery can be concatenated with other
 // files that may use define, but not via a proper concatenation script that
 // understands anonymous AMD modules. A named AMD is safest and most robust
@@ -10300,8 +10298,68 @@ if ( typeof noGlobal === strundefined ) {
 	window.jQuery = window.$ = jQuery;
 }
 
+jQuery.fn.setForm = function(jsonValue, prename) {
+    var obj=this;
+    if (!prename) {
+    	prename = '';
+    }
+    obj.removeClass('was-validated');
+    $.each(jsonValue, function (name, ival) {
+    	var $oinput = obj.find("input[name='" + prename +  name + "']"); 
+    	if ($.isPlainObject(ival)) {
+    		obj.setForm(ival, name + '.');
+    	}
+    	else if ($.isArray(ival)) {
+    		for(var i=0; i<ival.length; i++){
+    			obj.setForm(ival[i], name + '[' + i + '].');
+    		}
+    	}
+    	else if ($oinput.attr("type")== "radio" || $oinput.attr("type")== "checkbox"){
+    		 $oinput.each(function(){
+                 if(Object.prototype.toString.apply(ival) == '[object Array]'){//是复选框，并且是数组
+                      for(var i=0;i<ival.length;i++){
+                          if($(this).val()==ival[i])
+                             $(this).attr("checked", "checked");
+                      }
+    	 		 }else{
+                     if($(this).val()==ival)
+                        $(this).attr("checked", "checked");
+                 }
+             });
+    	}
+    	else if($oinput.attr("type")== "textarea"){//多行文本框
+    		obj.find("[name='" + prename +  name + "']").html(ival);
+    	}
+    	else{
+            obj.find("[name='" + prename +  name + "']").val(ival + ''); 
+        }
+   });
+};
 
+jQuery.fn.resetForm = function() {
+    var submitForm=this;
+	var inputItems=submitForm.find("input");
+	$(inputItems).each(function getInputVal(index,element){
+		if (!$(element).hasAttr('data-reset') || $(element).attr('data-reset')) {
+			$(element).val("");
+		}
+	});
+	//获取指定Form下的所有select元素
+	var selectItems=submitForm.find("select");
+	$(selectItems).each(function getInputVal(index,element){
+		if (!$(element).hasAttr('data-reset') || $(element).attr('data-reset')) {
+			$(element).val("");
+		}
+	});
+	submitForm.removeClass('was-validated');
+};
 
+jQuery.fn.hasAttr = function(attr) {
+	 if(typeof(this.attr(attr)) != "undefined") {
+		 return true;
+	 }
+	 return false
+}
 
 return jQuery;
 

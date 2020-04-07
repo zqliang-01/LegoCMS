@@ -25,6 +25,9 @@ public class SysUserDao extends GenericDao<SysUser> implements ISysUserDao {
         if (StringUtil.isNotBlank(vo.getName())) {
             queryHandler.condition("u.name like :name").setParameter("name", "%" + vo.getName() + "%");
         }
+        if (StringUtil.isNotBlank(vo.getStatus())) {
+            queryHandler.condition("u.status.code = :status").setParameter("status", vo.getStatus());
+        }
 
         if (vo.getCreateStart() != null) {
             queryHandler.condition("u.createDate >= :createStart").setParameter("createStart", vo.getCreateStart());

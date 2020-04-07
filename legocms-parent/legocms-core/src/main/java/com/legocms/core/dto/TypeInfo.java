@@ -12,6 +12,12 @@ public class TypeInfo extends Dto {
     private String code;
     private String name;
 
+    public TypeInfo() { }
+
+    public TypeInfo(String code) {
+        this.code = code;
+    }
+
     public TypeInfo(String code, String name) {
         this.code = code;
         this.name = name;

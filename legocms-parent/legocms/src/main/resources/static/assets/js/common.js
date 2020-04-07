@@ -11,7 +11,7 @@ function addTab(menuId, tabName, menuUrl) {
 	var tabHtml = 
     	  '<li class="nav-item">' +
 		       '<a role="tab" class="nav-link" id="' + menuId + '_tab" data-toggle="tab" href="#' + menuId + '_page">' +
-		        	'<span>' + tabName + '</span><span class="closetag">×</span>' +
+		        	'<span>' + tabName + '</span><span class="closetag">&times;</span>' +
 		       '</a>' +
 		  '</li>';
 	var liTab = $(tabHtml);
@@ -100,40 +100,16 @@ function setLeft() {
 
 /**----------------------------ajax----------------------------------**/
 
-function interceptorResponse(data) {
-	if (data.code != "0") {
-		if (data.code == "1000") {
-			showMsg(data.msg, 5, function() {
-				window.open(ctx + "/admin/login","_parent");
-			});
-		}
-		else {
-			showMsg(data.msg, 5);
-		}
-		return true;
-	}
-	return false;
-}
-
-function successShowFun(data){
-	if(data.code == "0"){
-		showMsg("操作成功！");
-	}
-	else {
-		showMsg("操作失败：" + data.msg, 5);
-	}
-}
-
 function showMsg(msg, type, callback){
 	layer.closeAll();
 	if (isEmpty(type)) {
-	    layer.msg(msg);
+	    layer.msg(msg, {time: 2000});
 	}
 	else if (isEmpty(callback)){
-		layer.msg(msg, {icon: type});
+		layer.msg(msg, {icon: type, time: 2000});
 	}
 	else {
-		layer.msg(msg, {icon: type}, callback);
+		layer.msg(msg, {icon: type, time: 2000}, callback);
 	}
 }
 
@@ -144,7 +120,7 @@ function showConfirm(msg, callback) {
 	});
 }
 
-function showFrame(content, callback) {
+function showFrame(data, callback) {
 	layer.open({
 		type: 1,
 		skin : 'layui-layer-rim', // 加上边框
@@ -159,52 +135,47 @@ function showFrame(content, callback) {
 	});
 }
 
+function showSimpleTree(title, data, callBack) {
+	var index = layer.open({
+		type: 1,
+		title: title,
+		area : [ '300px', '450px' ],
+		content : '<ul id="simpleTree" class="ztree"></ul>',
+		success: function(layero, index){
+			var setting = {
+				data: {
+					simpleData: {
+						enable: true,
+						idKey : 'code',
+						pIdKey : "parentCode"
+					}
+				},
+				callback: {
+					onClick: function(event, treeId, treeNode) {
+						callBack(treeNode);
+						layer.close(index);
+					}
+				}
+			};
+			$.fn.zTree.init($("#simpleTree"), setting, data);
+		}
+	});
+}
+
 function isEmpty(value) {
     if (value == null || value == undefined || value == '') {
         return true;
-    } else {
-        return false;
     }
+    if($.isArray(value) && value.length == 0){
+        return true;
+    }
+    return false;
 }
 
 function isNotEmpty(value) {
     return !isEmpty(value);
 }
 
-//指定Form下的所有对象构造ajax的提交参数
-function getDataFromForm(submitForm){
-	var submitPara = "&";
-	//获取指定Form下的所有input元素
-	var inputItems=submitForm.find("input");
-	//遍历指定Form下的所有input元素
-	$(inputItems).each(function getInputVal(index,element){
-		//获取text和hidden对象的value
-		if($(element).attr("type")=="text" || $(element).attr("type")=="hidden" || $(element).attr("type")=="password"){
-			submitPara += $(element).attr("name")+"="+$(element).attr("value")+"&";
-		}
-		//获取一组radio中被选中项的值
-		if($(element).attr("type")=="radio" && $(element).attr("checked")==true){
-			var radioName = $(element).attr("name");
-			submitPara += radioName+"="+$(element).attr("value")+"&";
-		}
-		//获取复选框中被选中项的值
-		if($(element).attr("type")=="checkbox"){
-			var checkBoxName = $(element).attr("name");
-			//一组复选框名称只能出现一次
-			if(submitPara.indexOf(checkBoxName)==-1){
-				submitPara += checkBoxName+"=";
-			}
-			if( $(element).attr("checked")==true){
-				submitPara += $(element).attr("value")+",";
-			}
-		}
-	});
-	//获取指定Form下的所有select元素
-	var selectItems=submitForm.find("select");
-	$(selectItems).each(function getInputVal(index,element){
-		//获取下拉列表中被选中项的值
-		submitPara += $(element).attr("id")+"="+$(element).val()+"&";
-	});
-	//返回串中不包含字符串末尾的&
-	return submitPara.substring(1,submitPara.length-1);
+function getTree(treeId) {
+	return $.fn.zTree.getZTreeObj(treeId);
 }

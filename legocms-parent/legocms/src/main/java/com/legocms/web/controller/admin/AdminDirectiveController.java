@@ -44,8 +44,10 @@ public class AdminDirectiveController extends SessionController {
         BusinessException.check(directive != null && directive.httpEnabled(), ConstantEnum.INTERFACE_NOTFOUND_INVALID);
         BusinessException.check(permission != null, ConstantEnum.AUTHORIZATION_INVALID);
 
-        List<String> permissionCodes = getPermissionCodes(AdminView.USER_SESSION_KEY);
-        BusinessException.check(permissionCodes.contains(permission.value()), ConstantEnum.AUTHORIZATION_INVALID);
+        if (!permission.skip()) {
+            List<String> permissionCodes = getPermissionCodes(AdminView.USER_SESSION_KEY);
+            BusinessException.check(permissionCodes.contains(permission.value()), ConstantEnum.AUTHORIZATION_INVALID);
+        }
 
         directive.execute(jsonMessageConverter, Constants.JSON_MEDIA_TYPE, request, response);
     }

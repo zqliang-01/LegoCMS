@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2020/4/17 10:03:25                           */
+/* Created on:     2020/4/22 15:03:42                           */
 /*==============================================================*/
 
 
@@ -54,7 +54,8 @@ create table SYS_PERMISSION_LANG
    NAME                 varchar(100) comment '值',
    CREATE_DATE          datetime not null comment '创建时间',
    PERMISSION_ID        bigint(15) not null comment '授权模块ID',
-   primary key (ID, PERMISSION_ID)
+   primary key (ID, PERMISSION_ID),
+   unique key AK_unique_type (PERMISSION_ID, CODE)
 );
 
 alter table SYS_PERMISSION_LANG comment '模块语言';

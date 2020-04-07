@@ -22,7 +22,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @Entity
 @Table(name = "sys_role")
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class SysRole extends BaseEntity {
 
     @ManyToMany(fetch = FetchType.LAZY)

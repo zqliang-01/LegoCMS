@@ -19,6 +19,7 @@ $(function(){
         var menuName = that.attr('name');
         var menuUrl = that.attr('data-url');
         addTab(menuId, menuName, menuUrl);
+        $(document).attr("title", menuName);
     });
     
     // 向左滚动

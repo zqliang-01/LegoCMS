@@ -1,18 +1,17 @@
 package com.legocms.data.assembler.sys;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
+import com.legocms.core.dto.SimpleTreeInfo;
 import com.legocms.core.dto.sys.SysOrganizationInfo;
 import com.legocms.data.assembler.AbstractAssembler;
-import com.legocms.data.assembler.TypeInfoAssembler;
 import com.legocms.data.entities.sys.SysOrganization;
 
 @Component
 public class SysOrganizationAssembler extends AbstractAssembler<SysOrganizationInfo, SysOrganization> {
-
-    @Autowired
-    private TypeInfoAssembler typeInfoAssembler;
 
     @Override
     public SysOrganizationInfo create(SysOrganization entity) {
@@ -21,5 +20,19 @@ public class SysOrganizationAssembler extends AbstractAssembler<SysOrganizationI
         info.setName(entity.getName());
         info.setState(typeInfoAssembler.create(entity.getStatus()));
         return info;
+    }
+
+    public List<SimpleTreeInfo> createSimpleTree(List<SysOrganization> organizations) {
+        List<SimpleTreeInfo> trees = new ArrayList<SimpleTreeInfo>();
+        for (SysOrganization organization : organizations) {
+            SimpleTreeInfo tree = new SimpleTreeInfo();
+            tree.setCode(organization.getCode());
+            tree.setName(organization.getName());
+            if (organization.getParent() != null) {
+                tree.setParentCode(organization.getParent().getCode());
+            }
+            trees.add(tree);
+        }
+        return trees;
     }
 }

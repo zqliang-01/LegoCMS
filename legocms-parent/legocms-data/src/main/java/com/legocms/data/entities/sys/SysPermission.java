@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @Entity
 @Table(name = "sys_permission")
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class SysPermission extends BaseEntity {
     private String url;
     private String authorizedUrl;
@@ -25,4 +25,11 @@ public class SysPermission extends BaseEntity {
     private SysPermission parent;
     private boolean menu;
     private int sort;
+
+    protected SysPermission() { }
+
+    public SysPermission(String code) {
+        super(code);
+    }
+
 }

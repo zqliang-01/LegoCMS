@@ -4,8 +4,10 @@ import java.nio.charset.Charset;
 
 import org.springframework.http.MediaType;
 
+import com.legocms.core.vo.sys.SysPermissionLangCode;
+
 public class Constants {
-    public static final String DEFAULT_LANG = "zh";
+    public static final String DEFAULT_LANG = SysPermissionLangCode.ZH;
     public static final String DIRECTIVE_REMOVE_REGEX = "Cms|Directive";
     public static final String ENCODING = "UTF-8";
     public static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");

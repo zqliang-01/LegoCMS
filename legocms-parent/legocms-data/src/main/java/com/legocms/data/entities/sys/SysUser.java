@@ -24,7 +24,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @Entity
 @Table(name = "sys_user")
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class SysUser extends BaseEntity {
 
     private String password;
@@ -42,4 +42,10 @@ public class SysUser extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "status", nullable = false)
     private UserStatus status;
+
+    protected SysUser() { }
+
+    public SysUser(String code) {
+        super(code);
+    }
 }

@@ -1,13 +1,4 @@
 $(function(){
-	$("form").submit(function(e){
-		if ($(this).attr('ajax')) {
-			var url = $(this).attr('action');
-			var data = $(this).serialize();
-			console.log(getDataFromForm($(this)))
-			ajaxSubmit(url, data);
-		}
-	});
-	
 	initDatepicker($('.selectdate'), 2);
     initDatepicker($('.singledate'), 1);
     function initDatepicker(obj, isone) {

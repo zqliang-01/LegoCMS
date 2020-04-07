@@ -1,5 +1,7 @@
 package com.legocms.data.dao.sys.impl;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import com.legocms.data.base.impl.GenericDao;
@@ -15,10 +17,17 @@ public class SysPermissionLangDao extends GenericDao<SysPermissionLang> implemen
     }
 
     @Override
-    public SysPermissionLang findBy(SysPermission module, String code) {
+    public SysPermissionLang findBy(SysPermission permission, String code) {
         QueryHandler<SysPermissionLang> query = createQueryHandler("FROM {0} ml");
-        query.condition("ml.module = :module").setParameter("module", module);
+        query.condition("ml.permission = :permission").setParameter("permission", permission);
         query.condition("ml.code = :code").setParameter("code", code);
         return query.findUnique();
+    }
+
+    @Override
+    public List<SysPermissionLang> findBy(SysPermission permission) {
+        QueryHandler<SysPermissionLang> query = createQueryHandler("FROM {0} ml");
+        query.condition("ml.permission = :permission").setParameter("permission", permission);
+        return query.findList();
     }
 }

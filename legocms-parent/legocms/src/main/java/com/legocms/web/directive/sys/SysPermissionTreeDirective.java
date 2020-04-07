@@ -1,28 +1,29 @@
 package com.legocms.web.directive.sys;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.legocms.core.annotation.RequiresPermissions;
-import com.legocms.core.dto.sys.SysUserInfo;
+import com.legocms.core.common.Constants;
+import com.legocms.core.dto.SimpleTreeInfo;
 import com.legocms.data.handler.RenderHandler;
-import com.legocms.service.sys.ISysUserService;
+import com.legocms.service.sys.ISysPermissionService;
 import com.legocms.web.directive.AbstractTemplateDirective;
 
 @Component
 @RequiresPermissions(skip = true)
-public class SysUserDirective extends AbstractTemplateDirective {
+public class SysPermissionTreeDirective extends AbstractTemplateDirective {
 
     @Autowired
-    private ISysUserService userService;
+    private ISysPermissionService permissionService;
 
     @Override
     public void execute(RenderHandler handler) throws IOException, Exception {
-        String code = handler.getString("code");
-        SysUserInfo userInfo = userService.findBy(code);
-        handler.put("userInfo", userInfo).render();
+        List<SimpleTreeInfo> trees = permissionService.findSimpleTree(Constants.DEFAULT_LANG);
+        handler.put("simpleTree", trees).render();
     }
 
 }

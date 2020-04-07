@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
+import com.legocms.core.common.DateUtil;
 import com.legocms.core.exception.CoreException;
 import com.legocms.core.vo.Vo;
 import com.legocms.data.sql.IdGenerator;
@@ -41,6 +42,7 @@ public class BaseEntity {
         this.id = IdGenerator.getCurrent().nextId(this);
         this.code = (code == null ? id.toString() : code);
         this.setVersion(1);
+        this.createDate = DateUtil.getCurrentDate();
     }
 
     /** 创建VO 子类覆盖 */

@@ -11,9 +11,9 @@ import java.util.TreeSet;
 
 import com.legocms.core.common.CollectionUtil;
 import com.legocms.core.common.StringUtil;
-import com.legocms.core.dto.JsonResponse;
 import com.legocms.core.exception.BusinessException;
 import com.legocms.core.vo.Vo;
+import com.legocms.core.web.JsonResponse;
 
 /**
   * 指令处理器基类

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.legocms.core.annotation.RequiresPermissions;
 import com.legocms.core.common.StringUtil;
 import com.legocms.core.dto.sys.SysUserInfo;
+import com.legocms.core.vo.sys.AdminPermission;
+import com.legocms.core.vo.sys.SysUserVo;
 import com.legocms.core.web.JsonResponse;
 import com.legocms.core.web.ViewResponse;
 import com.legocms.core.web.session.SessionController;
@@ -62,28 +64,36 @@ public class AdminSysUserController extends SessionController {
     }
 
     @GetMapping("/init")
-    @RequiresPermissions("user")
+    @RequiresPermissions(AdminPermission.USER)
     public ViewResponse init() {
         return ViewResponse.ok(AdminView.CMS_USER_LIST);
     }
 
     @GetMapping("/edit/{code}")
-    @RequiresPermissions("user-edit")
+    @RequiresPermissions(AdminPermission.USER_EDIT)
     public ViewResponse edit(@PathVariable String code) {
         return ViewResponse.ok(AdminView.CMS_USER_EDIT).put("code", code);
     }
 
     @PostMapping("/active")
-    @RequiresPermissions("user-edit")
+    @RequiresPermissions(AdminPermission.USER_EDIT)
     public JsonResponse active(String code) {
         userService.active(code);
         return JsonResponse.ok();
     }
 
     @PostMapping("/invalid")
-    @RequiresPermissions("user-edit")
+    @RequiresPermissions(AdminPermission.USER_EDIT)
     public JsonResponse invalid(String code) {
         userService.invalid(code);
+        return JsonResponse.ok();
+    }
+
+    @PostMapping("/save")
+    @RequiresPermissions(AdminPermission.USER_EDIT)
+    public JsonResponse save(SysUserVo vo) {
+        log.debug("保存客户信息：{}", vo);
+        userService.save(vo);
         return JsonResponse.ok();
     }
 }

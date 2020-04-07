@@ -1,3 +1,22 @@
+function ajaxForm(formId, successFun){
+	$('#' + formId).submit(function(e){
+		var form = $(this);
+		if (form[0].checkValidity() == false) {
+			form.addClass('was-validated');
+			return;
+		}
+		var url = form.attr('action');
+		var data = form.serialize();
+		ajaxSubmit(url, data, function(data) {
+			form.removeClass('was-validated');
+			showMsg("操作成功！", 1);
+			if (!isEmpty(successFun)) {
+				successFun(data);
+			}
+		});
+	});
+}
+
 function ajaxSubmit(url, data, successFun, errorFun){
 	ajaxPost(url, data, successFun, errorFun, true);
 }
@@ -124,3 +143,28 @@ function ajaxPost(url, data, successFun, errorFun, async){
 		}
 	});
 }
+
+function successShowFun(data){
+	if(data.code == "0"){
+		showMsg("操作成功！", 1);
+	}
+	else {
+		showMsg("操作失败：" + data.msg, 5);
+	}
+}
+
+function interceptorResponse(data) {
+	if (data.code != "0") {
+		if (data.code == "1000") {
+			showMsg(data.msg, 5, function() {
+				window.open(ctx + "/admin/login","_parent");
+			});
+		}
+		else {
+			showMsg(data.msg, 5);
+		}
+		return true;
+	}
+	return false;
+}
+

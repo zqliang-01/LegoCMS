@@ -15,7 +15,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @Entity
 @Table(name = "sys_organization")
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class SysOrganization extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
