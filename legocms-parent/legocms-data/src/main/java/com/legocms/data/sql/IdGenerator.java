@@ -12,6 +12,8 @@ public abstract class IdGenerator {
 
     public abstract Long nextId(BaseEntity baseEntity);
 
+    public abstract Long nextId();
+
     public static IdGenerator getCurrent() {
         return current;
     }

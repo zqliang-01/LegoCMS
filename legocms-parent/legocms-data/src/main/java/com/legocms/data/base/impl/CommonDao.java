@@ -34,12 +34,14 @@ public class CommonDao implements ICommonDao, InitializingBean {
     private EntityManager entityManager;
     private static CommonDao commonDao;
 
+    @Override
     public <T extends BaseEntity> T findByCode(Class<T> clazz, String code) {
         T result = findByUnsureCode(clazz, code);
-        CoreException.check(result != null, "未能找到对象,code:" + code);
+        CoreException.check(result != null, "未能找到对象,code:" + code + " type:" + clazz.getSimpleName());
         return result;
     }
 
+    @Override
     public <T extends BaseEntity> T findByUnsureCode(Class<T> clazz, String code) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(clazz);
@@ -49,6 +51,7 @@ public class CommonDao implements ICommonDao, InitializingBean {
         return uniqueOrNull(query.getResultList());
     }
 
+    @Override
     public <T extends BaseEntity> List<T> findAll(Class<T> clazz) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(clazz);
@@ -57,6 +60,7 @@ public class CommonDao implements ICommonDao, InitializingBean {
         return query.getResultList();
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public <T extends Dto> T findBeanBy(Class<T> clazz, String sql, Map<String, Object> parameters) {
         Session session = entityManager.unwrap(Session.class);
@@ -68,6 +72,7 @@ public class CommonDao implements ICommonDao, InitializingBean {
         return uniqueOrNull(query.getResultList());
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public <T extends Dto> List<T> findBeansBy(Class<T> clazz, String sql, Map<String, Object> parameters) {
         Session session = entityManager.unwrap(Session.class);

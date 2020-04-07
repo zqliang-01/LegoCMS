@@ -133,7 +133,7 @@ CALL addPermission('place-delete', 'place', null, null, 0, 2);
 CALL addPermissionLang('zh', '删除', 'place-delete');
 CALL addPermissionLang('en', 'delete', 'place-delete');
 
-CALL addPermission('file', 'site-maintenance', 'pe-7s-ribbon', '/admin/file/init', 1, 5);
+CALL addPermission('file', 'site-maintenance', 'pe-7s-wallet', '/admin/file/init', 1, 5);
 CALL addPermissionLang('zh', '站点文件管理', 'file');
 CALL addPermissionLang('en', 'File Management', 'file');
 

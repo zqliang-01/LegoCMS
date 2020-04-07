@@ -6,17 +6,23 @@ import org.springframework.http.MediaType;
 
 import com.legocms.core.vo.sys.SysPermissionLangCode;
 
-public class Constants {
-    public static final String DEFAULT_LANG = SysPermissionLangCode.ZH;
-    public static final String DIRECTIVE_REMOVE_REGEX = "Directive";
-    public static final String ENCODING = "UTF-8";
-    public static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
-    public static final String MEDIA_TYPE = "application/json;charset=UTF-8";
-    public static final MediaType JSON_MEDIA_TYPE = new MediaType("application", "json", DEFAULT_CHARSET);
-    public static final String SEPARATOR = "/";
-    public static final String BLANK = "";
-    public static final String DOT = ".";
-    public static final String UNDERLINE = "_";
-    public static final String BLANK_SPACE = " ";
-    public static final String COMMA_DELIMITED = ",";
+public interface Constants {
+    String DEFAULT_LANG = SysPermissionLangCode.ZH;
+
+    String DIRECTIVE_REMOVE_REGEX = "Directive";
+
+    String ENCODING = "UTF-8";
+    Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
+
+    String MEDIA_TYPE = "application/json;charset=UTF-8";
+    MediaType JSON_MEDIA_TYPE = new MediaType("application", "json", DEFAULT_CHARSET);
+
+    String SEPARATOR = "/";
+    String BLANK = "";
+    String DOT = ".";
+    String UNDERLINE = "_";
+    String BLANK_SPACE = " ";
+    String COMMA_DELIMITED = ",";
+
+    String ROOT_PATH = "/legocms";
 }

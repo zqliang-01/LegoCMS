@@ -25,7 +25,7 @@ public abstract class AbstractAssembler<T extends Dto, E extends BaseEntity> imp
 
     @Override
     public Page<T> createInfoPage(Page<E> ePage) {
-        return new Page<T>(create(ePage.getResult()), ePage.getCurrent(), ePage.getPageSize(), ePage.getTotalCount());
+        return new Page<T>(ePage.getParam(), create(ePage.getResult()), ePage.getCurrent(), ePage.getPageSize(), ePage.getTotalCount());
     }
 
     public List<String> createCodes(List<? extends BaseEntity> entities) {

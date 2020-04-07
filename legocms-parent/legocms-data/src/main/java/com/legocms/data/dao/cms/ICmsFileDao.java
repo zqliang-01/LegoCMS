@@ -6,5 +6,5 @@ import com.legocms.data.entities.cms.CmsFile;
 
 public interface ICmsFileDao extends IGenericDao<CmsFile> {
 
-    Page<CmsFile> findBy(String parentCode, String siteCode, int pageIndex, int pageSize);
+    Page<CmsFile> findBy(CmsFile parent, String siteCode, int pageIndex, int pageSize);
 }

@@ -1,7 +1,9 @@
 package com.legocms.core.dto;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -22,6 +24,7 @@ public class Page<T> extends Dto {
     protected List<T> result = new ArrayList<T>();
     protected long totalCount = -1; // 总记录条数
     protected long totalPage = -1; // 总页数
+    private Map<String, Object> param = new HashMap<String, Object>();
 
     // -- 构造函数 --//
     public Page() { }
@@ -30,11 +33,29 @@ public class Page<T> extends Dto {
         this.pageSize = pageSize;
     }
 
-    public Page(final List<T> result, final int current, final int pageSize, final long totalCount) {
+    public Page(List<T> result, int current, int pageSize, long totalCount) {
         super();
         this.current = current;
         this.pageSize = pageSize;
         this.result = result;
+        this.totalCount = totalCount;
+        if (totalCount == 0) {
+            this.totalPage = 1;
+        }
+        else if (totalCount % pageSize == 0) {
+            this.totalPage = totalCount / pageSize;
+        }
+        else {
+            this.totalPage = totalCount / pageSize + 1;
+        }
+    }
+
+    public Page(Map<String, Object> param, List<T> result, int current, int pageSize, long totalCount) {
+        super();
+        this.current = current;
+        this.pageSize = pageSize;
+        this.result = result;
+        this.param = param;
         this.totalCount = totalCount;
         if (totalCount == 0) {
             this.totalPage = 1;
@@ -129,5 +150,17 @@ public class Page<T> extends Dto {
 
     public void setTotalPage(final long totalPage) {
         this.totalPage = totalPage;
+    }
+
+    public Map<String, Object> getParam() {
+        return param;
+    }
+
+    public void setParam(Map<String, Object> param) {
+        this.param = param;
+    }
+
+    public void put(String key, Object value) {
+        param.put(key, value);
     }
 }

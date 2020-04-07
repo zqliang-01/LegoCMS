@@ -10356,6 +10356,31 @@ jQuery.fn.resetForm = function() {
 	submitForm.removeClass('was-validated');
 };
 
+jQuery.fn.hasFileInput = function() {
+	var include = false;
+	var inputItems = this.find("input");
+	$(inputItems).each(function getInputVal(index,element){
+		if ($(element).attr("type") == 'file') {
+			include = true;
+		}
+	});
+	return include;
+};
+
+jQuery.fn.serializeFile = function() {
+	var formData = new FormData();
+	var inputItems = this.find("input");
+	$(inputItems).each(function getInputVal(index,element){
+		if ($(element).attr("type") == 'file') {
+			formData.append($(element).attr("name"), $(element)[0].files[0]);
+		}
+		else {
+			formData.append($(element).attr("name"), $(element).val());
+		}
+	});
+	return formData;
+};
+
 jQuery.fn.hasAttr = function(attr) {
 	 if(typeof(this.attr(attr)) != "undefined") {
 		 return true;

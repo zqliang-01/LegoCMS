@@ -4,14 +4,12 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisStringCommands;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.types.Expiration;
-import org.springframework.stereotype.Component;
 
 import com.legocms.core.common.SerializerUtil;
 import com.legocms.core.web.session.RedisSession;
@@ -19,16 +17,16 @@ import com.legocms.core.web.session.RedisSession;
 /**
  * redis单机缓存 采用RedisTemplate
  */
-@Component("cache")
-@ConditionalOnProperty(name = "spring.session.store-type", havingValue = "redis")
 public class RedisCacheImpl implements RedisCache {
     private static ThreadLocal<String> currentToken = new ThreadLocal<String>();
 
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
+    @Override
     public <T> void saveOrUpdateCache(String key, T obj, final int liveTime) {
         redisTemplate.execute(new RedisCallback<Boolean>() {
+            @Override
             public Boolean doInRedis(RedisConnection connection) throws DataAccessException {
                 connection.set(key.getBytes(), SerializerUtil.serialize(obj), Expiration.seconds(liveTime), RedisStringCommands.SetOption.UPSERT);
                 return true;

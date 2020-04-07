@@ -18,7 +18,10 @@ public class CmsFileInfo extends Dto {
     private String name;
     private String path;
     private long size;
+    private String content;
+    private boolean editable;
     private TypeInfo type;
-    private Date createDate;
-    private Date updateDate;
+    private TypeInfo parent;
+    private Date createTime;
+    private Date updateTime;
 }

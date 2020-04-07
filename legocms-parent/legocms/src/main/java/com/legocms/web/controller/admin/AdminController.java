@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.legocms.core.dto.sys.SysSiteInfo;
 import com.legocms.core.dto.sys.SysUserInfo;
+import com.legocms.core.exception.BusinessException;
 import com.legocms.core.web.session.SessionController;
 import com.legocms.service.sys.ISysUserService;
 
@@ -42,10 +43,8 @@ public class AdminController extends SessionController {
 
     protected String getSiteCode() {
         SysSiteInfo site = getSite();
-        if (site != null) {
-            return site.getCode();
-        }
-        return null;
+        BusinessException.check(site != null, "当前无管理站点，请先选择管理站点！");
+        return site.getCode();
     }
 
     protected List<String> getPermissionCodes() {

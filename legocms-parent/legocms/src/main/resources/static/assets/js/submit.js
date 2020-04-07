@@ -5,20 +5,32 @@ function ajaxForm(form, successFun){
 			return;
 		}
 		var url = form.attr('action');
-		var data = form.serialize();
 		var method = form.attr('method');
 		if (isEmpty(method)) {
 			method = 'POST';
 		}
-		ajaxRequest(url, data, function(data) {
-			console.log();
-			form.removeClass('was-validated');
-			showMsg("操作成功！", 1, function(){
-				if (isNotEmpty(successFun)) {
-					successFun(data);
-				}
-			});
-		}, null, true, method);
+		if (form.hasFileInput()) {
+			var data = form.serializeFile();
+			ajaxFileSubmit(url, data, function(data) {
+				form.removeClass('was-validated');
+				showMsg("操作成功！", 1, function(){
+					if (isNotEmpty(successFun)) {
+						successFun(data);
+					}
+				});
+			}, null, true, method);
+		}
+		else {
+			var data = form.serialize();
+			ajaxRequest(url, data, function(data) {
+				form.removeClass('was-validated');
+				showMsg("操作成功！", 1, function(){
+					if (isNotEmpty(successFun)) {
+						successFun(data);
+					}
+				});
+			}, null, true, method);
+		}
 	});
 }
 

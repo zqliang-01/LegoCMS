@@ -16,5 +16,5 @@ public class CmsFileVo extends Vo {
     private String name;
     private String type;
     private String content;
-
+    private String siteCode;
 }

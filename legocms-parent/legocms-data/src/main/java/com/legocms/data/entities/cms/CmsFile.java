@@ -1,5 +1,6 @@
 package com.legocms.data.entities.cms;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,11 +18,13 @@ import com.legocms.data.entities.sys.SysSite;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
 @Entity
 @Table(name = "cms_file")
 @EqualsAndHashCode(callSuper = true)
+@ToString
 public class CmsFile extends BaseEntity {
 
     private long size;
@@ -37,7 +40,7 @@ public class CmsFile extends BaseEntity {
     private CmsFile parent;
 
     @OneToMany(cascade={CascadeType.ALL}, fetch = FetchType.LAZY)
-    @JoinColumn(name="id")
+    @JoinColumn(name = "parent_id")
     private List<CmsFile> childrens;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -48,5 +51,17 @@ public class CmsFile extends BaseEntity {
 
     public CmsFile(String code) {
         super(code);
+    }
+
+    public List<CmsFile> getAllChildren() {
+        List<CmsFile> list = new ArrayList<CmsFile>();
+        list.add(this);
+        if (childrens.isEmpty()) {
+            return list;
+        }
+        for (CmsFile children : childrens) {
+            list.addAll(children.getAllChildren());
+        }
+        return list;
     }
 }

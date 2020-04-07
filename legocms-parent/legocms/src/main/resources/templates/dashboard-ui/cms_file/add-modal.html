@@ -1,15 +1,19 @@
 <noscript id="add-modal" data-form="#add-form" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
 	<form id="add-form" action="${ctx}/admin/file/save" onsubmit="return false;" class="needs-validation" novalidate>
 		<div class="modal-body">
+			<input name="parentCode" type="hidden">
 			<div class="position-relative row form-group">
-				<label class="col-sm-3 col-form-label"><@t.page 'setting.name'/></label>
+				<label class="col-sm-3 col-form-label"><@t.page 'list.name'/></label>
 				<div class="col-sm-9">
 					<input name="name" type="text" class="form-control" required>
 					<div class="invalid-feedback">Please provide a valid name</div>
 				</div>
+			</div>
+			<div class="position-relative row form-group">
+				<label class="col-sm-3 col-form-label"><@t.page 'list.type'/></label>
 				<div class="col-sm-9">
-					<select name="type" class="form-control custom-select">
-						<option value=""><@t.page 'list.status'/></option>
+					<select name="type" class="form-control custom-select" required>
+						<option value=""><@t.page 'list.type'/></option>
 						<@cmsFileType>
 							<#list types as type>
 								<option value="${type.code}">${type.name}</option>
@@ -17,6 +21,13 @@
 						</@cmsFileType>
 					</select>
 					<div class="invalid-feedback">Please provide a valid type</div>
+				</div>
+			</div>
+			<div class="position-relative row form-group">
+				<label class="col-sm-3 col-form-label"><@t.page 'list.content'/></label>
+				<div class="col-sm-9">
+					<input name="content" type="text" class="form-control" required>
+					<div class="invalid-feedback">Please provide a valid name</div>
 				</div>
 			</div>
 		</div>

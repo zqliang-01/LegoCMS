@@ -5,39 +5,76 @@
         <meta name="description" content="LegoCMS">
         <#include "../include_page/link.html"/>
         <script type="text/javascript">
-        	$(function) {
+        	$(function() {
         		var url = ctx + "/admin/directive/cmsFileList";
-        		initMyPagination("MyPagination-file-list", "Template-file-list", url);
-        	}
+        		initMyPagination("MyPagination-file-list", "Template-file-list", url, function(data) {
+            		$('#path').html(data.page.param.path);
+        		});
+        	});
+			function query(code) {
+        		$('.queryForm').find("input[name='parentCode']").val(code);
+    			$('.query').click();
+			}
+			function createFile() {
+				var parentCode = $('.queryForm').find("input[name='parentCode']").val();
+				window.parent.showFormDialog('<@t.page "file.add-dir"/>', $('#add-modal'), function(form) {
+					form.setForm({parentCode : parentCode});
+				}, function() {
+	    			$('.query').click();
+				});
+			}
+			function uploadFile() {
+				var parentCode = $('.queryForm').find("input[name='parentCode']").val();
+				window.parent.showFormDialog('<@t.page "file.upload"/>', $('#upload-modal'), function(form) {
+					form.setForm({parentCode : parentCode});
+				}, function() {
+	    			$('.query').click();
+				});
+			}
+			function del(code) {
+				window.parent.showConfirm('是否确认删除该文件？', '<@t.page "file.delete"/>', function() {
+					var url = ctx + "/admin/file/delete";
+					ajaxSubmit(url, {code: code}, function() {
+		    			$('.query').click();
+					});
+				})
+			}
         </script>
     </head>
     <body>
         <div class="app-main__inner" id="MyPagination-file-list">
-        	<div class="queryForm app-page-title" onsubmit="return false;" name="queryForm">
-               	<div class="page-title-wrapper">
-                     <div class="form-inline">
-		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
-		                 	<button class="btn btn-info"onclick="window.parent.showFormDialog('<@t.page 'setting.change-password'/>', $('#change-password-modal'));" >创建文件</button>
-		                 </div>
-		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
-		                 	<button class="btn btn-info"onclick="window.parent.showFormDialog('<@t.page 'setting.change-password'/>', $('#change-password-modal'));" >上传文件</button>
-		                 </div>
-                     </div>
-                </div>
-           	</div>
+           	<form class="queryForm app-page-title">
+           		<input type="hidden" name="parentCode"/>
+	           	<div class="page-title-wrapper">
+					<div class="form-inline">
+						<div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+							<span class="btn btn-info" onclick="createFile()" ><@t.page 'file.add-file'/></span>
+						</div>
+						<div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+							<span class="btn btn-info" onclick="createFile()" ><@t.page 'file.add-dir'/></span>
+						</div>
+						<div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+							<span class="btn btn-info" onclick="uploadFile()" ><@t.page 'file.upload'/></span>
+						</div>
+						<div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+							<span class="btn btn-info query"><@t.page 'file.refresh'/></span>
+						</div>
+					</div>
+	            </div>
+	        </form>
 	        <div class="row row-fluid">
 	            <div class="col-md-12">
+	        	<span class="breadcrumb" id="path"></span>
 	                <div class="main-card mb-3 card">
-	                    <div class="card-header"><@t.page 'employee.list'/></div>
+	                    <div class="card-header"><@t.page 'file.list'/></div>
 	                    <div class="table-responsive">
 	                        <table role="grid" class="align-middle mb-0 table table-borderless table-striped table-hover mytab">
 	                            <thead>
 	                                <tr role="row">
-	                                    <th class="text-center"><@t.page 'list.code'/></th>
-	                                    <th><@t.page 'list.name'/></th>
-	                                    <th class="text-center">修改日期</th>
+	                                    <th class="text-center"><@t.page 'list.name'/></th>
+	                                    <th class="text-center"><@t.page 'list.update-time'/></th>
 	                                    <th class="text-center"><@t.page 'list.create-time'/></th>
-	                                    <th class="text-center">大小</th>
+	                                    <th class="text-center"><@t.page 'list.size'/>(B)</th>
 	                                    <th class="text-center"><@t.page 'list.operation'/></th>
 	                                </tr>
 	                            </thead>
@@ -51,20 +88,32 @@
 					            <textarea id="Template-file-list" rows="0" cols="0">
 					                <!--
 					                    {#template MAIN}
+					                        {#if $T.page.param.parentCode != '-'}
+					                            <tr role="row" >
+					                                <td class="text-center"><a href="#" onclick="query({$T.page.param.parentCode})">上一级</a></td>
+					                                <td class="text-center"></td>
+					                                <td class="text-center"></td>
+					                                <td class="text-center"></td>
+					                                <td class="text-center"></td>
+					                            </tr>
+					                        {#/if}
 					                        {#foreach $T.page.result as Result}
 					                            <tr role="row" >
-					                                <td class="text-center text-muted">
-					                                	<form onsubmit="return false;" name="queryForm">
-					                                		<input type="hidden" value="{$T.Result.code}" name="parentCode"/>
-					                                		<a class="query">{$T.Result.code}</a>
-					                                	</form>
+					                                <td class="text-center">
+					                                	{#if $T.Result.type.code == 'dir'}
+					                                		<a href="#" onclick="query({$T.Result.code})">{$T.Result.name}</a>
+					                                	{#else}
+					                                		{$T.Result.name}
+					                                	{#/if}
 					                                </td>
-					                                <td>{$T.Result.name}</td>
 					                                <td class="text-center">{$T.Result.updateTime}</td>
 					                                <td class="text-center">{$T.Result.createTime}</td>
 					                                <td class="text-center">{$T.Result.size}</td>
 					                                <td class="text-center">
-					                                	<button class="btn btn-primary btn-sm"><@t.page 'btn.edit'/></button>
+					                                	{#if $T.Result.type.code == 'file' && $T.Result.editable}
+															<button class="btn btn-primary btn-sm" onclick="window.parent.addTab('file-add', '<@t.page 'file.add-file'/>', '/admin/file/edit/{$T.Result.code}')"><@t.page 'btn.edit'/></button>					                                	
+					                                	{#/if}
+					                                	<button class="btn btn-danger btn-sm" onclick="del({$T.Result.code})"><@t.page 'btn.delete'/></button>
 					                                </td>
 					                            </tr>
 					                        {#/for}
@@ -78,5 +127,7 @@
 	            </div>
 	        </div>
 	    </div>
+		<#include "add-modal.html"/>
+		<#include "upload-modal.html"/>
     </body>
 </html>

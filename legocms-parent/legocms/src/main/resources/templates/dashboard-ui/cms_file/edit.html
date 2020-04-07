@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="LegoCMS">
+	<#include "../include_page/link.html"/>
+	<link rel="stylesheet" href="${res}/assets/js/codemirror/lib/codemirror.css">
+	<link rel="stylesheet" href="${res}/assets/js/codemirror/theme/eclipse.css">
+	<link rel="stylesheet" href="${res}/assets/js/codemirror/addon/hint/show-hint.css">
+	<link rel="stylesheet" href="${res}/assets/js/codemirror/addon/display/fullscreen.css">
+	<link rel="stylesheet" href="${res}/assets/js/codemirror/addon/scroll/simplescrollbars.css">
+	<script type="text/javascript" src="${res}/assets/js/codemirror/lib/codemirror.js"></script>
+	<script type="text/javascript" src="${res}/assets/js/codemirror/mode/xml/xml.js"></script>
+	<script type="text/javascript" src="${res}/assets/js/codemirror/mode/javascript/javascript.js"></script>
+	<script type="text/javascript" src="${res}/assets/js/codemirror/mode/css/css.js"></script>
+	<script type="text/javascript" src="${res}/assets/js/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+	<script type="text/javascript" src="${res}/assets/js/codemirror/mode/htmlembedded/htmlembedded.js"></script>
+	<script type="text/javascript" src="${res}/assets/js/codemirror/addon/mode/multiplex.js"></script>
+	<script type="text/javascript" src="${res}/assets/js/codemirror/addon/hint/anyword-hint.js"></script>
+	<script type="text/javascript" src="${res}/assets/js/codemirror/addon/hint/css-hint.js"></script>
+	<script type="text/javascript" src="${res}/assets/js/codemirror/addon/hint/html-hint.js"></script>
+	<script type="text/javascript" src="${res}/assets/js/codemirror/addon/hint/javascript-hint.js"></script>
+	<script type="text/javascript" src="${res}/assets/js/codemirror/addon/hint/show-hint.js"></script>
+	<script type="text/javascript" src="${res}/assets/js/codemirror/addon/hint/sql-hint.js"></script>
+	<script type="text/javascript" src="${res}/assets/js/codemirror/addon/hint/xml-hint.js"></script>
+	<script type="text/javascript" src="${res}/assets/js/codemirror/addon/display/fullscreen.js"></script>
+	<script type="text/javascript" src="${res}/assets/js/codemirror/addon/edit/closetag.js"></script>
+	<script type="text/javascript" src="${res}/assets/js/codemirror/addon/edit/closebrackets.js"></script>
+	<script type="text/javascript" src="${res}/assets/js/codemirror/addon/fold/xml-fold.js"></script>
+	<script type="text/javascript" src="${res}/assets/js/codemirror/addon/selection/active-line.js"></script>
+	<script type="text/javascript" src="${res}/assets/js/codemirror/addon/scroll/simplescrollbars.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			var dummy = {
+		    	attrs: {
+		        	color: ["red", "green", "blue", "purple", "white", "black", "yellow"],
+		        	size: ["large", "medium", "small"],
+		        	description: null
+		        },
+		        children: []
+		    };
+			var tags = {
+				"!top": ["top"],
+				"!attrs": {
+					id: null,
+					class: ["A", "B", "C"]
+				},
+				top: {
+					attrs: {
+						lang: ["en", "de", "fr", "nl"],
+						freeform: null
+					},
+					children: ["animal", "plant"]
+				},
+				animal: {
+					attrs: {
+						name: null,
+						isduck: ["yes", "no"]
+					},
+					children: ["wings", "feet", "body", "head", "tail"]
+				},
+				plant: {
+					attrs: {
+						name: null
+					},
+					children: ["leaves", "stem", "flowers"]
+				},
+				wings: dummy,
+				feet: dummy,
+				body: dummy,
+				head: dummy,
+				tail: dummy,
+				leaves: dummy,
+				stem: dummy,
+				flowers: dummy
+			};
+
+			function completeAfter(cm, pred) {
+				var cur = cm.getCursor();
+				if (!pred || pred()) setTimeout(function() {
+					if (!cm.state.completionActive)
+						cm.showHint({
+							completeSingle: false
+						});
+				}, 100);
+				return CodeMirror.Pass;
+			}
+
+			function completeIfAfterLt(cm) {
+				return completeAfter(cm, function() {
+					var cur = cm.getCursor();
+					return cm.getRange(CodeMirror.Pos(cur.line, cur.ch - 1), cur) == "<";
+				});
+			}
+
+			function completeIfInTag(cm) {
+				return completeAfter(cm, function() {
+					var tok = cm.getTokenAt(cm.getCursor());
+					if (tok.type == "string" && (!/['"]/.test(tok.string.charAt(tok.string.length - 1)) || tok.string.length == 1))
+						return false;
+					var inner = CodeMirror.innerMode(cm.getMode(), tok.state).state;
+					return inner.tagName;
+				});
+			}
+			var editor = CodeMirror.fromTextArea(document.getElementById("content"), {
+		        lineNumbers: true,
+		        mode: 'htmlmixed',
+		        theme: 'eclipse',
+		        scrollbarStyle: "simple",
+		        indentUnit: 4,
+		        indentWithTabs: true,
+		        autoCloseTags: true,
+		        autoCloseBrackets: true,
+		        styleActiveLine: {nonEmpty: true},
+		        lineWrapping: true,
+		        extraKeys: {
+		            "'<'": completeAfter,
+		            "'/'": completeIfAfterLt,
+		            "' '": completeIfInTag,
+		            "'='": completeIfInTag,
+		            "Ctrl-Space": "autocomplete",
+		            "F11": function(cm) {
+		                cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+		            },
+		            "Esc": function(cm) {
+		                if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+		            }
+		        },
+		        hintOptions: {schemaInfo: tags}
+	        });
+			ajaxForm($('#save-file-form'), function() {
+		    	$('#save-file-form').find("[name=code]").attr("readonly", "");
+			});
+		});
+	</script>
+</head>
+<body>
+	<div class="app-main__inner" id="MyPagination-user-list">
+		<@cmsFile code=code>
+		<div class="main-card mb-3 card">
+			<div class="card-body">
+				<h5 class="card-title"><@t.page 'employee.info'/></h5>
+				<form id="save-file-form" action="${ctx}/admin/file/save" ajax="true" onsubmit="return false;" class="needs-validation" novalidate>
+					<input name="parentCode" type="hidden" value="${(fileInfo.parent.code)!''}" required>
+					<div class="position-relative row form-group">
+						<label class="col-sm-2 col-form-label"><@t.page 'list.code'/></label>
+						<div class="col-sm-10">
+							<#if (fileInfo.code)??>
+								<input name="code" placeholder="Code" type="text" class="form-control" value="${(fileInfo.code)!''}" readonly required>
+							<#else>
+								<input name="code" placeholder="Code" type="text" class="form-control" required>
+							</#if>
+							<div class="invalid-feedback">
+                                Please provide a valid code
+                            </div>
+						</div>
+					</div>
+					<div class="position-relative row form-group">
+						<label class="col-sm-2 col-form-label"><@t.page 'list.name'/></label>
+						<div class="col-sm-10">
+							<input name="name" placeholder="Name" type="text" class="form-control" value="${(fileInfo.name)!''}" required>
+							<div class="invalid-feedback">
+                                Please provide a valid name
+                            </div>
+						</div>
+					</div>
+					<div class="position-relative row form-group">
+						<label class="col-sm-2 col-form-label"><@t.page 'list.type'/></label>
+						<div class="col-sm-10">
+							<select name="type" class="form-control custom-select" required>
+								<@cmsFileType>
+									<#list types as type>
+										<#if (fileInfo.type.code)??&&type.code == fileInfo.type.code>
+											<option selected="selected" value="${type.code}">${type.name}</option>
+										<#else>
+											<option value="${type.code}">${type.name}</option>
+										</#if>
+									</#list>
+								</@cmsFileType>
+							</select>
+							<div class="invalid-feedback">
+                                Please provide a valid status
+                            </div>
+						</div>
+					</div>
+					<div class="position-relative row form-group">
+						<label class="col-sm-2 col-form-label"><@t.page 'list.create-time'/></label>
+						<div class="col-sm-10">
+							<input placeholder="Create Date" class="form-control" value="${(fileInfo.createTime)!''}" disabled>
+						</div>
+					</div>
+					<div class="position-relative row form-group">
+						<label class="col-sm-2 col-form-label"><@t.page 'list.update-time'/></label>
+						<div class="col-sm-10">
+							<input placeholder="Update Date" class="form-control" value="${(fileInfo.updateTime)!''}" disabled>
+						</div>
+					</div>
+					<#if fileInfo.editable>
+						<div class="position-relative row form-group">
+							<textarea id="content" name="content" class="form-control">${(fileInfo.content)!''}</textarea>
+						</div>
+					</#if>
+					<div class="position-relative row form-check">
+						<div class="col-sm-10 offset-sm-2">
+							<button class="btn btn-secondary"><@t.page 'btn.save'/></button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		</@cmsFile>
+	</div>
+</body>
+</html>

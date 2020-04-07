@@ -20,6 +20,9 @@ public class MysqlSequenceIdGenerator extends IdGenerator implements Initializin
     @PersistenceContext
     private EntityManager entityManager;
 
+    private static final String GENERAL = "general";
+
+    @Override
     public Long nextId(BaseEntity baseEntity) {
         String subSystemPrefix = parserSubSystemPrefix(baseEntity.getClass().getName());
         String sql = MessageFormat.format("SELECT nextval({0}) FROM DUAL", "'" + subSystemPrefix + "'");
@@ -28,7 +31,16 @@ public class MysqlSequenceIdGenerator extends IdGenerator implements Initializin
         return Long.valueOf(id.longValue());
     }
 
+    @Override
     public void afterPropertiesSet() throws Exception {
         setIdGenerator(this);
+    }
+
+    @Override
+    public Long nextId() {
+        String sql = MessageFormat.format("SELECT nextval({0}) FROM DUAL", "'" + GENERAL + "'");
+        Query query = this.entityManager.createNativeQuery(sql);
+        BigInteger id = (BigInteger) query.getSingleResult();
+        return Long.valueOf(id.longValue());
     }
 }

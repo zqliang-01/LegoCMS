@@ -15,10 +15,16 @@ public class CmsFileDao extends GenericDao<CmsFile> implements ICmsFileDao {
     }
 
     @Override
-    public Page<CmsFile> findBy(String parentCode, String siteCode, int pageIndex, int pageSize) {
+    public Page<CmsFile> findBy(CmsFile parent, String siteCode, int pageIndex, int pageSize) {
         QueryHandler<CmsFile> handler = this.createQueryHandler("FROM {0} f");
-        handler.condition("f.parent.code = :parentCode").setParameter("parentCode", parentCode);
+        if (parent == null) {
+            handler.condition("f.parent IS NULL");
+        }
+        else {
+            handler.condition("f.parent = :parent").setParameter("parent", parent);
+        }
         handler.condition("f.site.code = :siteCode").setParameter("siteCode", siteCode);
+        handler.order("f.type.code, f.name DESC");
         return handler.findPage(pageIndex, pageSize);
     }
 

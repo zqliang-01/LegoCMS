@@ -22,7 +22,7 @@ public class SysSiteAssembler extends AbstractAssembler<SysSiteInfo, SysSite> {
     }
 
     public Page<SysSiteInfo> createInfoPage(Page<SysSite> ePage, String manageSite) {
-        return new Page<SysSiteInfo>(create(ePage.getResult(), manageSite), ePage.getCurrent(), ePage.getPageSize(), ePage.getTotalCount());
+        return new Page<SysSiteInfo>(ePage.getParam(), create(ePage.getResult(), manageSite), ePage.getCurrent(), ePage.getPageSize(), ePage.getTotalCount());
     }
 
     @Override
