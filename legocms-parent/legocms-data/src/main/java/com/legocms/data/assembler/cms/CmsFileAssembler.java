@@ -1,12 +1,15 @@
 package com.legocms.data.assembler.cms;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 
 import com.legocms.core.common.FileUtil;
+import com.legocms.core.dto.SimpleTreeInfo;
 import com.legocms.core.dto.cms.CmsFileInfo;
+import com.legocms.core.vo.cms.CmsTemplateTypeCode;
 import com.legocms.data.assembler.AbstractAssembler;
 import com.legocms.data.entities.cms.CmsFile;
 
@@ -32,4 +35,22 @@ public class CmsFileAssembler extends AbstractAssembler<CmsFileInfo, CmsFile> {
         return info;
     }
 
+    public List<SimpleTreeInfo> createSimpleTree(List<CmsFile> files) {
+
+        List<SimpleTreeInfo> trees = new ArrayList<SimpleTreeInfo>();
+        for (CmsFile file : files) {
+            SimpleTreeInfo tree = new SimpleTreeInfo();
+            tree.setCode(file.getCode());
+            tree.setName(file.getName());
+            tree.setPath(file.getPath());
+            if (file.getParent() != null) {
+                tree.setParentCode(file.getParent().getCode());
+            }
+            if (CmsTemplateTypeCode.DIR.equals(file.getType().getCode())) {
+                tree.setParent(true);
+            }
+            trees.add(tree);
+        }
+        return trees;
+    }
 }

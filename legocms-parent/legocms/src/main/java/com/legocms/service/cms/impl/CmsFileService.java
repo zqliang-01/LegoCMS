@@ -3,15 +3,21 @@ package com.legocms.service.cms.impl;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.legocms.core.common.Constants;
 import com.legocms.core.common.DateUtil;
 import com.legocms.core.common.FileUtil;
 import com.legocms.core.common.StringUtil;
 import com.legocms.core.dto.Page;
+import com.legocms.core.dto.SimpleTreeInfo;
+import com.legocms.core.dto.cms.CmsCyncFileInfo;
 import com.legocms.core.dto.cms.CmsFileInfo;
+import com.legocms.core.exception.BusinessException;
 import com.legocms.core.exception.ServiceException;
 import com.legocms.core.vo.cms.CmsFileTypeCode;
 import com.legocms.core.vo.cms.CmsFileVo;
@@ -47,6 +53,21 @@ public class CmsFileService extends BaseService implements ICmsFileService {
         fileHelper.get(baos, FileUtil.getPath(path), FileUtil.getFile(path));
         file.setContent(baos.toString());
         return file;
+    }
+
+    @Override
+    public CmsFileInfo findByPath(String path, String siteCode) {
+        CmsFile file = fileDao.findByPath(path, siteCode);
+        if (file == null) {
+            return null;
+        }
+        return fileAssembler.create(file);
+    }
+
+    @Override
+    public List<SimpleTreeInfo> findSimpleTree() {
+        List<CmsFile> files = fileDao.findAll(new Sort(Sort.Direction.ASC, "type.code", "name"));
+        return fileAssembler.createSimpleTree(files);
     }
 
     @Override
@@ -100,6 +121,7 @@ public class CmsFileService extends BaseService implements ICmsFileService {
             fileHelper.create(ins, FileUtil.getAbsolutePath(path, vo.getSiteCode()), null);
         }
         else {
+            BusinessException.check(ins != null, "文件内容不能为空！");
             fileHelper.create(ins, FileUtil.getAbsolutePath(parentPath, vo.getSiteCode()), vo.getName());
         }
         fileDao.save(file);
@@ -113,4 +135,51 @@ public class CmsFileService extends BaseService implements ICmsFileService {
         fileDao.deleteInBatch(file.getAllChildren());
     }
 
+    @Override
+    public void synchronizeDirectory(String parentCode, String siteCode) {
+        CmsFile file = fileDao.findByUnsureCode(parentCode);
+        String parentPath = "";
+        if (file != null) {
+            parentPath = file.getPath();
+        }
+        String path = FileUtil.getAbsolutePath(parentPath, siteCode);
+        List<CmsCyncFileInfo> fileInfos = fileHelper.list(path);
+        for (CmsCyncFileInfo fileInfo : fileInfos) {
+            path = parentPath + Constants.SEPARATOR + fileInfo.getName();
+            CmsFile dbFile = fileDao.findBy(parentCode, siteCode, path);
+            if (dbFile == null) {
+                dbFile = new CmsFile(null);
+                if (file != null) {
+                    dbFile.setParent(file);
+                }
+                dbFile.setPath(path);
+                dbFile.setName(fileInfo.getName());
+                dbFile.setSite(siteDao.findByCode(siteCode));
+                dbFile.setType(commonDao.findByCode(CmsFileType.class, fileInfo.getType()));
+            }
+            dbFile.setSize(fileInfo.getSize());
+            dbFile.setUpdateTime(fileInfo.getUpdateTime());
+            fileDao.save(dbFile);
+        }
+        for (CmsFile dbFile : fileDao.findBy(parentCode, siteCode)) {
+            boolean exist = false;
+            for (CmsCyncFileInfo fileInfo : fileInfos) {
+                if (fileInfo.getName().equals(dbFile.getName())) {
+                    exist = true;
+                    break;
+                }
+            }
+            if (CmsFileTypeCode.DIR.equals(dbFile.getType().getCode())) {
+                if (exist) {
+                    synchronizeDirectory(dbFile.getCode(), siteCode);
+                }
+                else {
+                    fileDao.deleteInBatch(dbFile.getAllChildren());
+                }
+            }
+            else if (!exist) {
+                fileDao.delete(dbFile);
+            }
+        }
+    }
 }

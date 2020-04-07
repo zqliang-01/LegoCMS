@@ -91,7 +91,9 @@ function showSimpleTree(title, data, callBack) {
 				callback: {
 					onClick: function(event, treeId, treeNode) {
 						callBack(treeNode);
-						layer.close(index);
+						if (!treeNode.isParent) {
+							layer.close(index);
+						}
 					}
 				}
 			};
@@ -172,4 +174,14 @@ function getMessage(code) {
 	}
 	console.log(parent.messageMap);
 	return message;
+}
+
+function getFileType(name) {
+	var index= name.lastIndexOf(".");
+	return name.substr(index + 1);
+}
+
+var arr = ["jpg", "png", "gif"];
+function isImage(fileType) {
+	return arr.indexOf(fileType) > -1
 }

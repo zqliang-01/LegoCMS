@@ -6,6 +6,7 @@ public enum ConstantEnum {
     BUSINESS_INVALID("3000", "业务异常"),
     AUTHORIZATION_INVALID("5000", "访问功能未授权"),
     INTERFACE_NOTFOUND_INVALID("5001", "不存在的接口！"),
+    RESOURCE_NOTFUND_INVALID("404", "资源不存在"),
     SESSION_INVALID("1000", "登录超时，请重新登录！");
 
     private String code;

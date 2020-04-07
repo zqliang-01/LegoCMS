@@ -49,6 +49,10 @@ public class DateUtil extends DateUtils {
         return new SimpleDateFormat(datePattern).parse(date);
     }
 
+    public static Date toDate(long date) {
+        return new Date(date);
+    }
+
     public static Date getCurrentDate() {
         return new Date();
     }

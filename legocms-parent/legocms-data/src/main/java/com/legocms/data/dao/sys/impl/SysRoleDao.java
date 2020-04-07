@@ -46,7 +46,7 @@ public class SysRoleDao extends GenericDao<SysRole> implements ISysRoleDao {
         if (StringUtil.isNotBlank(name)) {
             query.condition("r.name = :name").setParameter("name", name);
         }
-        query.order("r.createDate");
+        query.order("r.createTime");
         return query.findPage(pageIndex, pageSize);
     }
 }

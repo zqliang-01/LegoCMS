@@ -2863,6 +2863,7 @@ textarea.form-control.is-invalid {
     background-color: transparent;
     border: 1px solid transparent;
     padding: .375rem .75rem;
+    margin: .12rem 0rem;
     font-size: 1rem;
     line-height: 1.5;
     border-radius: .25rem;
@@ -4840,6 +4841,7 @@ input[type="button"].btn-block {
 .tab-content>.tab-pane {
     display: none;
     height: 100%;
+    min-height: calc(100vh - 170px);
 }
 
 .tab-content>.active {
@@ -11888,7 +11890,8 @@ button,
 
 .app-main .app-main__inner {
     padding: 5px 5px 0;
-    flex: 1
+    flex: 1;
+    height: 100%;
 }
 
 .app-theme-white.app-container {
@@ -25175,7 +25178,7 @@ a.fc-more:hover {
     .dropdown-menu::after {
         display: none
     }
-
+    
     .app-sidebar {
         flex: 0 0 280px !important;
         width: 280px !important;
@@ -25492,6 +25495,11 @@ a.fc-more:hover {
         padding: 0
     }
 
+	.tab-content>.tab-pane {
+	    height: 100%;
+	    min-height: calc(100vh - 160px);
+	}
+	
     .card-header.card-header-tab .card-header-title {
         display: inline-flex !important;
         line-height: 1

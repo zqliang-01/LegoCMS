@@ -1,0 +1,15 @@
+<noscript id="add-dir-modal" data-form="#add-dir-form" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+	<form id="add-dir-form" action="${ctx}/admin/file/save" onsubmit="return false;" class="needs-validation" novalidate>
+		<div class="modal-body">
+			<input name="parentCode" type="hidden">
+			<input name="type" value="dir" type="hidden">
+			<div class="position-relative row form-group">
+				<label class="col-sm-3 col-form-label"><@t.page 'list.name'/></label>
+				<div class="col-sm-9">
+					<input name="name" type="text" class="form-control" required>
+					<div class="invalid-feedback">Please provide a valid name</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</noscript>

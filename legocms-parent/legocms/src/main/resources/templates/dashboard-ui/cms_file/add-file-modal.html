@@ -1,0 +1,22 @@
+<noscript id="add-file-modal" data-form="#add-file-form" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+	<form id="add-file-form" action="${ctx}/admin/file/save" onsubmit="return false;" class="needs-validation" novalidate>
+		<div class="modal-body">
+			<input name="parentCode" type="hidden">
+			<input name="type" value="file" type="hidden">
+			<div class="position-relative row form-group">
+				<label class="col-sm-3 col-form-label"><@t.page 'list.name'/></label>
+				<div class="col-sm-9">
+					<input name="name" type="text" class="form-control" required>
+					<div class="invalid-feedback">Please provide a valid name</div>
+				</div>
+			</div>
+			<div class="position-relative row form-group">
+				<label class="col-sm-3 col-form-label"><@t.page 'list.content'/></label>
+				<div class="col-sm-9">
+					<input name="content" type="text" class="form-control" required>
+					<div class="invalid-feedback">Please provide a valid name</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</noscript>

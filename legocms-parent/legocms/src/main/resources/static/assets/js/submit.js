@@ -13,22 +13,23 @@ function ajaxForm(form, successFun){
 			var data = form.serializeFile();
 			ajaxFileSubmit(url, data, function(data) {
 				form.removeClass('was-validated');
-				showMsg("操作成功！", 1, function(){
-					if (isNotEmpty(successFun)) {
+				if (isNotEmpty(successFun)) {
+					console.log(123);
+					showMsg("操作成功！", 1, function() {
 						successFun(data);
-					}
-				});
+					});
+				}
 			}, null, true, method);
 		}
 		else {
 			var data = form.serialize();
 			ajaxRequest(url, data, function(data) {
 				form.removeClass('was-validated');
-				showMsg("操作成功！", 1, function(){
-					if (isNotEmpty(successFun)) {
+				if (isNotEmpty(successFun)) {
+					showMsg("操作成功！", 1, function() {
 						successFun(data);
-					}
-				});
+					});
+				}
 			}, null, true, method);
 		}
 	});

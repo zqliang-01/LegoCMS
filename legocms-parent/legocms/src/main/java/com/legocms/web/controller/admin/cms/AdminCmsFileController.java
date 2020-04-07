@@ -74,4 +74,11 @@ public class AdminCmsFileController extends AdminController {
         fileService.delete(code, getSiteCode());
         return JsonResponse.ok();
     }
+
+    @PostMapping("/synchronize")
+    @RequiresPermissions(SysPermissionCode.FILE_EDIT)
+    public JsonResponse synchronize(String parentCode) {
+        fileService.synchronizeDirectory(parentCode, getSiteCode());
+        return JsonResponse.ok();
+    }
 }

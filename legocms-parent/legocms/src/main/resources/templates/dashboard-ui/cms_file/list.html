@@ -5,7 +5,7 @@
         <meta name="description" content="LegoCMS">
         <#include "../include_page/link.html"/>
         <script type="text/javascript">
-        	$(function() {
+        	var jq = $(function() {
         		var url = ctx + "/admin/directive/cmsFileList";
         		initMyPagination("MyPagination-file-list", "Template-file-list", url, function(data) {
             		$('#path').html(data.page.param.path);
@@ -17,7 +17,15 @@
 			}
 			function createFile() {
 				var parentCode = $('.queryForm').find("input[name='parentCode']").val();
-				window.parent.showFormDialog('<@t.page "file.add-dir"/>', $('#add-modal'), function(form) {
+				window.parent.showFormDialog('<@t.page "file.add-file"/>', $('#add-file-modal'), function(form) {
+					form.setForm({parentCode : parentCode});
+				}, function() {
+	    			$('.query').click();
+				});
+			}
+			function createDir() {
+				var parentCode = $('.queryForm').find("input[name='parentCode']").val();
+				window.parent.showFormDialog('<@t.page "file.add-dir"/>', $('#add-dir-modal'), function(form) {
 					form.setForm({parentCode : parentCode});
 				}, function() {
 	    			$('.query').click();
@@ -34,10 +42,19 @@
 			function del(code) {
 				window.parent.showConfirm('是否确认删除该文件？', '<@t.page "file.delete"/>', function() {
 					var url = ctx + "/admin/file/delete";
-					ajaxSubmit(url, {code: code}, function() {
+					window.parent.ajaxSubmit(url, {code: code}, function() {
 		    			$('.query').click();
 					});
 				})
+			}
+			function refresh() {
+				var parentCode = $(".queryForm").find("input[name='parentCode']").val();
+				var url = ctx + "/admin/file/synchronize";
+				window.parent.ajaxSubmit(url, {parentCode : parentCode}, function() {
+					window.parent.showMsg("操作成功！", 1, function() {
+		    			$('.query').click();
+					});
+				});
 			}
         </script>
     </head>
@@ -51,14 +68,15 @@
 							<span class="btn btn-info" onclick="createFile()" ><@t.page 'file.add-file'/></span>
 						</div>
 						<div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
-							<span class="btn btn-info" onclick="createFile()" ><@t.page 'file.add-dir'/></span>
+							<span class="btn btn-info" onclick="createDir()" ><@t.page 'file.add-dir'/></span>
 						</div>
 						<div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
 							<span class="btn btn-info" onclick="uploadFile()" ><@t.page 'file.upload'/></span>
 						</div>
 						<div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
-							<span class="btn btn-info query"><@t.page 'file.refresh'/></span>
+							<span class="btn btn-info" onclick='refresh()'><@t.page 'file.refresh'/></span>
 						</div>
+						<span class="query"></span>
 					</div>
 	            </div>
 	        </form>
@@ -71,7 +89,8 @@
 	                        <table role="grid" class="align-middle mb-0 table table-borderless table-striped table-hover mytab">
 	                            <thead>
 	                                <tr role="row">
-	                                    <th class="text-center"><@t.page 'list.name'/></th>
+	                                    <th class="text-center"><@t.page 'list.type'/></th>
+	                                    <th class="text-left"><@t.page 'list.name'/></th>
 	                                    <th class="text-center"><@t.page 'list.update-time'/></th>
 	                                    <th class="text-center"><@t.page 'list.create-time'/></th>
 	                                    <th class="text-center"><@t.page 'list.size'/>(B)</th>
@@ -90,7 +109,8 @@
 					                    {#template MAIN}
 					                        {#if $T.page.param.parentCode != '-'}
 					                            <tr role="row" >
-					                                <td class="text-center"><a href="#" onclick="query({$T.page.param.parentCode})">上一级</a></td>
+					                                <td class="text-center" style="font-size: 1.5rem;"><i id="icon-view" class="pe-7s-back"></i></td>
+					                                <td class="text-left"><a href="#" onclick="query({$T.page.param.parentCode})">返回上级</a></td>
 					                                <td class="text-center"></td>
 					                                <td class="text-center"></td>
 					                                <td class="text-center"></td>
@@ -99,7 +119,14 @@
 					                        {#/if}
 					                        {#foreach $T.page.result as Result}
 					                            <tr role="row" >
-					                                <td class="text-center">
+					                                <td class="text-center" style="font-size: 1.5rem;">
+					                                	{#if $T.Result.type.code == 'dir'}
+					                                		<i id="icon-view" class="pe-7s-wallet"></i>
+					                                	{#else}
+					                                		<i id="icon-view" class="pe-7s-copy-file"></i>
+					                                	{#/if}
+					                                </td>
+					                                <td class="text-left">
 					                                	{#if $T.Result.type.code == 'dir'}
 					                                		<a href="#" onclick="query({$T.Result.code})">{$T.Result.name}</a>
 					                                	{#else}
@@ -110,8 +137,12 @@
 					                                <td class="text-center">{$T.Result.createTime}</td>
 					                                <td class="text-center">{$T.Result.size}</td>
 					                                <td class="text-center">
-					                                	{#if $T.Result.type.code == 'file' && $T.Result.editable}
-															<button class="btn btn-primary btn-sm" onclick="window.parent.addTab('file-add', '<@t.page 'file.add-file'/>', '/admin/file/edit/{$T.Result.code}')"><@t.page 'btn.edit'/></button>					                                	
+					                                	{#if $T.Result.type.code == 'file'}
+					                                		{#if $T.Result.editable}
+					                                			<button class="btn btn-primary btn-sm" onclick="window.parent.addTab('file-add', '<@t.page 'file.add-file'/>', '/admin/file/edit/{$T.Result.code}')"><@t.page 'btn.edit'/></button>
+					                                		{#else}
+					                                			<a class="btn btn-primary btn-sm" href="${site.path}{$T.Result.path}" target="_blank"><@t.page 'btn.view'/></a>
+					                                		{#/if}
 					                                	{#/if}
 					                                	<button class="btn btn-danger btn-sm" onclick="del({$T.Result.code})"><@t.page 'btn.delete'/></button>
 					                                </td>
@@ -127,7 +158,8 @@
 	            </div>
 	        </div>
 	    </div>
-		<#include "add-modal.html"/>
+		<#include "add-file-modal.html"/>
+		<#include "add-dir-modal.html"/>
 		<#include "upload-modal.html"/>
     </body>
 </html>

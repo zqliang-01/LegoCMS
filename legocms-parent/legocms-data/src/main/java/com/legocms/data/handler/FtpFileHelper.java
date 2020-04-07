@@ -1,7 +1,10 @@
 package com.legocms.data.handler;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
@@ -12,9 +15,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
+import com.legocms.core.common.Constants;
 import com.legocms.core.common.StringUtil;
+import com.legocms.core.dto.cms.CmsCyncFileInfo;
 import com.legocms.core.exception.CoreException;
+import com.legocms.core.vo.cms.CmsFileTypeCode;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Component
 @ConditionalOnProperty(name = "spring.session.store-type", havingValue = "redis")
 public class FtpFileHelper implements FileHelper {
@@ -31,37 +40,20 @@ public class FtpFileHelper implements FileHelper {
     @Value("${ftp.password}")
 	private String password;
 
-    public boolean open(String path) {
-        try {
-            ftp = new FTPClient();
-            ftp.connect(serverIP);
-            ftp.login(username, password);
-            ftp.setFileType(FTPClient.BINARY_FILE_TYPE);
-            int reply = ftp.getReplyCode();
-            if (!FTPReply.isPositiveCompletion(reply)) {
-                ftp.disconnect();
-                return false;
-            }
-            ftp.changeWorkingDirectory(path);
-            return true;
-        }
-        catch (Exception e) {
-            throw new CoreException(e);
-        }
-    }
-
     public boolean open() {
         try {
             ftp = new FTPClient();
             ftp.connect(serverIP);
             ftp.login(username, password);
             ftp.setFileType(FTPClient.BINARY_FILE_TYPE);
+            ftp.setControlEncoding(Constants.DEFAULT_CHARSET_NAME);
             int reply = ftp.getReplyCode();
             if (!FTPReply.isPositiveCompletion(reply)) {
                 ftp.disconnect();
                 return false;
             }
             ftp.changeWorkingDirectory("/");
+            log.debug("创建FTP连接！");
             return true;
         }
         catch (Exception e) {
@@ -75,13 +67,8 @@ public class FtpFileHelper implements FileHelper {
             open();
             ftp.makeDirectory(path);
             ftp.changeWorkingDirectory(path);
-            if (StringUtil.isNotBlank(name)) {
-                if (ins == null) {
-                    ftp.remoteStore(name);
-                }
-                else {
-                    ftp.storeFile(name, ins);
-                }
+            if (StringUtil.isNotBlank(name) && ins != null) {
+                ftp.storeFile(name, ins);
             }
         }
         catch(Exception e) {
@@ -98,6 +85,21 @@ public class FtpFileHelper implements FileHelper {
             open();
             ftp.changeWorkingDirectory(path);
             ftp.retrieveFile(name, os);
+        }
+        catch (Exception e) {
+            throw new CoreException(e);
+        }
+        finally {
+            close();
+        }
+    }
+
+    @Override
+    public InputStream get(String path, String name) {
+        try {
+            open();
+            ftp.changeWorkingDirectory(path);
+            return ftp.retrieveFileStream(path + Constants.SEPARATOR + name);
         }
         catch (Exception e) {
             throw new CoreException(e);
@@ -158,5 +160,35 @@ public class FtpFileHelper implements FileHelper {
                 }
             }
         }
+    }
+
+    @Override
+    public List<CmsCyncFileInfo> list(String path) {
+        List<CmsCyncFileInfo> infos = new ArrayList<CmsCyncFileInfo>();
+        try {
+            open();
+            FTPFile[] files = ftp.listFiles(path);
+            for (FTPFile file : files) {
+                CmsCyncFileInfo info = new CmsCyncFileInfo();
+                info.setName(file.getName());
+                info.setPath(path + "/" + file.getName());
+                info.setUpdateTime(file.getTimestamp().getTime());
+                if (file.isDirectory()) {
+                    info.setType(CmsFileTypeCode.DIR);
+                }
+                else {
+                    info.setSize(file.getSize());
+                    info.setType(CmsFileTypeCode.FILE);
+                }
+                infos.add(info);
+            }
+        }
+        catch (IOException e) {
+            throw new CoreException(e);
+        }
+        finally {
+            close();
+        }
+        return infos;
     }
 }

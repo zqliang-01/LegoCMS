@@ -11,8 +11,10 @@ public interface Constants {
 
     String DIRECTIVE_REMOVE_REGEX = "Directive";
 
-    String ENCODING = "UTF-8";
+    String DEFAULT_CHARSET_NAME = "UTF-8";
     Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
+
+    String DEFAULT_PAGE = "index.html";
 
     String MEDIA_TYPE = "application/json;charset=UTF-8";
     MediaType JSON_MEDIA_TYPE = new MediaType("application", "json", DEFAULT_CHARSET);
