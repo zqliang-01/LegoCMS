@@ -140,9 +140,12 @@ function showFormDialog(title, id, init, callback) {
 		btn: ['确定', '取消'],
 		yes: function(index, layero){
 			ajaxForm(form, function() {
+				if (isNotEmpty(callback)) {
+					callback(form);
+				}
 				layer.close(index);
 			});
-			callback(form);
+			form.submit();
 		}
 	});
 }

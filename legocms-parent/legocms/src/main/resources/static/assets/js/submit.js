@@ -1,5 +1,4 @@
 function ajaxForm(form, successFun){
-	console.log(form);
 	form.submit(function(e){
 		if (form[0].checkValidity() == false) {
 			form.addClass('was-validated');

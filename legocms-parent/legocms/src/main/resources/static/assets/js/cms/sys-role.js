@@ -29,8 +29,7 @@ function edit(code) {
 			}
 		});
 	},
-	function(form) {
-		form.submit();
+	function() {
 		myPagination.reload('MyPagination-role-list');
 	});
 }
