@@ -9,6 +9,8 @@ CALL addSysSimpleType('Terminated', '停用', 'OrganizationStatus', 2);
 
 CALL addCmsSimpleType('file', '文件', 'TemplateType', 1);
 CALL addCmsSimpleType('dir', '目录', 'TemplateType', 2);
+CALL addCmsSimpleType('file', '文件', 'PlaceType', 1);
+CALL addCmsSimpleType('dir', '目录', 'PlaceType', 2);
 
 CALL addOrganization('root', '根部门', null);
 
@@ -91,7 +93,7 @@ CALL addPermission('site-delete', 'site', null, null, 0, 2);
 CALL addPermissionLang('zh', '删除', 'site-delete');
 CALL addPermissionLang('en', 'delete', 'site-delete');
 
-CALL addPermission('template', 'site-maintenance', 'pe-7s-note2', '/admin/template/init', 1, 2);
+CALL addPermission('template', 'site-maintenance', 'pe-7s-note', '/admin/template/init', 1, 2);
 CALL addPermissionLang('zh', '模板管理', 'template');
 CALL addPermissionLang('en', 'Template Management', 'template');
 
@@ -103,19 +105,39 @@ CALL addPermission('template-delete', 'template', null, null, 0, 2);
 CALL addPermissionLang('zh', '删除', 'template-delete');
 CALL addPermissionLang('en', 'delete', 'template-delete');
 
+CALL addPermission('place', 'site-maintenance', 'pe-7s-ribbon', '/admin/place/init', 1, 3);
+CALL addPermissionLang('zh', '模板片段管理', 'place');
+CALL addPermissionLang('en', 'Place Management', 'place');
+
+CALL addPermission('place-edit', 'place', null, null, 0, 1);
+CALL addPermissionLang('zh', '修改', 'place-edit');
+CALL addPermissionLang('en', 'edit', 'place-edit');
+
+CALL addPermission('place-delete', 'place', null, null, 0, 2);
+CALL addPermissionLang('zh', '删除', 'place-delete');
+CALL addPermissionLang('en', 'delete', 'place-delete');
+
 CALL addRolePermission('super', 'root');
 CALL addRolePermission('super', 'admin');
 CALL addRolePermission('super', 'user');
 CALL addRolePermission('super', 'user-edit');
-CALL addRolePermission('super', 'user-delete');
 CALL addRolePermission('super', 'permission');
 CALL addRolePermission('super', 'permission-edit');
+CALL addRolePermission('super', 'permission-delete');
 CALL addRolePermission('super', 'role');
 CALL addRolePermission('super', 'role-authorize');
 CALL addRolePermission('super', 'role-edit');
+CALL addRolePermission('super', 'role-delete');
 CALL addRolePermission('super', 'organization');
 CALL addRolePermission('super', 'organization-edit');
+CALL addRolePermission('super', 'organization-delete');
 CALL addRolePermission('super', 'site-maintenance');
 CALL addRolePermission('super', 'site');
 CALL addRolePermission('super', 'site-edit');
+CALL addRolePermission('super', 'site-delete');
 CALL addRolePermission('super', 'template');
+CALL addRolePermission('super', 'template-edit');
+CALL addRolePermission('super', 'template-delete');
+CALL addRolePermission('super', 'place');
+CALL addRolePermission('super', 'place-edit');
+CALL addRolePermission('super', 'place-delete');

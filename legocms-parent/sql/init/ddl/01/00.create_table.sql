@@ -1,8 +1,29 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2020/5/9 9:51:55                             */
+/* Created on:     2020/5/25 15:17:45                           */
 /*==============================================================*/
 
+
+/*==============================================================*/
+/* Table: CMS_PLACE                                             */
+/*==============================================================*/
+create table CMS_PLACE
+(
+   ID                   bigint(15) not null comment 'ID',
+   VERSION              int(5) not null comment 'VERSION',
+   CODE                 varchar(50) not null comment 'CODE',
+   NAME                 varchar(255) comment '名称',
+   CREATE_DATE          datetime not null comment '创建时间',
+   UPDATE_TIME          bigint not null comment '更新时间',
+   TYPE_ID              bigint(15) not null comment '类型：file/dir',
+   PARENT_ID            bigint(15) comment '父ID',
+   SITE_ID              bigint(15) not null comment '站点ID',
+   CONTENT              text comment '内容',
+   primary key (ID),
+   unique key AK_UNIQUE_CODE (CODE)
+);
+
+alter table CMS_PLACE comment '模板片段';
 
 /*==============================================================*/
 /* Table: CMS_SIMPLE_TYPE                                       */
@@ -206,6 +227,9 @@ create table SYS_USER_ROLE
 );
 
 alter table SYS_USER_ROLE comment '用户角色';
+
+alter table CMS_PLACE add constraint FK_PLACE_TYPE foreign key (TYPE_ID)
+      references CMS_SIMPLE_TYPE (ID) on delete restrict on update restrict;
 
 alter table CMS_TEMPLATE add constraint FK_TEMPLATE_SITE foreign key (SITE_ID)
       references SYS_SITE (ID) on delete restrict on update restrict;

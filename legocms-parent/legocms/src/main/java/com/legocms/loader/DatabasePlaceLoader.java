@@ -6,21 +6,21 @@ import java.io.StringReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.legocms.data.dao.cms.ICmsTemplateDao;
-import com.legocms.data.entities.cms.CmsTemplate;
+import com.legocms.data.dao.cms.ICmsPlaceDao;
+import com.legocms.data.entities.cms.CmsPlace;
 
 import freemarker.cache.TemplateLoader;
 
 @Component
-public class DatabaseTemplateLoader implements TemplateLoader {
+public class DatabasePlaceLoader implements TemplateLoader {
 
     @Autowired
-    private ICmsTemplateDao templateDao;
+    private ICmsPlaceDao placeDao;
 
     @Override
     public Object findTemplateSource(String code) {
         code = code.split("_")[0];
-        CmsTemplate template = templateDao.findByCode(code);
+        CmsPlace template = placeDao.findByCode(code);
         return new StringTemplateSource(code, template.getContent().replaceAll("\r|\n|\t", ""), template.getUpdateTime());
     }
 

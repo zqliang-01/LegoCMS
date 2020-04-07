@@ -127,7 +127,7 @@
 	        });
 			refreshTree();
 			function refreshTree() {
-				var treeUrl = ctx + "/admin/directive/cmsTemplateTree";
+				var treeUrl = ctx + "/admin/directive/cmsPlaceTree";
 				ajaxSubmit(treeUrl, null, function(data) {
 					var setting = {
 						data: {
@@ -143,50 +143,24 @@
 							}
 						}
 					};
-					$.fn.zTree.init($("#templateTree"), setting, data.simpleTree);
+					$.fn.zTree.init($("#placeTree"), setting, data.simpleTree);
 				});
 			}
 
 			function refreshForm(code) {
-				var detailUrl = ctx + "/admin/directive/cmsTemplate";
+				var detailUrl = ctx + "/admin/directive/cmsPlace";
 			    ajaxSubmit(detailUrl, 'code=' + code, function(data) {
-			    	var form = $('#save-template-form');
+			    	var form = $('#save-place-form');
 			    	form.resetForm();
-			    	form.setForm(data.template);
-			    	if (data.template.type.code == 'file') {
-				    	$('#pre-view').attr('href', ctx + "/admin/template/find/" + data.template.code);
-			    	}
-			    	else {
-				    	$('#pre-view').attr('href', "");
-			    	}
-			    	editor.setValue(data.template.content);
+			    	form.setForm(data.place);
+			    	editor.setValue(data.place.content);
 			    	form.find("[name=code]").attr("readonly", "");
 			    })
 			}
 			
-			$('#pre-view').click(function() {
-				var url = $('#pre-view').attr('href');
-				if (url) {
-					window.parent.showIframe('模板预览', url);
-				}
-			});
-			
-			$('#add-place').click(function() {
-				var orgUrl = ctx + "/admin/directive/cmsPlaceTree";
-				ajaxSubmit(orgUrl, null, function(data) {
-					window.parent.showSimpleTree('片段选择', data.simpleTree, function(treeNode){
-						if (!treeNode.isParent) {
-							var temp = '&lt;@includePlace code="' + treeNode.code + '" /&gt;';
-							temp = temp.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
-						    editor.replaceSelection(temp);
-						}
-					})
-				});
-			});
-			
 			$('#add').click(function() {
-				var nodes = getTree('templateTree').getSelectedNodes();
-				var form = $('#save-template-form');
+				var nodes = getTree('placeTree').getSelectedNodes();
+				var form = $('#save-place-form');
 				form.resetForm();
 				form.find("input[name=code]").removeAttr("readonly");
 				if (nodes && nodes.length > 0) {
@@ -200,23 +174,23 @@
 			});
 			
 			$('#delete').click(function() {
-				var code = $('#save-template-form').find("[name=code]").val();
+				var code = $('#save-place-form').find("[name=code]").val();
 				if (isEmpty(code)) {
 					showMsg("请选择需要删除的模板信息", 5);
 					return;
 				}
 				window.parent.showConfirm("是否确认删除该模板信息！", '模板删除', function(){
-					var url = ctx + "/admin/template/delete";
+					var url = ctx + "/admin/place/delete";
 					ajaxSubmit(url, "code=" + code, function() {
-						$('#save-template-form').resetForm();
+						$('#save-place-form').resetForm();
 						refreshTree();
 					});
 				})
 			});
 			
-			ajaxForm($('#save-template-form'), function() {
+			ajaxForm($('#save-place-form'), function() {
 				refreshTree();
-				var code = $('#save-template-form').find("[name=code]").val();
+				var code = $('#save-place-form').find("[name=code]").val();
 				refreshForm(code);
 			});
 		})
@@ -227,14 +201,14 @@
 			<div class="col-md-3">
 				<div class="main-card card">
 					<div class="card-body">
-						<ul id="templateTree" class="ztree"></ul>
+						<ul id="placeTree" class="ztree"></ul>
 					</div>
 				</div>
 			</div>
        		<div class="col-md-9">
 				<div class="main-card card">
 					<div class="card-body">
-		       			<form id="save-template-form" action="${ctx}/admin/template/save" onsubmit="return false;" class="needs-validation" novalidate>
+		       			<form id="save-place-form" action="${ctx}/admin/place/save" onsubmit="return false;" class="needs-validation" novalidate>
 							<input name="site.code" type="hidden" required>
 							<input name="parent.code" type="hidden" required>
 							<div class="position-relative row form-group">
@@ -255,22 +229,15 @@
 				                <div class="col-md-3">
 									<label class="col-form-label"><@t.page 'list.type'/></label>
 									<select name="type.code" class="custom-select" required>
-										<@cmsTemplateType>
+										<@cmsPlaceType>
 											<#list types as type>
 												<option value="${type.code}">${type.name}</option>
 											</#list>
-										</@cmsTemplateType>
+										</@cmsPlaceType>
 									</select>
 									<div class="invalid-feedback">
                                         Please provide a valid sort
                                     </div>
-				                </div>
-				                <div class="col-md-3">
-									<label class="col-form-label"><@t.page 'list.operation'/></label>
-									<div>
-										<span class="btn btn-info" id="add-place">模板片段</span>
-										<span class="btn btn-info" id="pre-view">预览</span>
-									</div>
 				                </div>
 							</div>
 							<div class="position-relative row form-group">

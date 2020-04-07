@@ -1,11 +1,17 @@
 package com.legocms.web.controller.admin.cms;
 
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.legocms.component.TemplateComponent;
 import com.legocms.core.annotation.RequiresPermissions;
 import com.legocms.core.common.StringUtil;
 import com.legocms.core.vo.cms.CmsTemplateVo;
@@ -22,6 +28,9 @@ public class AdminCmsTemplateController extends AdminController {
 
     @Autowired
     private ICmsTemplateService templateService;
+
+    @Autowired
+    private TemplateComponent templateComponent;
 
     @GetMapping("/init")
     @RequiresPermissions(SysPermissionCode.TEMPLATE)
@@ -46,4 +55,13 @@ public class AdminCmsTemplateController extends AdminController {
         return JsonResponse.ok();
     }
 
+    @ResponseBody
+    @GetMapping(value = "/find/{code}", produces = MediaType.TEXT_HTML_VALUE)
+    @RequiresPermissions(SysPermissionCode.TEMPLATE_EDIT)
+    public String findTemplate(@PathVariable String code) {
+        HashMap<String, Object> input = new HashMap<String, Object>();
+        input.put(AdminView.USER_SESSION_KEY, getUser());
+        String output = templateComponent.generateStringByTemplate(code, input);
+        return output;
+    }
 }

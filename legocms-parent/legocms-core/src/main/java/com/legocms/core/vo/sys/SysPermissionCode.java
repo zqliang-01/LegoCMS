@@ -25,4 +25,8 @@ public interface SysPermissionCode {
     String TEMPLATE = "template";
     String TEMPLATE_EDIT = "template-edit";
     String TEMPLATE_DELETE = "template-delete";
+
+    String PLACE = "place";
+    String PLACE_EDIT = "place-edit";
+    String PLACE_DELETE = "place-delete";
 }

@@ -129,6 +129,16 @@ function showCheckTree(title, data, callBack) {
 	});
 }
 
+function showIframe(title, url) {
+	layer.open({
+		type: 2,
+		title: title,
+		area : [ '550px', '400px' ],
+		maxmin: true,
+		content : url
+	});
+}
+
 function isEmpty(value) {
     if (value == null || value == undefined || value == '') {
         return true;

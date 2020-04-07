@@ -24,4 +24,6 @@ public interface AdminView {
     String SYS_SITE_EDIT = UI_TYPE + "sys_site/edit";
 
     String CMS_TEMPLATE_LIST = UI_TYPE + "cms_template/list";
+
+    String CMS_PLACE_LIST = UI_TYPE + "cms_place/list";
 }

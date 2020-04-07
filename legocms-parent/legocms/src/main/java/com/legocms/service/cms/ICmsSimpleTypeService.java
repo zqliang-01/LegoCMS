@@ -7,4 +7,6 @@ import com.legocms.core.dto.TypeInfo;
 public interface ICmsSimpleTypeService {
 
     List<TypeInfo> findTemplateType();
+
+    List<TypeInfo> findPlaceType();
 }

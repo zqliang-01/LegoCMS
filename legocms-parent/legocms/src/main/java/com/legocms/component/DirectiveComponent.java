@@ -9,9 +9,15 @@ import org.springframework.stereotype.Component;
 
 import com.legocms.core.common.Constants;
 import com.legocms.core.common.StringUtil;
+import com.legocms.loader.DatabasePlaceLoader;
+import com.legocms.loader.DatabaseTemplateLoader;
 import com.legocms.web.directive.ControllerTemplateDirective;
 
+import freemarker.cache.MultiTemplateLoader;
+import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
+import freemarker.template.SimpleHash;
+import freemarker.template.TemplateModelException;
 import lombok.Data;
 
 @Data
@@ -23,7 +29,16 @@ public class DirectiveComponent {
     private TemplateComponent templateComponent;
 
     @Autowired
-    private void init(Configuration freeMarkerConfigurer, List<ControllerTemplateDirective> templateDirectiveList) {
+    private PlaceComponent placeComponent;
+
+    @Autowired
+    private DatabaseTemplateLoader templateLoader;
+
+    @Autowired
+    private DatabasePlaceLoader placeLoader;
+
+    @Autowired
+    private void init(Configuration freeMarkerConfigurer, List<ControllerTemplateDirective> templateDirectiveList) throws TemplateModelException {
         for (ControllerTemplateDirective templateDirective : templateDirectiveList) {
             if (templateDirective.getName() == null) {
                 String simpleName = templateDirective.getClass().getSimpleName();
@@ -31,10 +46,20 @@ public class DirectiveComponent {
                 templateDirective.setName(name);
             }
             templateDirectiveMap.put(templateDirective.getName(), templateDirective);
-            freeMarkerConfigurer.setSharedVariable(templateDirective.getName(), templateDirective);
         }
-        templateComponent.setAdminConfiguration(freeMarkerConfigurer);
+        freeMarkerConfigurer.setAllSharedVariables(new SimpleHash(templateDirectiveMap, freeMarkerConfigurer.getObjectWrapper()));
 
+        Configuration templaceConfiguration = new Configuration(Configuration.getVersion());
+        templaceConfiguration.setTemplateLoader(new MultiTemplateLoader(new TemplateLoader[]{templateLoader}));
+        copyConfig(freeMarkerConfigurer, templaceConfiguration);
+        templaceConfiguration.setAllSharedVariables(new SimpleHash(templateDirectiveMap, templaceConfiguration.getObjectWrapper()));
+        templateComponent.setTemplaceConfiguration(templaceConfiguration);
+
+        Configuration placeConfiguration = new Configuration(Configuration.getVersion());
+        placeConfiguration.setTemplateLoader(new MultiTemplateLoader(new TemplateLoader[]{placeLoader}));
+        copyConfig(freeMarkerConfigurer, placeConfiguration);
+        placeConfiguration.setAllSharedVariables(new SimpleHash(templateDirectiveMap, placeConfiguration.getObjectWrapper()));
+        placeComponent.setPlaceConfiguration(placeConfiguration);
     }
 
     private void copyConfig(Configuration source, Configuration target) {
