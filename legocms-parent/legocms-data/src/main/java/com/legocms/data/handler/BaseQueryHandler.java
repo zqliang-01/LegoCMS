@@ -23,9 +23,11 @@ import com.legocms.data.sql.SqlExtractor;
 public class BaseQueryHandler<T> {
 
     private EntityManager entityManager;
+    private Class<?> domainClass;
 
-    public BaseQueryHandler(EntityManager em) {
+    public BaseQueryHandler(EntityManager em, Class<?> domainClass) {
         this.entityManager = em;
+        this.domainClass = domainClass;
     }
 
     @SuppressWarnings({ "hiding", "unchecked" })
@@ -87,8 +89,8 @@ public class BaseQueryHandler<T> {
     }
 
     @SuppressWarnings("unchecked")
-    public List<T> findSQL(String sql, Map<String, Object> parameters, Class<T> clazz) {
-        Query query = entityManager.createNativeQuery(sql, clazz);
+    public List<T> findSQL(String sql, Map<String, Object> parameters) {
+        Query query = entityManager.createNativeQuery(sql, domainClass);
         setParameter(parameters, query);
         return query.getResultList();
     }

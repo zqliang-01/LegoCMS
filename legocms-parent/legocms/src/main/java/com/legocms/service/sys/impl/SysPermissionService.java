@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.legocms.core.dto.sys.SysPermissionInfo;
-import com.legocms.data.assembler.sys.SysModuleAssembler;
+import com.legocms.data.assembler.sys.SysPermissionAssembler;
 import com.legocms.data.dao.sys.ISysPermissionDao;
 import com.legocms.data.entities.sys.SysPermission;
 import com.legocms.service.BaseService;
@@ -16,13 +16,13 @@ import com.legocms.service.sys.ISysPermissionService;
 public class SysPermissionService extends BaseService implements ISysPermissionService {
 
     @Autowired
-    private ISysPermissionDao moduleDao;
+    private ISysPermissionDao permissionDao;
 
     @Autowired
-    private SysModuleAssembler moduleAssembler;
+    private SysPermissionAssembler permissionAssembler;
 
     public List<SysPermissionInfo> findBy(String userCode, String parentCode, boolean menu) {
-        List<SysPermission> modules = moduleDao.findBy(null, parentCode, menu);
-        return this.moduleAssembler.create(modules);
+        List<SysPermission> modules = permissionDao.findBy(userCode, parentCode, menu);
+        return this.permissionAssembler.create(modules);
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.legocms.core.annotation.LoginCheckAvoided;
+import com.legocms.core.annotation.RequiresPermissions;
 import com.legocms.core.common.StringUtil;
 import com.legocms.core.dto.sys.SysUserInfo;
 import com.legocms.core.web.ViewResponse;
@@ -54,6 +55,7 @@ public class SysUserController extends SessionController {
     }
 
     @GetMapping("/init")
+    @RequiresPermissions("user")
     public ViewResponse init() {
         return ViewResponse.ok(AdminView.CMS_USER_LIST);
     }

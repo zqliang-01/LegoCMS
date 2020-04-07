@@ -17,16 +17,23 @@ public class SysPermissionDao extends GenericDao<SysPermission> implements ISysP
     }
 
     public List<SysPermission> findBy(String userCode, String parentCode, boolean menu) {
-        QueryHandler<SysPermission> query = createQueryHandler("FROM {0} m");
-        if (StringUtil.isNoneBlank(new CharSequence[] { parentCode })) {
-            query.condition("m.parent.code = :parentCode").setParameter("parentCode", parentCode);
+        String sql =
+                " SELECT p.* FROM sys_permission p " +
+                " LEFT JOIN sys_permission pp ON pp.ID = p.PARENT_ID " +
+                " JOIN sys_role_permission rp ON rp.PERMISSION_ID = p.id " +
+                " JOIN sys_user_role ur ON ur.ROLE_ID = rp.ROLE_ID " +
+                " JOIN sys_user u ON u.ID = ur.USER_ID ";
+        QueryHandler<SysPermission> query = createQueryHandler(sql, SysPermission.class);
+        if (StringUtil.isNoneBlank(parentCode)) {
+            query.condition("pp.code = :parentCode").setParameter("parentCode", parentCode);
         }
         else {
-            query.condition("m.parent = null ");
+            query.condition("p.parent_id IS NULL ");
         }
+        query.condition("u.code = :userCode").setParameter("userCode", userCode);
         if (menu) {
-            query.condition("m.menu = :menu").setParameter("menu", Boolean.valueOf(menu));
+            query.condition("p.menu = :menu").setParameter("menu", Boolean.valueOf(menu));
         }
-        return query.findList();
+        return query.findSqlList();
     }
 }

@@ -17,13 +17,13 @@ import com.legocms.web.directive.AbstractTemplateDirective;
 public class SysPermissionListDirective extends AbstractTemplateDirective {
 
     @Autowired
-    private ISysPermissionService moduleService;
+    private ISysPermissionService permissionService;
 
     public void execute(RenderHandler handler) throws IOException, Exception {
         String code = handler.getString("code");
         boolean menu = handler.getBoolean("menu", true).booleanValue();
         SysUserInfo user = getAttribute(AdminView.USER_SESSION_KEY);
-        List<SysPermissionInfo> permissions = moduleService.findBy(user.getCode(), code, menu);
+        List<SysPermissionInfo> permissions = permissionService.findBy(user.getCode(), code, menu);
         handler.put("permissions", permissions).render();
     }
 }

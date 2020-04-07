@@ -34,7 +34,11 @@ public class GenericDao<T extends BaseEntity> extends SimpleJpaRepository<T, Lon
     }
 
     protected QueryHandler<T> createQueryHandler(String sql) {
-        return new QueryHandler<T>(sql, this.domainClass, this.entityManager);
+        return new QueryHandler<T>(sql, this.entityManager, this.domainClass);
+    }
+
+    protected QueryHandler<T> createQueryHandler(String sql, Class<?>... domainClasses) {
+        return new QueryHandler<T>(sql, this.entityManager, domainClasses);
     }
 
     public List<T> findByCodes(List<String> codes) {

@@ -19,10 +19,20 @@ public class QueryHandler<T extends BaseEntity> extends BaseQueryHandler<T> {
     private StringBuilder sqlBuilder;
     private Map<String, Object> param;
 
-    public QueryHandler(String sql, Class<T> domainClass, EntityManager em) {
-        super(em);
+    public QueryHandler(String sql, EntityManager em, Class<T> domainClass) {
+        super(em, domainClass);
         this.sqlBuilder = new StringBuilder(" ");
         this.sqlBuilder.append(format(sql, new Object[] { domainClass.getName() }));
+    }
+
+    public QueryHandler(String sql, EntityManager em, Class<?>... domainClasses) {
+        super(em, domainClasses[0]);
+        this.sqlBuilder = new StringBuilder(" ");
+        Object[] classNames = new Object[domainClasses.length];
+        for (int i = 0; i < domainClasses.length; ++i) {
+            classNames[i] = domainClasses[i].getName();
+        }
+        this.sqlBuilder.append(format(sql, classNames));
     }
 
     public QueryHandler<T> condition(String condition) {
@@ -87,6 +97,10 @@ public class QueryHandler<T extends BaseEntity> extends BaseQueryHandler<T> {
 
     public List<T> findList() {
         return findHQL(this.sqlBuilder.toString(), this.param);
+    }
+
+    public List<T> findSqlList() {
+        return findSQL(this.sqlBuilder.toString(), this.param);
     }
 
     public T findUnique() {

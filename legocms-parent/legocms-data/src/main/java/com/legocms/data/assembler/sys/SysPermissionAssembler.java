@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.legocms.core.common.Constants;
 import com.legocms.core.dto.sys.SysPermissionInfo;
 import com.legocms.data.assembler.AbstractAssembler;
 import com.legocms.data.dao.sys.ISysPermissionLangDao;
@@ -13,13 +14,13 @@ import com.legocms.data.entities.sys.SysPermission;
 import com.legocms.data.entities.sys.SysPermissionLang;
 
 @Component
-public class SysModuleAssembler extends AbstractAssembler<SysPermissionInfo, SysPermission> {
+public class SysPermissionAssembler extends AbstractAssembler<SysPermissionInfo, SysPermission> {
 
     @Autowired
-    private ISysPermissionLangDao moduleLangDao;
+    private ISysPermissionLangDao permissionLangDao;
 
     public SysPermissionInfo create(SysPermission entity, String lang) {
-        SysPermissionLang moduleLang = this.moduleLangDao.findBy(entity, lang);
+        SysPermissionLang moduleLang = this.permissionLangDao.findBy(entity, lang);
         SysPermissionInfo info = new SysPermissionInfo();
         info.setCode(entity.getCode());
         info.setIcon(entity.getIcon());
@@ -30,7 +31,7 @@ public class SysModuleAssembler extends AbstractAssembler<SysPermissionInfo, Sys
     }
 
     public SysPermissionInfo create(SysPermission entity) {
-        return create(entity, "zh");
+        return create(entity, Constants.DEFAULT_LANG);
     }
 
     public List<SysPermissionInfo> create(List<SysPermission> entities) {
