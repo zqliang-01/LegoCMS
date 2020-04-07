@@ -1,0 +1,59 @@
+<div id="header">
+	<img src="${res}/unicorn/img/logo.png">
+</div>
+
+<div id="topnav">
+	<div class="navbar navbar-inverse">
+		<!-- 定义了个响应触发点 -->
+		<div class="nav-collapse collapse">
+			<!-- 定义导航列表 -->
+			<ul id="top" class="nav">
+				<li class="cashier">
+					<a id="orderManage" href="#" title="内容管理">
+						<i class=""></i><span>内容管理</span>
+					</a>
+				</li>
+				<li>
+					<a id="orderRealTimeQuery" href="#" title="分类管理">
+						<i class=""></i><span>分类管理</span>
+					</a>
+				</li>
+				<li>
+					<a id="orderRealTimeQuery" href="#" title="定时调度">
+						<i class=""></i><span>定时调度</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div id="user-nav" class="navbar navbar-inverse">
+	<ul class="nav btn-group">
+		<li class="btn btn-inverse dropdown" id="user-info">
+			<a href="#" data-toggle="dropdown" data-target="#user-info" class="dropdown-toggle"><i class="icon icon-user"></i><span class="text">个人资料</span></a>
+			<div class="dropdown-menu article-post">
+				<span class="user-info">${Session.admin_user.name}</span>
+				<p><a>${Session.admin_user.organization.name}</a></p>
+			</div>
+		</li>
+		<li class="btn btn-inverse dropdown" id="menu-style">
+			<a href="#" data-toggle="dropdown" data-target="#menu-style" class="dropdown-toggle">
+				<i class="icon icon-cog"></i>
+				<span class="text">主题</span>
+			</a>
+			<ul class="dropdown-menu">
+				<li><a class="style-item" href="#" style="color: #1262b7;">Blue</a></li>
+				<li><a class="style-item" href="#" style="color: #555555;">Grey</a></li>
+				<li><a class="style-item" href="#" style="color: #673232;">Red</a></li>
+				<li><a class="style-item" href="#" style="color: #2D2F57;">Purple</a></li>
+			</ul>
+		</li>
+		<li class="btn btn-inverse">
+			<a title="" href="#" onclick="launchFullscreen(document.documentElement);"><i class="icon icon-fullscreen"></i><span class="text">全屏</span></a>
+		</li>
+		<li class="btn btn-inverse">
+			<a title="" href="${ctx}/admin/user/doLogout"><i class="icon icon-share-alt"></i> <span class="text"><@t.page 'btn.logout'/></span></a>
+		</li>
+	</ul>
+</div>

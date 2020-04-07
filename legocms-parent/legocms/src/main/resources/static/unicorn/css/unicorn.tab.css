@@ -1,0 +1,183 @@
+.nav-tab{
+  width: 100%;
+  height: 35px;
+  position: relative;
+}
+.nav-scroll{
+  position: absolute;
+  width: 25px;
+  height: calc(100% - 1px);
+  overflow: hidden;
+  margin: 0;
+  top: 0;
+  background: #fff url(../img/icon-left.png) center center no-repeat;
+  background-size: 55% auto;
+  cursor: pointer;
+}
+.nav-scroll-left{
+  left: 0;
+  border-radius: 5px 0px 0px 0px;
+  border-right: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+.nav-scroll-right{
+  right: 40px;
+  transform: rotate(180deg);
+  border: 1px solid #eee;
+  border-bottom: 0px;
+}
+
+.close-box{
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 40px;
+  height: calc(100% - 1px);
+  border-bottom: 1px solid #eee;
+}
+.close-box>label{
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background: #fff url(../img/uploadify-cancel.png) center center no-repeat;
+  background-size: 35% auto;
+  cursor: pointer;
+} 
+
+.close-item{
+  display: none;
+  position: absolute;
+  right: 2px;
+  overflow: hidden;
+  height: 71px;
+  width: 100px;
+  top: 35px;
+  background: #fff;
+  text-align: center;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 1px #ddd;
+}
+
+.close-box:hover .close-item,.close-item:hover{
+  display: block;
+}
+
+.close-item>span{
+  display: block;
+  height: 35px;
+  font-size: 12px;
+  color: #444;
+  line-height: 35px;
+  cursor: pointer;
+}
+.close-item>span:first-of-type{
+  border-bottom: 1px solid #ddd;
+}
+.close-item>span:hover{
+  background: #2196F3;
+  color: #fff;
+}
+
+
+.tabbed {
+  position: absolute;
+  left: 26px;
+  right: 66px;
+  height: 100%;
+  overflow: hidden;
+  background-color: #ebeced;
+  transition: border 250ms ease;
+}
+.tabbed ul {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 0px;
+  padding: 0px 8px;
+  overflow: hidden;
+  float: left;
+  padding-left: 15px;
+  list-style-type: none;
+  white-space: nowrap;
+  transition: all 0.3s;
+}
+.tabbed ul * {
+  margin: 0px;
+  padding: 0px;
+}
+.tabbed ul li {
+  display: inline-block;
+  padding: 6px 28px 3px 10px;
+  background-color: #cacfdf;
+  margin-right: 10px;
+  z-index: 2;
+  position: relative;
+  cursor: pointer;
+  color: #777;
+  margin-top: 6px;
+  text-transform: uppercase;
+  font: 600 13px/20px roboto, "Open Sans", Helvetica, sans-serif;
+  transition: all 0.2s;
+}
+.tabbed ul li .closetag{
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    background-color: #ccc;
+    font: 600 5px/18px "simsun";
+    text-align: center;
+    color: #f1f1f1;
+    position: absolute;
+    margin-left: 3px;
+    margin-top: 2px;
+}
+.tabbed ul li:before,
+.tabbed ul li:after {
+  display: block;
+  content: " ";
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 44px;  
+  background-color: #cacfdf;
+  transition: all 250ms ease;
+}
+.tabbed ul li:before {
+  right: -5px;
+  width: 10px;
+  transform: skew(15deg, 0deg);
+  box-shadow: rgba(0,0,0,.1) 3px 2px 5px, inset rgba(255,255,255,.09) -1px 0;
+}
+.tabbed ul li:after {
+  left: -5px;
+  width: 10px;
+  transform: skew(-15deg, 0deg);
+  box-shadow: rgba(0,0,0,.1) -3px 2px 5px, inset rgba(255,255,255,.09) 1px 0;
+}
+.tabbed ul li:hover,
+.tabbed ul li:hover:before,
+.tabbed ul li:hover:after {
+  background-color: #F4F7F9;
+  color: #444;
+}
+.tabbed ul li.active {
+  z-index: 3;
+}
+.tabbed ul li.active,
+.tabbed ul li.active:before,
+.tabbed ul li.active:after {
+  background-color: #fff;
+  color: #fff;
+}
+
+/* Round Tabs */
+.tabbed.round ul li {
+  border-radius: 8px 8px 0 0;
+}
+.tabbed.round ul li:before {
+  border-radius: 0 8px 0 0;
+}
+.tabbed.round ul li:after {
+  border-radius: 8px 0 0 0;
+}

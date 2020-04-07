@@ -26,11 +26,11 @@ public class AdminCmsTemplateController extends AdminController {
     @GetMapping("/init")
     @RequiresPermissions(SysPermissionCode.TEMPLATE)
     public ViewResponse init() {
-        return ViewResponse.ok(AdminView.SYS_TEMPLATE_LIST);
+        return ViewResponse.ok(AdminView.CMS_TEMPLATE_LIST);
     }
 
     @PostMapping("/save")
-    @RequiresPermissions(SysPermissionCode.TEMPLATE)
+    @RequiresPermissions(SysPermissionCode.TEMPLATE_EDIT)
     public JsonResponse save(CmsTemplateVo vo) {
         if (vo.getSite() == null || StringUtil.isBlank(vo.getSite().getCode())) {
             vo.setSite(getSite());
@@ -40,7 +40,7 @@ public class AdminCmsTemplateController extends AdminController {
     }
 
     @PostMapping("/delete")
-    @RequiresPermissions(SysPermissionCode.TEMPLATE)
+    @RequiresPermissions(SysPermissionCode.TEMPLATE_DELETE)
     public JsonResponse delete(String code) {
         templateService.delete(code);
         return JsonResponse.ok();

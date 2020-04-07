@@ -11,5 +11,7 @@ public interface ISysPermissionDao extends IGenericDao<SysPermission> {
 
     List<SysPermission> findAccessible(String roleCode);
 
-    List<SysPermission> findChildren(String parentCode);
+    List<SysPermission> findChildren(String code);
+
+    long findChildrenCount(String code, boolean menu);
 }

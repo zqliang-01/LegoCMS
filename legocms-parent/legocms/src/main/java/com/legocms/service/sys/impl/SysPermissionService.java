@@ -37,9 +37,10 @@ public class SysPermissionService extends BaseService implements ISysPermissionS
     @Autowired
     private ISysPermissionLangDao permissionLangDao;
 
+    @Override
     public List<SysPermissionInfo> findBy(String userCode, String parentCode, String lang, boolean menu) {
         List<SysPermission> permissions = permissionDao.findBy(userCode, parentCode, menu);
-        return this.permissionAssembler.create(permissions, lang);
+        return this.permissionAssembler.create(permissions, lang, menu);
     }
 
     @Override

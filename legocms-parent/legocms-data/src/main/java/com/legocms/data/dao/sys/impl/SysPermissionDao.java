@@ -16,6 +16,7 @@ public class SysPermissionDao extends GenericDao<SysPermission> implements ISysP
         super(domainClass, em);
     }
 
+    @Override
     public List<SysPermission> findBy(String userCode, String parentCode, boolean menu) {
         String sql =
                 " SELECT p.* FROM sys_permission p " +
@@ -59,9 +60,19 @@ public class SysPermissionDao extends GenericDao<SysPermission> implements ISysP
     }
 
     @Override
-    public List<SysPermission> findChildren(String parentCode) {
+    public List<SysPermission> findChildren(String code) {
         QueryHandler<SysPermission> query = createQueryHandler("FROM {0} p");
-        query.condition("p.parent.code = :parentCode").setParameter("parentCode", parentCode);
+        query.condition("p.parent.code = :code").setParameter("code", code);
         return query.findList();
+    }
+
+    @Override
+    public long findChildrenCount(String code, boolean menu) {
+        QueryHandler<SysPermission> query = createQueryHandler("FROM {0} p");
+        query.condition("p.parent.code = :code").setParameter("code", code);
+        if (menu) {
+            query.condition("p.menu = :menu").setParameter("menu", menu);
+        }
+        return query.findCount();
     }
 }

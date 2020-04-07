@@ -56,7 +56,7 @@ public class AdminSysSiteController extends AdminController {
     }
 
     @PostMapping("/delete")
-    @RequiresPermissions(SysPermissionCode.SITE_EDIT)
+    @RequiresPermissions(SysPermissionCode.SITE_DELETE)
     public JsonResponse delete(String code) {
         siteService.delete(getUserCode(), code);
         refreshUser();

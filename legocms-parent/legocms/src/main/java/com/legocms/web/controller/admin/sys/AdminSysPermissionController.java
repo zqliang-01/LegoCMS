@@ -41,7 +41,7 @@ public class AdminSysPermissionController extends AdminController {
     }
 
     @PostMapping("/delete")
-    @RequiresPermissions(SysPermissionCode.PERMISSION_EDIT)
+    @RequiresPermissions(SysPermissionCode.PERMISSION_DELETE)
     public JsonResponse delete(String code) {
         permissionService.delete(code);
         return JsonResponse.ok();

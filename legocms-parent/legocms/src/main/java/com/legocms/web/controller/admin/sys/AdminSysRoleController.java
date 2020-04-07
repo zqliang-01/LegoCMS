@@ -50,7 +50,7 @@ public class AdminSysRoleController extends AdminController {
     }
 
     @PostMapping("/delete")
-    @RequiresPermissions(SysPermissionCode.ROLE_EDIT)
+    @RequiresPermissions(SysPermissionCode.ROLE_DELETE)
     public JsonResponse delete(String code) {
         roleService.delete(code);
         refreshUser();

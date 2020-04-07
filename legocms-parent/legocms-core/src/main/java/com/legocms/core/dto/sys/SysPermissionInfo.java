@@ -13,5 +13,6 @@ public class SysPermissionInfo extends Dto {
     private String url;
     private String icon;
     private String name;
+    private boolean hasChildren;
     private int sort;
 }

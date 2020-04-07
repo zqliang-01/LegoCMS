@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.legocms.core.annotation.RequiresPermissions;
-import com.legocms.core.vo.sys.SysPermissionCode;
 import com.legocms.core.vo.sys.SysOrganizationVo;
+import com.legocms.core.vo.sys.SysPermissionCode;
 import com.legocms.core.web.JsonResponse;
 import com.legocms.core.web.ViewResponse;
 import com.legocms.service.sys.ISysOrganizationService;
@@ -37,7 +37,7 @@ public class AdminSysOrganizationController extends AdminController {
     }
 
     @PostMapping("/delete")
-    @RequiresPermissions(SysPermissionCode.ORGANIZATION_EDIT)
+    @RequiresPermissions(SysPermissionCode.ORGANIZATION_DELETE)
     public JsonResponse delete(String code) {
         organizationService.delete(code);
         return JsonResponse.ok();

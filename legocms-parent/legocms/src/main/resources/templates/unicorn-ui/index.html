@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<title>LegoCMS</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<#include "include_page/link.html"/>
+		<script type="text/javascript" src="${res}/unicorn/js/unicorn/unicorn.sidebar.js"></script>
+	</head>
+	<body>
+		<#include "include_page/header.html"/>
+		<#include "include_page/sidebar.html"/>
+		
+        <div id="content">
+			<div class="nav-tab">
+				<p class="nav-scroll nav-scroll-left" title="向左滚动"></p>
+				<div class="tabbed round">
+					<ul id="tab-home">
+					</ul>
+				</div>
+				<p class="nav-scroll nav-scroll-right" title="向右滚动"></p>
+				<div class="close-box">
+					<label title="关闭操作"></label>
+					<div class="close-item">
+						<span class="closeAll">关闭全部</span>
+						<span class="closeOther">关闭其他</span>
+					</div>
+				</div>
+			</div>
+			
+			<div id="content-center" class="tab-content"> </div>
+        </div>
+	</body>
+</html>

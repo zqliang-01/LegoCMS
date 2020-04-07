@@ -110,4 +110,8 @@ public class QueryHandler<T extends BaseEntity> extends BaseQueryHandler<T> {
     public T findUnique() {
         return findUnique(this.sqlBuilder.toString(), this.param);
     }
+
+    public long findCount() {
+        return findCount(getCountSql(), this.param);
+    }
 }

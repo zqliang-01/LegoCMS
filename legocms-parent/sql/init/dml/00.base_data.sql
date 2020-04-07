@@ -34,10 +34,6 @@ CALL addPermission('user-edit', 'user', null, null, 0, 2);
 CALL addPermissionLang('zh', '修改', 'user-edit');
 CALL addPermissionLang('en', 'edit', 'user-edit');
 
-CALL addPermission('user-delete', 'user', null, null, 0, 3);
-CALL addPermissionLang('zh', '删除', 'user-delete');
-CALL addPermissionLang('en', 'delete', 'user-delete');
-
 CALL addPermission('organization', 'admin', 'pe-7s-users', '/admin/organization/init', 1, 2);
 CALL addPermissionLang('zh', '部门管理', 'organization');
 CALL addPermissionLang('en', 'Organization Management', 'organization');
@@ -45,6 +41,10 @@ CALL addPermissionLang('en', 'Organization Management', 'organization');
 CALL addPermission('organization-edit', 'organization', null, null, 0, 1);
 CALL addPermissionLang('zh', '修改', 'organization-edit');
 CALL addPermissionLang('en', 'edit', 'organization-edit');
+
+CALL addPermission('organization-delete', 'organization', null, null, 0, 2);
+CALL addPermissionLang('zh', '删除', 'organization-delete');
+CALL addPermissionLang('en', 'delete', 'organization-delete');
 
 CALL addPermission('role', 'admin', 'pe-7s-id', '/admin/role/init', 1, 3);
 CALL addPermissionLang('zh', '角色管理', 'role');
@@ -58,6 +58,10 @@ CALL addPermission('role-edit', 'role', null, null, 0, 2);
 CALL addPermissionLang('zh', '修改', 'role-edit');
 CALL addPermissionLang('en', 'edit', 'role-edit');
 
+CALL addPermission('role-delete', 'role', null, null, 0, 3);
+CALL addPermissionLang('zh', '删除', 'role-delete');
+CALL addPermissionLang('en', 'delete', 'role-delete');
+
 CALL addPermission('permission', 'admin', 'pe-7s-hammer', '/admin/permission/init', 1, 4);
 CALL addPermissionLang('zh', '权限管理', 'permission');
 CALL addPermissionLang('en', 'Permission Management', 'permission');
@@ -65,6 +69,10 @@ CALL addPermissionLang('en', 'Permission Management', 'permission');
 CALL addPermission('permission-edit', 'permission', null, null, 0, 1);
 CALL addPermissionLang('zh', '修改', 'permission-edit');
 CALL addPermissionLang('en', 'edit', 'permission-edit');
+
+CALL addPermission('permission-delete', 'permission', null, null, 0, 2);
+CALL addPermissionLang('zh', '删除', 'permission-delete');
+CALL addPermissionLang('en', 'delete', 'permission-delete');
 
 /** =======系统管理====== */
 CALL addPermission('site-maintenance', 'root', 'pe-7s-tools', null, 1, 2);
@@ -79,9 +87,21 @@ CALL addPermission('site-edit', 'site', null, null, 0, 1);
 CALL addPermissionLang('zh', '修改', 'site-edit');
 CALL addPermissionLang('en', 'edit', 'site-edit');
 
+CALL addPermission('site-delete', 'site', null, null, 0, 2);
+CALL addPermissionLang('zh', '删除', 'site-delete');
+CALL addPermissionLang('en', 'delete', 'site-delete');
+
 CALL addPermission('template', 'site-maintenance', 'pe-7s-note2', '/admin/template/init', 1, 2);
 CALL addPermissionLang('zh', '模板管理', 'template');
 CALL addPermissionLang('en', 'Template Management', 'template');
+
+CALL addPermission('template-edit', 'template', null, null, 0, 1);
+CALL addPermissionLang('zh', '修改', 'template-edit');
+CALL addPermissionLang('en', 'edit', 'template-edit');
+
+CALL addPermission('template-delete', 'template', null, null, 0, 2);
+CALL addPermissionLang('zh', '删除', 'template-delete');
+CALL addPermissionLang('en', 'delete', 'template-delete');
 
 CALL addRolePermission('super', 'root');
 CALL addRolePermission('super', 'admin');

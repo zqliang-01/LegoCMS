@@ -1,0 +1,23 @@
+.condition-fluid {
+	background-color: #e8f4e4;
+    border: 1px solid #d3e9ca;
+    padding: 10px;
+    margin: 10px 0px 0px;
+    list-style: none;
+}
+
+.condition-fluid input {
+	margin: 0px;
+}
+@media (max-width: 480px) {
+	.condition-fluid input {
+		float: left;
+		width: 126px;
+	}
+}
+@media (max-width: 767px) {
+	.condition-fluid input {
+		float: left;
+		width: 126px;
+	}
+}

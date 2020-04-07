@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>LegoCMS</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<#include "../include_page/link.html"/>
+	</head>
+	<body>
+		<div class="content-scorll">
+			<div class="container-fluid" id="table-condition">
+				<form method="post" class="queryForm" action="${ctx}/admin/directive/sysUserList">
+					<div class="condition-fluid unstyled">
+						<input name="name" placeholder="name" type="text" class="span2">
+	                 	<input name="code" placeholder="code" type="text" class="span2">
+						<select name="status">
+							<option value="" selected="selected"><@t.page 'list.status'/></option>
+							<@sysUserStatus>
+								<#list userStatus as userState>
+									<option value="${userState.code}">${userState.name}</option>
+								</#list>
+							</@sysUserStatus>
+						</select>
+		        		<span id="orderQuery" class="btn btn-success query"><i class="icon-search icon-white"></i><@t.page 'btn.query'/></span>
+						<span class="btn btn-danger" data-toggle="collapse" data-target=".condition-advance"><@t.page 'btn.advance-query'/></span>
+		                <span class="btn btn-info"onclick="window.parent.addTab('user-add', '创建员工', '/admin/user/edit/1_#')" ><@t.page 'btn.create'/></span>
+					</div>
+					<!--find_title_box-->
+				
+					<div class="condition-advance collapse">
+						<div class="condition-fluid">
+							创建时间：
+							<div class="btn date-inline selectdate">
+								<i class="icon-calendar"></i>
+								<span></span><b class="caret"></b>
+								<input type="hidden" name="createStart"  value="">
+								<input type="hidden" name="createEnd"  value="">
+							</div>
+						</div>
+					</div><!--collapse-->
+				</form>
+				<div class="row-fluid">
+		            <div class="span12">
+		                <div class="widget-box">
+		                    <div class="widget-title">
+		                    	<span class="icon"> <i class="icon-th-list"></i> </span>
+		                    	<h5><@t.page 'employee.list'/></h5>
+		                    </div>
+		                    <div class="widget-content nopadding">
+		                        <table role="grid" class="table table-hover mytab">
+		                            <thead>
+		                                <tr role="row">
+		                                    <th><@t.page 'list.code'/></th>
+		                                    <th><@t.page 'list.name'/></th>
+		                                    <th><@t.page 'list.organization'/></th>
+		                                    <th><@t.page 'list.create-time'/></th>
+		                                    <th><@t.page 'list.status'/></th>
+		                                    <th><@t.page 'list.operation'/></th>
+		                                </tr>
+		                            </thead>
+	                        		<tbody></tbody>
+		                        </table>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+                <div class="tempContentDiv"></div>
+	   			<p style="display: none">
+		            <textarea id="table-template" rows="0" cols="0">
+		                <!--
+		                    {#template MAIN}
+		                        {#foreach $T.page.result as Result}
+		                            <tr role="row" >
+		                                <td class="text-center text-muted">{$T.Result.code}</td>
+		                                <td>{$T.Result.name}</td>
+		                                <td class="text-center">{$T.Result.organization.name}</td>
+		                                <td class="text-center">{$T.Result.createDate}</td>
+		                                <td class="text-center">
+		                                	{#if $T.Result.status.code == 'Using'}
+		                                		<div class="badge badge-info">{$T.Result.status.name}</div>
+		                                	{#else}
+		                                		<div class="badge badge-danger">{$T.Result.status.name}</div>
+		                                	{#/if}
+		                                </td>
+		                                <td>
+		                                	<a onclick="window.parent.addTab('user-edit', '员工修改', '/admin/user/edit/{$T.Result.code}')" class="text-primary"><@t.page 'btn.edit'/></a>
+		                                	{#if $T.Result.status.code == 'Using'}
+		                                		<a onclick="invalid('{$T.Result.code}')" class="text-primary"><@t.page 'btn.invalid'/></a>
+		                                	{#else}
+		                                		<a onclick="active('{$T.Result.code}')" class="text-primary"><@t.page 'btn.active'/></a>
+		                                	{#/if}
+		                                </td>
+		                            </tr>
+		                        {#/for}
+		                    {#/template MAIN}
+		                -->
+		            </textarea>
+	        	</p>
+	        </div>
+		</div>
+	</body>
+</html>

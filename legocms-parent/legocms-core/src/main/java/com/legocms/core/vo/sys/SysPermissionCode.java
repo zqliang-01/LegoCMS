@@ -7,17 +7,22 @@ public interface SysPermissionCode {
 
     String PERMISSION = "permission";
     String PERMISSION_EDIT = "permission-edit";
+    String PERMISSION_DELETE = "permission-delete";
 
     String ROLE = "role";
     String ROLE_AUTHORIZE = "role-authorize";
     String ROLE_EDIT = "role-edit";
+    String ROLE_DELETE = "role-delete";
 
     String ORGANIZATION = "organization";
     String ORGANIZATION_EDIT = "organization-edit";
+    String ORGANIZATION_DELETE = "organization-delete";
 
     String SITE = "site";
     String SITE_EDIT = "site-edit";
+    String SITE_DELETE = "site-delete";
 
     String TEMPLATE = "template";
     String TEMPLATE_EDIT = "template-edit";
+    String TEMPLATE_DELETE = "template-delete";
 }

@@ -1,29 +1,31 @@
 <#macro permission parentCode top>
     <@sysPermissionList code=parentCode menu=true>
-		<#list permissions as p>
-	        <#if p?size gt 0>
-	        	<ul class="vertical-nav-menu">
-	        		<#if top>
-			        	<!-- <li class="app-sidebar__heading">----</li> -->
-			        </#if>
-			        <li>
-			        	<#if top>
-				            <a href="#" aria-expanded="true" class="menu-item-top" id="${p.code!}" name="${p.name}">
-				                <i class="metismenu-icon ${p.icon!}"></i>
-				                <span>${p.name}</span>
-				                <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
-				            </a>
-			        	<#else>
-		                    <a href="#" data-url="${p.url!}" class="menu-item" id="${p.code!}" name="${p.name}">
-		                        <i class="metismenu-icon ${p.icon!}"></i>
-		                        <span>${p.name}</span>
-		                    </a>
-			        	</#if>
-						<@permission parentCode=p.code top=false />
-			        </li>
-			    </ul>
-	        </#if>
-	    </#list>
+       	<ul class="vertical-nav-menu">
+			<#list permissions as p>
+		        <#if p?size gt 0>
+		        		<#if top>
+				        	<!-- <li class="app-sidebar__heading">----</li> -->
+				        </#if>
+				        <li>
+				        	<#if top>
+					            <a href="#" aria-expanded="true" class="menu-item-top" id="${p.code!}" name="${p.name}">
+					                <i class="metismenu-icon ${p.icon!}"></i>
+					                <span>${p.name}</span>
+					                <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+					            </a>
+				        	<#else>
+			                    <a href="#" data-url="${p.url!}" class="menu-item" id="${p.code!}" name="${p.name}">
+			                        <i class="metismenu-icon ${p.icon!}"></i>
+			                        <span>${p.name}</span>
+			                    </a>
+				        	</#if>
+	        				<#if p.hasChildren>
+								<@permission parentCode=p.code top=false />
+							</#if>
+				        </li>
+		        </#if>
+		    </#list>
+	    </ul>
 	</@sysPermissionList>
 </#macro>
 <div class="app-sidebar sidebar-shadow bg-secondary sidebar-text-light">

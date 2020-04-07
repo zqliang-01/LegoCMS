@@ -129,7 +129,7 @@ public class BaseQueryHandler<T> {
         return query.getResultList();
     }
 
-    public long findCount(String hql, Map<String, ?> values) {
+    protected long findCount(String hql, Map<String, ?> values) {
         Query query = entityManager.createQuery(hql);
         setParameter(values, query);
         return (Long) query.getSingleResult();

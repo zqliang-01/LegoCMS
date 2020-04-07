@@ -1,0 +1,916 @@
+div.uploader span.action, div.button, div.button span {
+    display: inline-block;
+    margin-bottom: 0;
+    padding: 4px 12px;
+    border: 1px solid #bbb;
+    border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    background-color: #f5f5f5;
+    background-image: -moz-linear-gradient(top, #fff, #e6e6e6);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fff), to(#e6e6e6));
+    background-image: -webkit-linear-gradient(top, #fff, #e6e6e6);
+    background-image: -o-linear-gradient(top, #fff, #e6e6e6);
+    background-image: linear-gradient(to bottom, #fff, #e6e6e6);
+    background-repeat: repeat-x;
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+    color: #333;
+    vertical-align: middle;
+    text-align: center;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+    line-height: 20px;
+    cursor: pointer;
+    *display: inline;
+    *margin-left: .3em;
+    *line-height: 20px;
+    *background-color: #e6e6e6;
+    *border: 0;
+    border-bottom-color: #a2a2a2;
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);
+    filter: progid: DXImageTransform.Microsoft.gradient(enabled=false);
+    *zoom: 1
+}
+
+div.checker span, div.radio span {
+    background-image: url(../img/sprite.png);
+    background-repeat: no-repeat;
+    -webkit-font-smoothing: antialiased
+}
+
+.selector, .radio, .checker, .uploader, .button, .selector *, .radio *,
+.checker *, .uploader *, .button * {
+    margin: 0;
+    padding: 0
+}
+
+div.checker {
+    width: 19px;
+    height: 19px;
+    line-height: 0
+}
+
+div.checker input {
+    width: 19px;
+    height: 19px
+}
+
+div.checker span {
+    background-position: 0 -260px;
+    height: 19px;
+    width: 19px
+}
+
+div.checker:active span, div.checker.active span {
+    background-position: -19px -260px
+}
+
+div.checker.focus span, div.checker:hover span {
+    background-position: -38px -260px
+}
+
+div.checker.focus:active span, div.checker:active:hover span, div.checker.active:hover span, div.checker.focus.active span {
+    background-position: -57px -260px
+}
+
+div.checker span.checked {
+    background-position: -76px -260px
+}
+
+div.checker:active span.checked, div.checker.active span.checked {
+    background-position: -95px -260px
+}
+
+div.checker.focus span.checked, div.checker:hover span.checked {
+    background-position: -114px -260px
+}
+
+div.checker.focus:active span.checked, div.checker:hover:active span.checked, div.checker.active:hover span.checked, div.checker.active.focus span.checked {
+    background-position: -133px -260px
+}
+
+div.checker.disabled span, div.checker.disabled:active span, div.checker.disabled.active span {
+    background-position: -152px -260px
+}
+
+div.checker.disabled span.checked, div.checker.disabled:active span.checked, div.checker.disabled.active span.checked {
+    background-position: -171px -260px
+}
+
+div.radio {
+    width: 18px;
+    height: 18px
+}
+
+div.radio input {
+    width: 18px;
+    height: 18px
+}
+
+div.radio span {
+    height: 18px;
+    width: 18px;
+    line-height: 0;
+    background-position: 0 -279px
+}
+
+div.radio:active span, div.radio.active span {
+    background-position: -18px -279px
+}
+
+div.radio.focus span, div.radio:hover span {
+    background-position: -36px -279px
+}
+
+div.radio.focus:active span, div.radio:active:hover span, div.radio.active:hover span, div.radio.active.focus span {
+    background-position: -54px -279px
+}
+
+div.radio span.checked {
+    background-position: -72px -279px
+}
+
+div.radio:active span.checked, div.radio.active span.checked {
+    background-position: -90px -279px
+}
+
+div.radio.focus span.checked, div.radio:hover span.checked {
+    background-position: -108px -279px
+}
+
+div.radio.focus:active span.checked, div.radio:hover:active span.checked, div.radio.focus.active span.checked, div.radio.active:hover span.checked {
+    background-position: -126px -279px
+}
+
+div.radio.disabled span, div.radio.disabled:active span, div.radio.disabled.active span {
+    background-position: -144px -279px
+}
+
+div.radio.disabled span.checked, div.radio.disabled:active span.checked, div.radio.disabled.active span.checked {
+    background-position: -162px -279px
+}
+
+div.uploader {
+    display: inline-block;
+    padding: 2px 6px;
+    font-size: 1em;
+    line-height: 24px;
+    height: 24px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    color: #e00;
+    vertical-align: middle;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    -webkit-transition: border linear .2s, box-shadow linear .2s;
+    -moz-transition: border linear .2s, box-shadow linear .2s;
+    -o-transition: border linear .2s, box-shadow linear .2s;
+    transition: border linear .2s, box-shadow linear .2s
+}
+
+div.uploader span.action {
+    border: 1px solid #ddd;
+    background-color: #fff;
+    -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    -webkit-transition: border linear .2s, box-shadow linear .2s;
+    -moz-transition: border linear .2s, box-shadow linear .2s;
+    -o-transition: border linear .2s, box-shadow linear .2s;
+    transition: border linear .2s, box-shadow linear .2s;
+    margin: -3px 0 0;
+    overflow: hidden;
+    padding: 4px 12px
+}
+
+div.uploader.focus, div.uploader.hover, div.uploader:hover {
+    outline: 0;
+    outline: thin dotted \9;
+    border-color: rgba(82, 168, 236, 0.8);
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6)
+}
+
+div.uploader.focus span.action, div.uploader.hover span.action,
+div.uploader:hover span.action {
+    background-color: #e6e6e6;
+    background-position: 0 -15px;
+    color: #333;
+    text-decoration: none;
+    -webkit-transition: background-position .1s linear;
+    -moz-transition: background-position .1s linear;
+    -o-transition: background-position .1s linear;
+    transition: background-position .1s linear;
+    *background-color: #d9d9d9
+}
+
+div.uploader.active span.action, div.uploader:active span.action {
+    background-position: right -465px
+}
+
+div.uploader.focus.active span.action, div.uploader:focus.active span.action, div.uploader.focus:active span.action, div.uploader:focus:active span.action {
+    background-position: right -493px
+}
+
+div.uploader.disabled {
+    background-position: 0 -325px
+}
+
+div.uploader.disabled span.action {
+    background-position: right -381px
+}
+
+div.checker {
+    margin-right: 5px
+}
+
+div.radio {
+    margin-right: 3px
+}
+
+.table_info_box>span>.radio {
+    margin-left: 20px
+}
+
+.selector, .checker, .button, .radio, .uploader {
+    display: -moz-inline-box;
+    display: inline-block;
+    vertical-align: middle;
+    zoom: 1;
+    *display: inline
+}
+
+.selector select:focus, .radio input:focus, .checker input:focus, .uploader input:focus {
+    outline: 0
+}
+
+div.checker {
+    position: relative
+}
+
+div.checker span {
+    display: -moz-inline-box;
+    display: inline-block;
+    text-align: center
+}
+
+div.checker input {
+    opacity: 0;
+    filter: alpha(opacity:0);
+    display: inline-block;
+    background: 0
+}
+
+div.radio {
+    position: relative
+}
+
+div.radio span {
+    display: -moz-inline-box;
+    display: inline-block;
+    text-align: center
+}
+
+div.radio input {
+    opacity: 0;
+    filter: alpha(opacity:0);
+    text-align: center;
+    display: inline-block;
+    background: 0
+}
+
+div.uploader span.action {
+    float: right;
+    display: inline;
+    overflow: hidden
+}
+
+div.uploader span.filename {
+    float: left;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: default;
+    position: relative
+}
+
+div.uploader input {
+    opacity: 0;
+    filter: alpha(opacity:0);
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    float: right;
+    width: 100%;
+    border: 0;
+    cursor: pointer
+}
+
+div.uploader {
+    width: 300px;
+    height: auto;
+    min-height: 24px
+}
+
+div.uploader span.action {
+    width: 25%;
+    text-align: center;
+    text-shadow: #fff 0 1px 0;
+    background-color: #fff;
+    font-size: 14px;
+    margin-right: -6px;
+    -webkit-border-radius: 0 4px 4px 0;
+    -moz-border-radius: 0 4px 4px 0;
+    border-radius: 0 4px 4px 0
+}
+
+div.uploader span.filename {
+    color: #555;
+    width: 65%;
+    font-size: 14px
+}
+
+div.uploader.disabled span.action {
+    color: #aaa
+}
+
+div.uploader.disabled span.filename {
+    border-color: #ddd;
+    color: #aaa
+}
+
+.select2-container {
+    position: relative;
+    display: inline-block;
+    zoom: 1;
+    *display: inline;
+    vertical-align: top
+}
+
+.select2-container, .select2-drop, .select2-search, .select2-search input {
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -khtml-box-sizing: border-box;
+    box-sizing: border-box
+}
+
+.select2-container .select2-choice {
+    background-color: #fff;
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #eee), color-stop(0.5, white));
+    background-image: -webkit-linear-gradient(center bottom, #eee 0, white 50%);
+    background-image: -moz-linear-gradient(center bottom, #eee 0, white 50%);
+    background-image: -o-linear-gradient(bottom, #eee 0, #fff 50%);
+    background-image: -ms-linear-gradient(top, #eee 0, #fff 50%);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr = '#eeeeee', endColorstr = '#ffffff', GradientType = 0);
+    background-image: linear-gradient(top, #eee 0, #fff 50%);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid #ccc;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    height: 22px;
+    line-height: 22px;
+    padding: 3px 6px 3px 6px;
+    color: #444;
+    text-decoration: none
+}
+
+.select2-container.select2-drop-above .select2-choice {
+    border-bottom-color: #aaa;
+    -webkit-border-radius: 0 0 4px 4px;
+    -moz-border-radius: 0 0 4px 4px;
+    border-radius: 0 0 4px 4px;
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #eee), color-stop(0.9, white));
+    background-image: -webkit-linear-gradient(center bottom, #eee 0, white 90%);
+    background-image: -moz-linear-gradient(center bottom, #eee 0, white 90%);
+    background-image: -o-linear-gradient(bottom, #eee 0, white 90%);
+    background-image: -ms-linear-gradient(top, #eee 0, #fff 90%);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee', endColorstr='#ffffff', GradientType=0);
+    background-image: linear-gradient(top, #eee 0, #fff 90%)
+}
+
+.select2-container .select2-choice span {
+    margin-right: 24px;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    -o-text-overflow: ellipsis;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis
+}
+
+.select2-container .select2-choice abbr {
+    display: block;
+    position: absolute;
+    right: 26px;
+    top: 8px;
+    width: 12px;
+    height: 12px;
+    font-size: 1px;
+    background: url('../img/select2.png') right top no-repeat;
+    cursor: pointer;
+    text-decoration: none;
+    border: 0;
+    outline: 0
+}
+
+.select2-container .select2-choice abbr:hover {
+    background-position: right -11px;
+    cursor: pointer
+}
+
+.select2-drop {
+    background: #fff;
+    color: #000;
+    border: 1px solid #5897fb;
+    border-top: 0;
+    position: absolute;
+    top: 100%;
+    -webkit-box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
+    -moz-box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
+    -o-box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
+    box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
+    z-index: 9999;
+    width: 100%;
+    margin-top: -4px;
+    -webkit-border-radius: 0 0 4px 4px;
+    -moz-border-radius: 0 0 4px 4px;
+    border-radius: 0 0 4px 4px
+}
+
+.select2-drop-active {
+    z-index: 99999
+}
+
+.select2-drop.select2-drop-above {
+    -webkit-border-radius: 4px 4px 0 0;
+    -moz-border-radius: 4px 4px 0 0;
+    border-radius: 4px 4px 0 0;
+    margin-top: 1px;
+    border-top: 1px solid #aaa;
+    border-bottom: 0;
+    -webkit-box-shadow: 0 -4px 5px rgba(0, 0, 0, .15);
+    -moz-box-shadow: 0 -4px 5px rgba(0, 0, 0, .15);
+    -o-box-shadow: 0 -4px 5px rgba(0, 0, 0, .15);
+    box-shadow: 0 -4px 5px rgba(0, 0, 0, .15)
+}
+
+.select2-container .select2-choice div {
+    -webkit-border-radius: 0 4px 4px 0;
+    -moz-border-radius: 0 4px 4px 0;
+    border-radius: 0 4px 4px 0;
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    background: #ccc;
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #ccc), color-stop(0.6, #eee));
+    background-image: -webkit-linear-gradient(center bottom, #ccc 0, #eee 60%);
+    background-image: -moz-linear-gradient(center bottom, #ccc 0, #eee 60%);
+    background-image: -o-linear-gradient(bottom, #ccc 0, #eee 60%);
+    background-image: -ms-linear-gradient(top, #ccc 0, #eee 60%);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr = '#cccccc', endColorstr = '#eeeeee', GradientType = 0);
+    background-image: linear-gradient(top, #ccc 0, #eee 60%);
+    border-left: 1px solid #aaa;
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: block;
+    height: 100%;
+    width: 18px
+}
+
+.select2-container .select2-choice div b {
+    background: url('../img/select2.png') no-repeat 0 1px;
+    display: block;
+    width: 100%;
+    height: 100%
+}
+
+.select2-search {
+    display: inline-block;
+    white-space: nowrap;
+    z-index: 10000;
+    min-height: 26px;
+    width: 100%;
+    margin: 0;
+    padding-left: 4px;
+    padding-right: 4px
+}
+
+.select2-search-hidden {
+    display: block;
+    position: absolute;
+    left: -10000px
+}
+
+.select2-search input {
+    background: #fff url('../img/select2.png') no-repeat 100% -22px;
+    background: url('../img/select2.png') no-repeat 100% -22px, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, white), color-stop(0.99, #eee));
+    background: url('../img/select2.png') no-repeat 100% -22px, -webkit-linear-gradient(center bottom, white 85%, #eee 99%);
+    background: url('../img/select2.png') no-repeat 100% -22px, -moz-linear-gradient(center bottom, white 85%, #eee 99%);
+    background: url('../img/select2.png') no-repeat 100% -22px, -o-linear-gradient(bottom, white 85%, #eee 99%);
+    background: url('../img/select2.png') no-repeat 100% -22px, -ms-linear-gradient(top, #fff 85%, #eee 99%);
+    background: url('../img/select2.png') no-repeat 100% -22px, linear-gradient(top, #fff 85%, #eee 99%);
+    padding: 4px 20px 4px 5px;
+    outline: 0;
+    border: 1px solid #aaa;
+    font-size: 1em;
+    width: 100%;
+    margin: 0;
+    height: auto !important;
+    min-height: 26px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    border-radius: 0;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0
+}
+
+.select2-drop.select2-drop-above .select2-search input {
+    margin-top: 4px
+}
+
+.select2-search input.select2-active {
+    background: #fff url('../img/spinner.gif') no-repeat 100%;
+    background: url('../img/spinner.gif') no-repeat 100%, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, white), color-stop(0.99, #eee));
+    background: url('../img/spinner.gif') no-repeat 100%, -webkit-linear-gradient(center bottom, white 85%, #eee 99%);
+    background: url('../img/spinner.gif') no-repeat 100%, -moz-linear-gradient(center bottom, white 85%, #eee 99%);
+    background: url('../img/spinner.gif') no-repeat 100%, -o-linear-gradient(bottom, white 85%, #eee 99%);
+    background: url('../img/spinner.gif') no-repeat 100%, -ms-linear-gradient(top, #fff 85%, #eee 99%);
+    background: url('../img/spinner.gif') no-repeat 100%, linear-gradient(top, #fff 85%, #eee 99%)
+}
+
+.select2-container-active .select2-choice, .select2-container-active .select2-choices {
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+    -o-box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+    box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+    border: 1px solid #5897fb;
+    outline: 0
+}
+
+.select2-dropdown-open .select2-choice {
+    border: 1px solid #aaa;
+    border-bottom-color: transparent;
+    -webkit-box-shadow: 0 1px 0 #fff inset;
+    -moz-box-shadow: 0 1px 0 #fff inset;
+    -o-box-shadow: 0 1px 0 #fff inset;
+    box-shadow: 0 1px 0 #fff inset;
+    background-color: #eee;
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, white), color-stop(0.5, #eee));
+    background-image: -webkit-linear-gradient(center bottom, white 0, #eee 50%);
+    background-image: -moz-linear-gradient(center bottom, white 0, #eee 50%);
+    background-image: -o-linear-gradient(bottom, white 0, #eee 50%);
+    background-image: -ms-linear-gradient(top, #fff 0, #eee 50%);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#eeeeee', GradientType=0);
+    background-image: linear-gradient(top, #fff 0, #eee 50%);
+    -webkit-border-bottom-left-radius: 0;
+    -webkit-border-bottom-right-radius: 0;
+    -moz-border-radius-bottomleft: 0;
+    -moz-border-radius-bottomright: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0
+}
+
+.select2-dropdown-open .select2-choice div {
+    background: transparent;
+    border-left: none
+}
+
+.select2-dropdown-open .select2-choice div b {
+    background-position: -18px 1px
+}
+
+.select2-results {
+    margin: 4px 4px 4px 0;
+    padding: 0 0 0 4px;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 200px
+}
+
+.select2-results ul.select2-result-sub {
+    margin: 0
+}
+
+.select2-results ul.select2-result-sub>li .select2-result-label {
+    padding-left: 20px
+}
+
+.select2-results ul.select2-result-sub ul.select2-result-sub>li .select2-result-label {
+    padding-left: 40px
+}
+
+.select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub>li .select2-result-label {
+    padding-left: 60px
+}
+
+.select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub>li .select2-result-label {
+    padding-left: 80px
+}
+
+.select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub>li .select2-result-label {
+    padding-left: 100px
+}
+
+.select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub>li .select2-result-label {
+    padding-left: 110px
+}
+
+.select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub>li .select2-result-label {
+    padding-left: 120px
+}
+
+.select2-results li {
+    list-style: none;
+    display: list-item
+}
+
+.select2-results li.select2-result-with-children>.select2-result-label {
+    font-weight: bold
+}
+
+.select2-results .select2-result-label {
+    padding: 3px 7px 4px;
+    margin: 0;
+    cursor: pointer;
+    white-space: nowrap
+}
+
+.select2-results .select2-highlighted {
+    background: #3875d7;
+    color: #fff
+}
+
+.select2-results li em {
+    background: #feffde;
+    font-style: normal
+}
+
+.select2-results .select2-highlighted em {
+    background: transparent
+}
+
+.select2-results .select2-no-results, .select2-results .select2-searching,
+.select2-results .select2-selection-limit {
+    background: #f4f4f4;
+    display: list-item
+}
+
+.select2-results .select2-disabled {
+    display: none
+}
+
+.select2-more-results.select2-active {
+    background: #f4f4f4 url('../img/spinner.gif') no-repeat 100%
+}
+
+.select2-more-results {
+    background: #f4f4f4;
+    display: list-item
+}
+
+.select2-container.select2-container-disabled .select2-choice {
+    background-color: #f4f4f4;
+    background-image: none;
+    border: 1px solid #ddd;
+    cursor: default
+}
+
+.select2-container.select2-container-disabled .select2-choice div {
+    background-color: #f4f4f4;
+    background-image: none;
+    border-left: 0
+}
+
+.select2-container-multi .select2-choices {
+    background-color: #fff;
+    background-image: -webkit-gradient(linear, 0% 0, 0% 100%, color-stop(1%, #fafafa), color-stop(15%, #fff));
+    background-image: -webkit-linear-gradient(top, #fafafa 1%, #fff 15%);
+    background-image: -moz-linear-gradient(top, #fafafa 1%, #fff 15%);
+    background-image: -o-linear-gradient(top, #fafafa 1%, #fff 15%);
+    background-image: -ms-linear-gradient(top, #fafafa 1%, #fff 15%);
+    background-image: linear-gradient(top, #fafafa 1%, #fff 15%);
+    border: 1px solid #ddd;
+    margin: 0;
+    padding: 0;
+    cursor: text;
+    overflow: hidden;
+    height: auto !important;
+    height: 1%;
+    position: relative;
+    border-radius: 4px
+}
+
+.select2-container-multi .select2-choices {
+    min-height: 26px;
+    min-width: 100px
+}
+
+.awardid {
+    min-width: 23.0769% !important
+}
+
+.awardid .select2-choices {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+    transition: border .2s linear 0s, box-shadow .2s linear 0s
+}
+
+.select2-container-multi.select2-container-active .select2-choices {
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(82, 168, 236, 0.6);
+    -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(82, 168, 236, 0.6);
+    -o-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(82, 168, 236, 0.6);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(82, 168, 236, 0.6);
+    border: 1px solid #5897fb;
+    outline: 0
+}
+
+.select2-container-multi .select2-choices li {
+    float: left;
+    list-style: none
+}
+
+.select2-container-multi .select2-choices .select2-search-field {
+    white-space: nowrap;
+    margin: 0;
+    padding: 0
+}
+
+.select2-container-multi .select2-choices .select2-search-field input {
+    color: #666;
+    background: transparent !important;
+    font-size: 100%;
+    height: 28px;
+    line-height: 28px;
+    padding: 0 5px;
+    margin: 1px 0;
+    outline: 0;
+    border: 0;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    -o-box-shadow: none;
+    box-shadow: none
+}
+
+.select2-container-multi .select2-choices .select2-search-field input.select2-active {
+    background: #fff url('../img/spinner.gif') no-repeat 100% !important
+}
+
+.select2-default {
+    color: #999 !important
+}
+
+.select2-container-multi .select2-choices .select2-search-choice {
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    background-color: #e4e4e4;
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#f4f4f4', endColorstr='#eeeeee', GradientType=0);
+    background-image: -webkit-gradient(linear, 0% 0, 0% 100%, color-stop(20%, #f4f4f4), color-stop(50%, #f0f0f0), color-stop(52%, #e8e8e8), color-stop(100%, #eee));
+    background-image: -webkit-linear-gradient(top, #fff 20%, #f0f0f0 50%, #e8e8e8 52%, #eee 100%);
+    background-image: -moz-linear-gradient(top, #fff 20%, #f0f0f0 50%, #e8e8e8 52%, #eee 100%);
+    background-image: -o-linear-gradient(top, #fff 20%, #f0f0f0 50%, #e8e8e8 52%, #eee 100%);
+    background-image: -ms-linear-gradient(top, #fff 20%, #f0f0f0 50%, #e8e8e8 52%, #eee 100%);
+    background-image: linear-gradient(top, #fff 20%, #f0f0f0 50%, #e8e8e8 52%, #eee 100%);
+    -webkit-box-shadow: 0 0 2px #fff inset, 0 1px 0 rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0 0 2px #fff inset, 0 1px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0 2px #fff inset, 0 1px 0 rgba(0, 0, 0, 0.05);
+    color: #333;
+    border: 1px solid #ddd;
+    line-height: 16px;
+    padding: 3px 5px 3px 18px;
+    margin: 2px 0 2px 3px;
+    position: relative;
+    cursor: default
+}
+
+.select2-container-multi .select2-choices .select2-search-choice span {
+    cursor: default
+}
+
+.select2-container-multi .select2-choices .select2-search-choice-focus {
+    background: #d4d4d4
+}
+
+.select2-search-choice-close {
+    display: block;
+    position: absolute;
+    right: 3px;
+    top: 4px;
+    width: 12px;
+    height: 13px;
+    font-size: 1px;
+    background: url('../img/select2.png') right top no-repeat;
+    outline: 0
+}
+
+.select2-container-multi .select2-search-choice-close {
+    left: 3px
+}
+
+.select2-container-multi .select2-choices .select2-search-choice .select2-search-choice-close:hover {
+    background-position: right -11px
+}
+
+.select2-container-multi .select2-choices .select2-search-choice-focus .select2-search-choice-close {
+    background-position: right -11px
+}
+
+.select2-container-multi.select2-container-disabled .select2-choices {
+    background-color: #f4f4f4;
+    background-image: none;
+    border: 1px solid #ddd;
+    cursor: default
+}
+
+.select2-container-multi.select2-container-disabled .select2-choices .select2-search-choice {
+    background-image: none;
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    padding: 3px 5px 3px 5px
+}
+
+.select2-container-multi.select2-container-disabled .select2-choices .select2-search-choice .select2-search-choice-close {
+    display: none
+}
+
+.select2-result-selectable .select2-match, .select2-result-unselectable .select2-result-selectable .select2-match {
+    text-decoration: underline
+}
+
+.select2-result-unselectable .select2-match {
+    text-decoration: none
+}
+
+.select2-offscreen {
+    position: absolute;
+    left: -10000px
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio:1.5) {
+    .select2-search input, .select2-search-choice-close, .select2-container .select2-choice abbr,
+    .select2-container .select2-choice div b {
+        background-image: url(../img/select2x2.png) !important;
+        background-repeat: no-repeat !important;
+        background-size: 60px 40px !important
+    }
+
+    .select2-search input {
+        background-position: 100% -21px !important
+    }
+}
+
+#s2id_searchlevelid {
+    width: 160px
+}
+
+#s2id_searchisbig {
+    width: 100px
+}
+
+.table_info_box #s2id_levelid {
+    width: 206px
+}
+
+.select-width {
+    width: 206px
+}
+
+#filelist {
+    -webkit-border-radius: 4px 0 0 4px;
+    -moz-border-radius: 4px 0 0 4px;
+    border-radius: 4px 0 0 4px
+}
+
+#pickfiles {
+    -webkit-border-radius: 0 4px 4px 0;
+    -moz-border-radius: 0 4px 4px 0;
+    border-radius: 0 4px 4px 0;
+    vertical-align: top;
+    margin-top: 1px
+}
+
+
+

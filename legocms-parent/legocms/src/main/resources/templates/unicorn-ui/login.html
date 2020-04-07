@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<title>LegoCMS</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+		<meta http-equiv="X-UA-Compatible" content="IE=9" />
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!-- Javascript -->
+		<link rel="stylesheet" type="text/css" href="${res}/unicorn/css/bootstrap.login.min.css"/>
+		<link rel="stylesheet" type="text/css" href="${res}/unicorn/css/unicorn.login.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="${res}/unicorn/js/jquery/jquery.min.js"></script>
+		<script src="${res}/unicorn/js/bootstrap/bootstrap.min.js"></script>
+		<script src="${res}/unicorn/js/jquery/jquery.backstretch.min.js"></script>
+		<script type="text/javascript">
+			if(window.top != window.self){
+				top.location.href = location.href;
+			}
+		</script>
+	</head>
+	<body id="login" style="zoom: 1;">
+		<div class="top-content">
+			<div class="inner-bg">
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-8 col-sm-offset-2 text">
+							<h1>LegoCMS内容管理系统</h1>
+							<div class="description">
+								<p>*推荐使用Opera或IE8以上版本浏览器或Chrome内核浏览器访问本站,若使用360浏览器，请开启极速模式*</p>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6 col-sm-offset-3 form-box">
+							<div class="form-bottom">
+								<p style="color:red">${msg!''}</p>
+								<form role="form" action="${ctx}/admin/user/doLogin" method="post" class="login-form">
+									<div class="form-group">
+										<label class="sr-only" for="form-username">Username</label>
+										<input type="text" name="username"  placeholder="Username..." value="admin" class="form-username form-control" id="form-username">
+									</div>
+									<div class="form-group">
+										<label class="sr-only" for="form-password">Password</label>
+										<input type="password" name="password" placeholder="Password..." value="admin" class="form-password form-control" id="form-password">
+									</div>
+									<button type="submit" class="btn">登 录!</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

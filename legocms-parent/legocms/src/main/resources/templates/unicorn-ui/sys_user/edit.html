@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>LegoCMS</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<#include "../include_page/link.html"/>
+	</head>
+	<body>
+		<div class="content-scorll">
+			<@sysUser code=code>
+			<div class="container-fluid">
+				<div class="widget-box">
+					<div class="widget-title">
+						<span class="icon">
+							<i class="icon-align-justify"></i>
+						</span>
+						<h5><@t.page 'employee.info'/></h5>
+					</div>
+					<div class="widget-content nopadding">
+						<form class="form-horizontal" method="post" action="#" id="basic_validate" novalidate="novalidate" >
+							<div class="control-group">
+								<label class="control-label"><@t.page 'list.code'/></label>
+								<div class="controls">
+									<#if (userInfo.code)??>
+										<input name="code" placeholder="Code" type="text" value="${(userInfo.code)!''}" readonly>
+									<#else>
+										<input name="code" placeholder="Code" type="text">
+									</#if>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label"><@t.page 'list.name'/></label>
+								<div class="controls">
+									<input name="name" placeholder="Name" type="text" value="${(userInfo.name)!''}" required>
+									<div class="invalid-feedback">
+		                                Please provide a valid code
+		                            </div>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label"><@t.page 'list.status'/></label>
+								<div class="controls">
+									<select name="status" class="form-control" required>
+										<@sysUserStatus>
+											<#list userStatus as userState>
+												<#if (userInfo.status.code)??&&userState.code == userInfo.status.code>
+													<option selected="selected" value="${userState.code}">${userState.name}</option>
+												<#else>
+													<option value="${userState.code}">${userState.name}</option>
+												</#if>
+											</#list>
+										</@sysUserStatus>
+									</select>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label"><@t.page 'list.organization'/></label>
+								<div class="controls ">
+									<input type="text" name="organization.name" value="${(userInfo.organization.name)!''}" readonly>
+									<input type="hidden" name="organization.code" value="${(userInfo.organization.code)!''}">
+									<span id="select-org" class="btn btn-secondary"><@t.page 'btn.chose-organization'/></span>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label"><@t.page 'list.role'/></label>
+								<div class="controls">
+			                        <select name="roles" class="multiple" multiple>
+			                        	<@sysRoleSimpleList userCode=(userInfo.code)!>
+			                        		<#list roles as role>
+												<#if role.checked>
+													<option value="${role.code}" selected="selected">${role.name}</option>
+												<#else>
+													<option value="${role.code}">${role.name}</option>
+												</#if>
+											</#list>
+			                        	</@sysRoleSimpleList>
+									</select>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label"><@t.page 'list.create-time'/></label>
+								<div class="controls">
+									<input placeholder="Create Date" type="text" value="${(userInfo.createDate)!''}" readonly>
+								</div>
+							</div>
+							<div class="form-actions">
+								<button type="submit" value="Validate" class="btn btn-primary"><@t.page 'btn.save'/></button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			</@sysUser>
+		</div>
+	</body>
+</html>

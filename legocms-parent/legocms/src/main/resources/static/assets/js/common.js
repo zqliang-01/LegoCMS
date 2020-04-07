@@ -149,7 +149,6 @@ function getTree(treeId) {
 
 function getMessage(code) {
 	var message = messageMap.get(code);
-	console.log(message);
 	if (isEmpty(message)) {
 		var url = ctx + '/admin/message';
 		ajaxSyncGetSubmit(url, "code=" + code, function(date){

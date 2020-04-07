@@ -14,6 +14,7 @@ import com.legocms.core.dto.sys.SysPermissionDetailInfo;
 import com.legocms.core.dto.sys.SysPermissionInfo;
 import com.legocms.core.vo.sys.SysPermissionLangCode;
 import com.legocms.data.assembler.AbstractAssembler;
+import com.legocms.data.dao.sys.ISysPermissionDao;
 import com.legocms.data.dao.sys.ISysPermissionLangDao;
 import com.legocms.data.entities.sys.SysPermission;
 import com.legocms.data.entities.sys.SysPermissionLang;
@@ -24,7 +25,10 @@ public class SysPermissionAssembler extends AbstractAssembler<SysPermissionInfo,
     @Autowired
     private ISysPermissionLangDao permissionLangDao;
 
-    public SysPermissionInfo create(SysPermission entity, String lang) {
+    @Autowired
+    private ISysPermissionDao permissionDao;
+
+    public SysPermissionInfo create(SysPermission entity, String lang, boolean hasChildren) {
         SysPermissionLang moduleLang = permissionLangDao.findBy(entity, lang);
         SysPermissionInfo info = new SysPermissionInfo();
         info.setCode(entity.getCode());
@@ -34,6 +38,7 @@ public class SysPermissionAssembler extends AbstractAssembler<SysPermissionInfo,
         }
         info.setSort(entity.getSort());
         info.setUrl(entity.getUrl());
+        info.setHasChildren(hasChildren);
         return info;
     }
 
@@ -105,13 +110,18 @@ public class SysPermissionAssembler extends AbstractAssembler<SysPermissionInfo,
 
     @Override
     public SysPermissionInfo create(SysPermission entity) {
-        return create(entity, Constants.DEFAULT_LANG);
+        return create(entity, Constants.DEFAULT_LANG, false);
     }
 
-    public List<SysPermissionInfo> create(List<SysPermission> permissions, String lang) {
+    public List<SysPermissionInfo> create(List<SysPermission> permissions, String lang, boolean menu) {
         List<SysPermissionInfo> infos = new ArrayList<SysPermissionInfo>();
         for (SysPermission permission : permissions) {
-            infos.add(create(permission, lang));
+            boolean hasChildren = false;
+            long count = permissionDao.findChildrenCount(permission.getCode(), menu);
+            if (count > 0) {
+                hasChildren = true;
+            }
+            infos.add(create(permission, lang, hasChildren));
         }
         return infos;
     }

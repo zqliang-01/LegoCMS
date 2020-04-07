@@ -1,6 +1,6 @@
 $(function(){
     // left menu
-    /*$('.menu-item').click(function(){
+    $('.menu-item').click(function(){
         let that = $(this);
         $('.menu-item').each(function(e){
             if (that != $(this) && $(this).hasClass('mm-active')) {
@@ -20,7 +20,7 @@ $(function(){
         var menuUrl = that.attr('data-url');
         addTab(menuId, menuName, menuUrl);
         $(document).attr("title", menuName);
-    });*/
+    });
     
     // 向左滚动
     $(".nav-scroll-left").click(function () {
@@ -80,70 +80,71 @@ $(function(){
         else {
     		index = $(".body-tabs li a").eq(0);
     	}
-        selectTag(index);
+        selectTab(index);
     	$(a.attr('href')).remove();
     	li.remove();
     });
 })
 var marginLeft = 0;
+var tabArray = new Array();
+function push(id) {
+	for(var i = 0; i < tabArray.length; i++) {
+		if (tabArray[i] == id) {
+			tabArray.splice(i, 1);
+		}
+	}
+	tabArray.push(id);
+}
+function pop() {
+	tabArray.pop();
+	return tabArray[tabArray.length - 1];
+}
 
 // 添加窗口
 function addTab(menuId, tabName, menuUrl) {
-    if (getTab(menuId + "_tab")) {
+	var tabId = menuId + "-tab";
+	var pageId = menuId + "-page";
+    if (selectTab(tabId)) {
     	return;
     }
-    menuUrl = ctx + menuUrl;
+	push(tabId);
 	var tabHtml = 
     	  '<li class="nav-item">' +
-		       '<a role="tab" class="nav-link" id="' + menuId + '_tab" data-toggle="tab" href="#' + menuId + '_page">' +
+		       '<a role="tab" class="nav-link active show" id="' + tabId + '" data-toggle="tab" href="#' + pageId + '">' +
 		        	'<span>' + tabName + '</span><span class="closetag">&times;</span>' +
 		       '</a>' +
 		  '</li>';
 	var liTab = $(tabHtml);
 	liTab.appendTo($("#tab-home"));
+	liTab.click(function () {
+		push(tabId);
+	});
 	liTab.find(".closetag").click(function() {
-        let index;
         let a = $(this).parent();
         let li = a.parent();
     	closeTabWidth = li[0].offsetWidth;
-    	if (li.index() > 0) {
-    		index = $(".body-tabs li a").eq(li.index() - 1);
-    	}
-        else {
-    		index = $(".body-tabs li a").eq(0);
-    	}
-        selectTag(index);
-    	$(a.attr('href')).remove();
+		push(tabId);
+		selectTab(pop());
+		$('#' + pageId).remove();
     	li.remove();
 	});
-    selectTag(liTab.find('.nav-link'));
 	setNavMarginLeft();
-    addPage(menuId, menuUrl);
-}
-
-function getTab(tabId) {
-	var isContain = false;
-	$("#tab-home").children().each(function (i, e) {
-		if ($(this).find('.nav-link').attr('id') == tabId) {
-			selectTag($('#' + tabId));
-			isContain = true;
-			return false;
-		}
-	});
-	return isContain;
+    addPage(pageId, menuUrl);
 }
 
 // 添加内容页面
-function addPage(menuId, path) {
+function addPage(pageId, path) {
 	var height = $('.app-main__inner').height() - 5;
 	if (height < 300) {
 		height = document.body.scrollHeight;
 	}
-	var iframeHtml = '<iframe onload="this.height=' + height + '" frameborder="0" allowtransparency="true" width="100%" src="' + path + '"></iframe>';
-	var pageHtml = '<div class="tab-pane tabs-animation fade" id="' + menuId + '_page" role="tabpanel">' + iframeHtml + '</div>';
-	var childdiv = $(pageHtml);
-	childdiv.appendTo($(".tab-content"));
-	selectPage(childdiv);
+	var iframe = $('<iframe onload="this.height=' + height + '" frameborder="0" allowtransparency="true" width="100%"></iframe>');
+	var page = $('<div class="tab-pane tabs-animation fade" role="tabpanel"></div>');
+	iframe.attr("src", ctx + path);
+	iframe.appendTo(page);
+	page.attr("id", pageId);
+	page.appendTo($(".tab-content"));
+	selectPage(page);
 }
 
 function setNavMarginLeft() {
@@ -157,14 +158,19 @@ function setNavMarginLeft() {
 	setLeft();
 }
 
-function selectTag(tab) {
+function selectTab(tabId) {
+	var tab;
     $(".body-tabs li a").each(function(i, e) {
-        if ($(this) != tab) {
+        if ($(this).attr('id') != tabId) {
             $(this).removeClass('active');
         }
+		else {
+			tab = $(this);
+			tab.addClass('active');
+			selectPage($(tab.attr('href')));
+		}
     });
-    tab.addClass('active');
-	selectPage($(tab.attr('href')));
+	return tab;
 }
 
 function selectPage(page) {
