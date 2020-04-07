@@ -26,7 +26,6 @@ $(function(){
 	    ajaxSubmit(detailUrl, 'code=' + code, function(data) {
 	    	var organization = data.organization;
 	    	var form = $('#save-organization-form');
-	    	console.log(organization);
 	    	form.resetForm();
 	    	form.setForm(organization);
 	    	form.find("[name=code]").attr("readonly", "");
@@ -36,7 +35,7 @@ $(function(){
 	$('#add').click(function() {
 		var nodes = getTree('organizationTree').getSelectedNodes();
 		if (isEmpty(nodes)) {
-			showMsg('请选择上级授权', 5);
+			showMsg('请选择上级部门', 5);
 			return;
 		}
 		var form = $('#save-organization-form');
@@ -48,7 +47,7 @@ $(function(){
 	$('#delete').click(function() {
 		var code = $('#save-organization-form').find("[name=code]").val();
 		if (isEmpty(code)) {
-			showMsg("请选择需要删除的权限", 5);
+			showMsg("请选择需要删除的部门", 5);
 			return;
 		}
 		window.parent.showConfirm("是否确认删除该部门信息！", function(){
@@ -60,11 +59,9 @@ $(function(){
 		})
 	});
 	
-	ajaxForm('save-organization-form', function() {
-		showMsg('操作成功！', 1, function() {
-			refreshTree();
-			var code = $('#save-organization-form').find("[name=code]").val();
-			refreshForm(code);
-		});
+	ajaxForm($('#save-organization-form'), function() {
+		refreshTree();
+		var code = $('#save-organization-form').find("[name=code]").val();
+		refreshForm(code);
 	});
 })

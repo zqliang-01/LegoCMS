@@ -72,8 +72,8 @@ public class SysPermissionService extends BaseService implements ISysPermissionS
         permission.setMenu(vo.isMenu());
         permission.setUrl(vo.getUrl());
         permission.setSort(vo.getSort());
-        SysPermission parent = permissionDao.findByCode(vo.getParent().getCode());
-        if (!parent.equals(permission)) {
+        SysPermission parent = permissionDao.findByUnsureCode(vo.getParent().getCode());
+        if (parent != null && !parent.equals(permission)) {
             permission.setParent(parent);
         }
         permissionDao.save(permission);

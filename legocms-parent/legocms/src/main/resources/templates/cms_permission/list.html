@@ -8,8 +8,12 @@
     </head>
     <body>
        	<div class="row">
-			<div class="main-card card col-md-3">
-				<ul id="permissionTree" class="ztree"></ul>
+			<div class="col-md-3">
+				<div class="main-card card">
+					<div class="card-body">
+						<ul id="permissionTree" class="ztree"></ul>
+					</div>
+				</div>
 			</div>
        		<div class="col-md-9">
 				<div class="main-card card">
@@ -51,7 +55,7 @@
 								<div class="col-sm-10">
 									<select id="menu" name="menu" class="form-control custom-select" required>
 										<option value="true"><@t.page 'select-ture'/></option>
-										<option value="false">false</option>
+										<option value="false"><@t.page 'select-false'/></option>
 									</select>
 									<div class="invalid-feedback">
                                         Please provide a valid menu

@@ -1,6 +1,6 @@
-function ajaxForm(formId, successFun){
-	$('#' + formId).submit(function(e){
-		var form = $(this);
+function ajaxForm(form, successFun){
+	console.log(form);
+	form.submit(function(e){
 		if (form[0].checkValidity() == false) {
 			form.addClass('was-validated');
 			return;
@@ -9,49 +9,25 @@ function ajaxForm(formId, successFun){
 		var data = form.serialize();
 		ajaxSubmit(url, data, function(data) {
 			form.removeClass('was-validated');
-			showMsg("操作成功！", 1);
-			if (!isEmpty(successFun)) {
-				successFun(data);
-			}
+			showMsg("操作成功！", 1, function(){
+				if (!isEmpty(successFun)) {
+					successFun(data);
+				}
+			});
 		});
 	});
 }
 
 function ajaxSubmit(url, data, successFun, errorFun){
-	ajaxPost(url, data, successFun, errorFun, true);
+	ajaxRequest(url, data, successFun, errorFun, true, 'POST');
 }
 
 function ajaxSyncSubmit(url, data, successFun, errorFun){
-	ajaxPost(url, data, successFun, errorFun, false);
+	ajaxRequest(url, data, successFun, errorFun, false, 'POST');
 }
 
-function ajaxTextSubmit(url, data, successFun, errorFun) {
-	$.ajax({
-		url: url ,		//发送请求的地址
-		data: data,		//要传递到服务器端的数据
-		type: "post",	//请求方式 ("POST" 或 "GET")， 默认为 "GET"
-		async: true,	//请求默认为异步请求true
-		cache: false,	//设置为 false 将不缓存此页面
-		dataType: "text",	//预期服务器返回的数据类型
-		success: function(data){
-			if(isEmpty(successFun)){
-				console.log(date);
-				showMsg("未定义回调方法！", 5);
-			}
-			else {
-				successFun(data);
-			}
-		},	//请求成功后的回调函数
-		error: function(date){
-			if(isEmpty(errorFun)){
-				console.log(date);
-				showMsg("系统发生未知异常……", 5);
-			}
-			else {
-				errorFun(data);
-			}
-		}
-	});
+function ajaxSyncGetSubmit(url, data, successFun, errorFun){
+	ajaxRequest(url, data, successFun, errorFun, false, 'GET');
 }
 
 function ajaxFileSubmit(url, data, successFun, errorFun) {
@@ -98,14 +74,14 @@ function ajaxFileSubmit(url, data, successFun, errorFun) {
 	});
 }
 
-function ajaxPost(url, data, successFun, errorFun, async){
+function ajaxRequest(url, data, successFun, errorFun, async, method){
 	if(null==async ||'boolean'!= typeof(async)){
 		async=true;
 	}
 	$.ajax({
 		url: url ,		//发送请求的地址
 		data: data,		//要传递到服务器端的数据
-		type: "post",	//请求方式 ("POST" 或 "GET")， 默认为 "GET"
+		type: method,	//请求方式 ("POST" 或 "GET")
 		async: async,	//请求默认为异步请求true
 		cache: false,	//设置为 false 将不缓存此页面
 		dataType: "json",	//预期服务器返回的数据类型

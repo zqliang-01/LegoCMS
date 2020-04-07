@@ -1,12 +1,6 @@
 $(function() {
 	var url = ctx + "/admin/directive/sysRoleList";
 	initMyPagination("MyPagination-role-list", "Template-role-list", url);
-
-	ajaxForm('save-role-form', function() {
-		$('#save-role-form').find("[name=code]").attr("readonly", "");
-		myPagination.reload('MyPagination-role-list');
-		$("#role-modal .close").click();
-	});
 })
 function permission(code) {
 	var url = ctx + "/admin/directive/sysPermissionCheckTree";
@@ -16,24 +10,28 @@ function permission(code) {
 			$.each(nodes, function(index,value){
 				permissionCodes.push(value.code);
 			});
-			console.log(permissionCodes);
 			var url = ctx + "/admin/role/authorize";
 			ajaxSubmit(url, { permisisons : permissionCodes, roleCode : code});
 		});
 	});
 }
 function edit(code) {
-	var url = ctx + "/admin/directive/sysRole";
-	ajaxSubmit(url, "code=" + code, function(data) {
-		var form = $('#save-role-form');
-		form.resetForm();
-		if (data.role) {
-			form.setForm(data.role);
-	    	form.find("[name=code]").attr("readonly", "");
-		}
-		else {
-			form.find("input[name=code]").removeAttr("readonly");
-		}
+	window.parent.showFormDialog('角色管理', $('#role-modal'), function(form) {
+		var url = ctx + "/admin/directive/sysRole";
+		ajaxSubmit(url, "code=" + code, function(data) {
+			form.resetForm();
+			if (data.role) {
+				form.setForm(data.role);
+		    	form.find("[name=code]").attr("readonly", "");
+			}
+			else {
+				form.find("input[name=code]").removeAttr("readonly");
+			}
+		});
+	},
+	function(form) {
+		form.submit();
+		myPagination.reload('MyPagination-role-list');
 	});
 }
 function del(code) {

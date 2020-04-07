@@ -1,6 +1,7 @@
 
 /**----------------------------多窗口控制----------------------------------**/
 var marginLeft = 0;
+var messageMap = new Map();
 
 // 添加窗口
 function addTab(menuId, tabName, menuUrl) {
@@ -102,6 +103,9 @@ function setLeft() {
 
 function showMsg(msg, type, callback){
 	layer.closeAll();
+	if (isEmpty(msg)) {
+		return;
+	}
 	if (isEmpty(type)) {
 	    layer.msg(msg, {time: 1000});
 	}
@@ -114,23 +118,31 @@ function showMsg(msg, type, callback){
 }
 
 function showConfirm(msg, callback) {
-	layer.confirm(msg, function(index){
-		callback();
-		layer.close(index);
-	});
-}
-
-function showFrame(data, callback) {
-	layer.open({
-		type: 1,
-		skin : 'layui-layer-rim', // 加上边框
-		area : [ '420px', '500px' ], // 宽高
-		content : content,
-		btn: ['确定', '取消'],
-		yes: function(index, layero){
-			console.log(layero);
+	if (isNotEmpty(msg)) {
+		layer.confirm(msg, function(index){
 			callback();
 			layer.close(index);
+		});
+	}
+}
+
+function showFormDialog(title, id, init, callback) {
+	var form;
+	layer.open({
+		type: 1,
+		title: title,
+		area : [ '420px' ],
+		content : id.html(),
+		success: function(layero, index) {
+			form = $(id.attr('data-form'));
+			init(form);
+		},
+		btn: ['确定', '取消'],
+		yes: function(index, layero){
+			ajaxForm(form, function() {
+				layer.close(index);
+			});
+			callback(form);
 		}
 	});
 }
@@ -206,4 +218,23 @@ function isNotEmpty(value) {
 
 function getTree(treeId) {
 	return $.fn.zTree.getZTreeObj(treeId);
+}
+
+function getMessage(code) {
+	var message = messageMap.get(code);
+	console.log(message);
+	if (isEmpty(message)) {
+		var url = ctx + '/admin/message';
+		ajaxSyncGetSubmit(url, "code=" + code, function(date){
+			message = date.result;
+			if (isNotEmpty(message)) {
+				messageMap.set(code, message);
+			}
+			else {
+				message = 'error message code:' + code;
+			}
+		});
+	}
+	console.log(parent.messageMap);
+	return message;
 }

@@ -21,7 +21,7 @@
 		                 	<button class="btn btn-primary query"><@t.page 'btn-query'/></button>
 		                 </div>
 		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
-		                 	<button class="btn btn-info"onclick="edit()" data-toggle="modal" data-target="#role-modal"><@t.page 'btn-create'/></button>
+		                 	<button class="btn btn-info"onclick="edit()"><@t.page 'btn-create'/></button>
 		                 </div>
                      </div>
                 </div>
@@ -56,7 +56,7 @@
 					                                <td>{$T.Result.name}</td>
 					                                <td class="text-center">{$T.Result.createDate}</td>
 					                                <td class="text-center">
-					                                	<button onclick="edit('{$T.Result.code}')" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#role-modal"><@t.page 'btn-edit'/></button>
+					                                	<button onclick="edit('{$T.Result.code}')" class="btn btn-primary btn-sm"><@t.page 'btn-edit'/></button>
 					                                	<button onclick="permission('{$T.Result.code}')" class="btn btn-primary btn-sm"><@t.page 'btn-authorization'/></button>
 					                                	<button onclick="del('{$T.Result.code}')" class="btn btn-danger btn-sm"><@t.page 'btn-delete'/></button>
 					                                </td>
@@ -72,7 +72,6 @@
 	            </div>
 	        </div>
 	    </div>
-	    <!-- modal -->
-        <#include "edit-modal.html"/>
     </body>
+    <#include "edit-modal.html"/>
 </html>

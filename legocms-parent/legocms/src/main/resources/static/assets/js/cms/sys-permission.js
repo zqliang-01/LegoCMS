@@ -59,11 +59,9 @@ $(function(){
 		})
 	});
 	
-	ajaxForm('save-permission-form', function() {
-		showMsg('操作成功！', 1, function() {
-			refreshTree();
-			var code = $('#save-permission-form').find("[name=code]").val();
-			refreshForm(code);
-		});
+	ajaxForm($('#save-permission-form'), function() {
+		refreshTree();
+		var code = $('#save-permission-form').find("[name=code]").val();
+		refreshForm(code);
 	});
 });

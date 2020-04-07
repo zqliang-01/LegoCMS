@@ -10328,10 +10328,10 @@ jQuery.fn.setForm = function(jsonValue, prename) {
              });
     	}
     	else if($oinput.attr("type")== "textarea"){//多行文本框
-    		obj.find("[name='" + prename +  name + "']").html(ival);
+    		obj.find("[name='" + prename + name + "']").html(ival);
     	}
     	else{
-            obj.find("[name='" + prename +  name + "']").val(ival + ''); 
+            obj.find("[name='" + prename + name + "']").val(ival + '');
         }
    });
 };

@@ -6,7 +6,7 @@
 	<#include "../include_page/link.html"/>
 	<script type="text/javascript">
 		$(function(){
-			ajaxForm('save-user-form', function() {
+			ajaxForm($('#save-user-form'), function() {
 		    	$('#save-user-form').find("[name=code]").attr("readonly", "");
 			});
 			$('#select-org').click(function(){

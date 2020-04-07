@@ -7,6 +7,8 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +21,7 @@ import com.legocms.core.annotation.RequiresPermissions;
 import com.legocms.core.dto.TypeCheckInfo;
 import com.legocms.core.dto.TypeInfo;
 import com.legocms.core.vo.sys.SysPermissionLangCode;
+import com.legocms.core.web.JsonResponse;
 import com.legocms.core.web.ViewResponse;
 import com.legocms.core.web.session.SessionController;
 import com.legocms.web.AdminView;
@@ -29,6 +32,9 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/admin")
 public class AdminInitController extends SessionController {
+
+    @Autowired
+    private MessageSource messageSource;
 
     @GetMapping
     @RequiresPermissions("admin")
@@ -61,5 +67,13 @@ public class AdminInitController extends SessionController {
             localeResolver.setLocale(request, response, StringUtils.parseLocaleString(lang));
         }
         return ViewResponse.redirect(AdminView.ROOT);
+    }
+
+    @RequiresPermissions(skip = true)
+    @GetMapping("/message")
+    public JsonResponse message(String code, HttpServletRequest request) {
+        Locale locale = RequestContextUtils.getLocale(request);
+        String message = messageSource.getMessage(code, null, locale);
+        return JsonResponse.ok(message);
     }
 }
