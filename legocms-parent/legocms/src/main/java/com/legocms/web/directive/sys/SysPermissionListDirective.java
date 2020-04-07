@@ -19,6 +19,7 @@ public class SysPermissionListDirective extends AbstractTemplateDirective {
     @Autowired
     private ISysPermissionService permissionService;
 
+    @Override
     public void execute(RenderHandler handler) throws IOException, Exception {
         String code = handler.getString("code");
         boolean menu = handler.getBoolean("menu", true).booleanValue();

@@ -16,6 +16,7 @@ import freemarker.template.TemplateModel;
 
 public abstract class BaseTemplateDirective implements TemplateDirectiveModel, Directive, HttpDirective {
     protected final Logger log = LoggerFactory.getLogger(getClass());
+    protected static final String KEY_PAGE_NAME = "page";
     private String name;
 
     @Override

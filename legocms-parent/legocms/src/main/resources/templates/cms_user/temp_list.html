@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>LegoCMS</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="Content-Language" content="en">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+        <meta name="description" content="LegoCMS">
+        <meta name="msapplication-tap-highlight" content="no">
+        <link rel="stylesheet" href="${res}/assets/css/main.css">
+        <link href="assets/js/myPagination/jqtransform.css" />
+        <link href="assets/css/main.css" />
+        <link href="assets/js/myPagination/messageBox.css" />
+        <link href="assets/js/myPagination/page.css" />
+
+        <script type="text/javascript" src="${res}/assets/js/jquery.js"></script>
+        <script type="text/javascript" src="${res}/assets/js/jquery.js"></script>
+        <script type="text/javascript" src="${res}/assets/js/layer/layer.js"></script>
+        <script type="text/javascript" src="${res}/assets/js/myPagination/jquery.myPagination6.0.js"></script>
+        <script type="text/javascript" src="${res}/assets/js/myPagination/messageBox.js"></script>
+        <script type="text/javascript" src="${res}/assets/js/myPagination/jquery.jqtransform.js"></script>
+        <script type="text/javascript" src="${res}/assets/js/myPagination/jquery-jtemplates.js"></script>
+        <script type="text/javascript" src="${res}/assets/js/myPagination/myPagination.js"></script>
+    </head>
+    <body>
+        <div class="app-main__inner">
+        	<div class="app-page-title">
+                <div class="page-title-wrapper">
+                 <form onsubmit="return false;">
+                     <div class="form-inline">
+		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+		                 	<input name="email" id="exampleEmail22" placeholder="name" type="text" class="form-control">
+		                 </div>
+		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+		                 	<input name="password" id="examplePassword22" placeholder="code" type="password" class="form-control">
+		                 </div>
+		                 <button class="btn btn-primary">查 询</button>
+                     </div>
+                 </form>
+                </div>
+            </div>
+	        <div class="row">
+	            <div class="col-md-12">
+	                <div class="main-card mb-3 card">
+	                    <div class="card-header">Active Users
+	                        <div class="btn-actions-pane-right">
+	                            <div role="group" class="btn-group-sm btn-group">
+	                                <button class="active btn btn-focus">Last Week</button>
+	                                <button class="btn btn-focus">All Month</button>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="table-responsive">
+	                        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+	                            <thead>
+	                                <tr>
+	                                    <th class="text-center">#</th>
+	                                    <th>Name</th>
+	                                    <th class="text-center">City</th>
+	                                    <th class="text-center">Status</th>
+	                                    <th class="text-center">Actions</th>
+	                                </tr>
+	                            </thead>
+	                            <tbody>
+	                                <tr>
+	                                    <td class="text-center text-muted">#345</td>
+	                                    <td>
+	                                        <div class="widget-content p-0">
+	                                            <div class="widget-content-wrapper">
+	                                                <div class="widget-content-left mr-3">
+	                                                    <div class="widget-content-left">
+	                                                        <img width="40" class="rounded-circle" src="${res}/assets/images/avatars/4.jpg" alt="">
+	                                                    </div>
+	                                                </div>
+	                                                <div class="widget-content-left flex2">
+	                                                    <div class="widget-heading">John Doe</div>
+	                                                    <div class="widget-subheading opacity-7">Web Developer</div>
+	                                                </div>
+	                                            </div>
+	                                        </div>
+	                                    </td>
+	                                    <td class="text-center">Madrid</td>
+	                                    <td class="text-center">
+	                                        <div class="badge badge-warning">Pending</div>
+	                                    </td>
+	                                    <td class="text-center">
+	                                        <button type="button" id="PopoverCustomT-1" class="btn btn-primary btn-sm">Details</button>
+	                                    </td>
+	                                </tr>
+	                                <tr>
+	                                    <td class="text-center text-muted">#347</td>
+	                                    <td>
+	                                        <div class="widget-content p-0">
+	                                            <div class="widget-content-wrapper">
+	                                                <div class="widget-content-left mr-3">
+	                                                    <div class="widget-content-left">
+	                                                        <img width="40" class="rounded-circle" src="${res}/assets/images/avatars/3.jpg" alt="">
+	                                                    </div>
+	                                                </div>
+	                                                <div class="widget-content-left flex2">
+	                                                    <div class="widget-heading">Ruben Tillman</div>
+	                                                    <div class="widget-subheading opacity-7">Etiam sit amet orci eget</div>
+	                                                </div>
+	                                            </div>
+	                                        </div>
+	                                    </td>
+	                                    <td class="text-center">Berlin</td>
+	                                    <td class="text-center">
+	                                        <div class="badge badge-success">Completed</div>
+	                                    </td>
+	                                    <td class="text-center">
+	                                        <button type="button" id="PopoverCustomT-2" class="btn btn-primary btn-sm">Details</button>
+	                                    </td>
+	                                </tr>
+	                                <tr>
+	                                    <td class="text-center text-muted">#321</td>
+	                                    <td>
+	                                        <div class="widget-content p-0">
+	                                            <div class="widget-content-wrapper">
+	                                                <div class="widget-content-left mr-3">
+	                                                    <div class="widget-content-left">
+	                                                        <img width="40" class="rounded-circle" src="${res}/assets/images/avatars/2.jpg" alt="">
+	                                                    </div>
+	                                                </div>
+	                                                <div class="widget-content-left flex2">
+	                                                    <div class="widget-heading">Elliot Huber</div>
+	                                                    <div class="widget-subheading opacity-7">Lorem ipsum dolor sic</div>
+	                                                </div>
+	                                            </div>
+	                                        </div>
+	                                    </td>
+	                                    <td class="text-center">London</td>
+	                                    <td class="text-center">
+	                                        <div class="badge badge-danger">In Progress</div>
+	                                    </td>
+	                                    <td class="text-center">
+	                                        <button type="button" id="PopoverCustomT-3" class="btn btn-primary btn-sm">Details</button>
+	                                    </td>
+	                                </tr>
+	                                <tr>
+	                                    <td class="text-center text-muted">#55</td>
+	                                    <td>
+	                                        <div class="widget-content p-0">
+	                                            <div class="widget-content-wrapper">
+	                                                <div class="widget-content-left mr-3">
+	                                                    <div class="widget-content-left">
+	                                                        <img width="40" class="rounded-circle" src="${res}/assets/images/avatars/1.jpg" alt="">
+	                                                    </div>
+	                                                </div>
+	                                                <div class="widget-content-left flex2">
+	                                                    <div class="widget-heading">Vinnie Wagstaff</div>
+	                                                    <div class="widget-subheading opacity-7">UI Designer</div>
+	                                                </div>
+	                                            </div>
+	                                        </div>
+	                                    </td>
+	                                    <td class="text-center">Amsterdam</td>
+	                                    <td class="text-center">
+	                                        <div class="badge badge-info">On Hold</div>
+	                                    </td>
+	                                    <td class="text-center">
+	                                        <button type="button" id="PopoverCustomT-4" class="btn btn-primary btn-sm">Details</button>
+	                                    </td>
+	                                </tr>
+	                            </tbody>
+	                        </table>
+	                    </div>
+	                    <div class="d-block text-center card-footer widget-content-rigth">
+	                    	<nav class="" aria-label="Page navigation example">
+	                    		<span>共50条</span>
+	                            <ul class="pagination">
+	                                <li class="page-item">
+	                                	<a href="javascript:void(0);" class="page-link" aria-label="Previous">
+	                                		<span aria-hidden="true">«</span>
+	                                		<span class="sr-only">Previous</span>
+	                                	</a>
+	                                </li>
+	                                <li class="page-item"><a href="javascript:void(0);" class="page-link">1</a></li>
+	                                <li class="page-item active"><a href="javascript:void(0);" class="page-link">2</a></li>
+	                                <li class="page-item"><a href="javascript:void(0);" class="page-link">3</a></li>
+	                                <li class="page-item">
+	                                	<a href="javascript:void(0);" class="page-link" aria-label="Next">
+	                                 	<span aria-hidden="true">»</span>
+	                                 	<span class="sr-only">Next</span>
+	                                	</a>
+	                                </li>
+	                            </ul>
+                            </nav>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+    </body>
+</html>

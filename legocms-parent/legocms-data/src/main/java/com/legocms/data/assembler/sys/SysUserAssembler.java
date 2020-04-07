@@ -22,6 +22,7 @@ public class SysUserAssembler extends AbstractAssembler<SysUserInfo, SysUser> {
         userInfo.setCode(user.getCode());
         userInfo.setName(user.getName());
         userInfo.setPassword(user.getPassword());
+        userInfo.setCreateDate(user.getCreateDate());
         SysOrganization organization = user.getOrganization();
         userInfo.setOrganization(new TypeInfo(organization.getCode(), organization.getName()));
         userInfo.setPermissions(getPermissions(user.getRoles()));

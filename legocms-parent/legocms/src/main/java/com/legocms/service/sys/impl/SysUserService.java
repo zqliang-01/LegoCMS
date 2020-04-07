@@ -3,7 +3,9 @@ package com.legocms.service.sys.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.legocms.core.dto.Page;
 import com.legocms.core.dto.sys.SysUserInfo;
+import com.legocms.data.assembler.PageAssemler;
 import com.legocms.data.assembler.sys.SysUserAssembler;
 import com.legocms.data.dao.sys.ISysUserDao;
 import com.legocms.data.entities.sys.SysUser;
@@ -25,5 +27,11 @@ public class SysUserService extends BaseService implements ISysUserService {
             return null;
         }
         return userAssembler.create(user);
+    }
+
+    @Override
+    public Page<SysUserInfo> findBy(String code, String name, int pageIndex, int pageSize) {
+        Page<SysUser> page = userDao.findBy(code, name, pageIndex, pageSize);
+        return PageAssemler.createInfos(page, SysUserAssembler.class);
     }
 }

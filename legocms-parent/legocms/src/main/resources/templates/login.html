@@ -21,8 +21,6 @@
             .btn-primary {width: 100%;margin-top: 10px;}
         </style>
         <link rel="stylesheet" href="${res}/assets/css/main.css" />
-        <link rel="stylesheet" href="${res}/assets/js/layui/css/layui.css" />
-        <script type="text/javascript" src="${res}/assets/js/layui/layui.js"></script>
         <script type="text/javascript" src="${res}/assets/js/jquery.js"></script>
         <script type="text/javascript" src="${res}/assets/js/submit.js"></script>
 	</head>
@@ -33,7 +31,7 @@
             </div>
             <div class="card mb-3 widget-content">
                 <div class="widget-content-wrapper">
-                    <form id="login-form" action="${base}/admin/user/doLogin" method="post">
+                    <form id="login-form" action="${ctx}/admin/user/doLogin" method="post">
                 		<div class="input-group"><a>${msg!''}</a></div>
                         <div class="input-group">
                             <div class="input-group-prepend"><span class="input-group-text">@</span></div>

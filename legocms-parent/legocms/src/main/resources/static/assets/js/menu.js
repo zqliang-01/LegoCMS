@@ -65,9 +65,8 @@ $(function(){
 
     // 添加内容页面
     function addPage(menuId, path) {
-    	var width = $('.app-main__inner').width() - 5;
     	var height = $('.app-main__inner').height() - 5;
-    	var iframeHtml = '<iframe onload="this.height=' + height + '" frameborder="0" allowtransparency="true" width="' + width + 'px" src="' + path + '"></iframe>';
+    	var iframeHtml = '<iframe onload="this.height=' + height + '" frameborder="0" allowtransparency="true" width="100%" src="' + path + '"></iframe>';
     	var pageHtml = '<div class="tab-pane tabs-animation fade" id="' + menuId + '_page" role="tabpanel">' + iframeHtml + '</div>';
     	var childdiv = $(pageHtml);
     	childdiv.appendTo($(".tab-content"));
@@ -85,7 +84,7 @@ $(function(){
     	setLeft();
     }
 
-    var selectTag = function(tab) {
+    function selectTag(tab) {
         $(".body-tabs li a").each(function(i, e) {
             if ($(this) != tab) {
                 $(this).removeClass('active');
@@ -95,7 +94,7 @@ $(function(){
     	selectPage($(tab.attr('href')));
     }
     
-    var selectPage = function(page) {
+    function selectPage(page) {
     	$(".tab-content .tab-pane").each(function() {
     		if ($(this) != page) {
                 $(this).removeClass('active');
@@ -107,7 +106,7 @@ $(function(){
     }
     
     // 设置焦点
-    var setLeft = function() {
+    function setLeft() {
     	$(".body-tabs").css("left", -marginLeft + "px");
     }
     

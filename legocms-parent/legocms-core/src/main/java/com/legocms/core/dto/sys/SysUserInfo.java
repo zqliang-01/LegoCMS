@@ -1,6 +1,7 @@
 package com.legocms.core.dto.sys;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.legocms.core.dto.Dto;
@@ -17,6 +18,7 @@ public class SysUserInfo extends Dto {
     private String name;
     private String password;
     private TypeInfo organization;
+    private Date createDate;
     private List<String> permissions = new ArrayList<String>();
 
     public void addPermission(String permission) {

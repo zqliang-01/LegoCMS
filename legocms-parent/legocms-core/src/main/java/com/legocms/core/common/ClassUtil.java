@@ -271,18 +271,22 @@ public class ClassUtil extends ClassUtils {
 
     @SuppressWarnings("unchecked")
     public static <T> T getClassInstance(Class<T> interfaceClazz, Class<?> implClazz) {
-        try {
-            if (isAssignable(implClazz, interfaceClazz)) {
-                return (T) implClazz.newInstance();
-            }
-        }
-        catch (Exception e) {
-            throw new CoreException("加载类[" + implClazz + "]出错", e);
+        if (isAssignable(implClazz, interfaceClazz)) {
+            return (T) getInstance(implClazz);
         }
         throw new CoreException("加载类[" + implClazz + "]非继承于[" + interfaceClazz + "]");
     }
 
     public static <T> T getClassInstance(Class<T> interfaceClazz, String className) {
         return getClassInstance(interfaceClazz, getClass(className));
+    }
+
+    public static <T> T getInstance(Class<T> clazz) {
+        try {
+            return clazz.newInstance();
+        }
+        catch (Exception e) {
+            throw new CoreException("加载类[" + clazz + "]出错", e);
+        }
     }
 }

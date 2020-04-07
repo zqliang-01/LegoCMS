@@ -5552,7 +5552,8 @@ input[type="button"].btn-block {
     display: flex;
     padding-left: 0;
     list-style: none;
-    border-radius: .25rem
+    border-radius: .25rem;
+    float: right;
 }
 
 .page-link {

@@ -38,11 +38,7 @@ public abstract class AbstractExceptionHandler {
         if (StringUtil.isBlank(errorMsg)) {
             errorMsg = rootException.getClass().getSimpleName();
         }
-        Class<?> returnType = handlerMethod.getMethod().getReturnType();
-        if (returnType == JsonResponse.class) {
-            return jsonResponse(response, errorMsg, errorCode);
-        }
-        return ViewResponse.error(errorCode, errorMsg, getPage500());
+        return response(response, handlerMethod, errorCode, errorMsg);
     }
 
     @ExceptionHandler(value = ServiceException.class)

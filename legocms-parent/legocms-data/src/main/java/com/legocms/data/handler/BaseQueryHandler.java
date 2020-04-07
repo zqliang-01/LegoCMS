@@ -47,7 +47,8 @@ public class BaseQueryHandler<T> {
         return query.getResultList();
     }
 
-    protected static <T> T uniqueOrNull(List<T> objects) {
+    @SuppressWarnings("hiding")
+    private <T> T uniqueOrNull(List<T> objects) {
         int size = objects.size();
         if (size >= 2) {
             throw new ServiceException("最多允许一个结果, 实际结果数: " + size);
@@ -58,7 +59,7 @@ public class BaseQueryHandler<T> {
         return objects.get(0);
     }
 
-    protected void setParameter(Map<String, ?> values, Query query) {
+    private void setParameter(Map<String, ?> values, Query query) {
         if (values != null) {
             for (Map.Entry<String, ?> entry : values.entrySet()) {
                 String paramName = entry.getKey();

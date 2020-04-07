@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController;
 import org.springframework.web.method.HandlerMethod;
 
-import com.legocms.core.annotation.LoginCheckAvoided;
 import com.legocms.core.annotation.RequiresPermissions;
 import com.legocms.core.common.ConstantEnum;
 import com.legocms.core.exception.BusinessException;
@@ -41,9 +40,6 @@ public abstract class AbstractInterceptor extends SessionController implements I
             log.debug("Controller: {}", controller.getClassName());
             log.debug("method: {}", handlerMethod.getMethod().getName());
             log.debug("Param: {}", params);
-            if (handlerMethod.hasMethodAnnotation(LoginCheckAvoided.class)) {
-                return true;
-            }
             if (preprocess(request, response, handlerMethod)) {
                 checkPermission(handlerMethod);
                 return true;

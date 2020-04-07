@@ -8,10 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.session.web.http.CookieHttpSessionIdResolver;
-import org.springframework.session.web.http.CookieSerializer;
-import org.springframework.session.web.http.DefaultCookieSerializer;
-import org.springframework.session.web.http.HttpSessionIdResolver;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -51,7 +47,7 @@ public class LegoWebConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    CorsFilter corsFilter() {
+    public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", buildConfig());
         return new CorsFilter(source);
@@ -64,20 +60,6 @@ public class LegoWebConfig implements WebMvcConfigurer {
         result.addAllowedMethod(CorsConfiguration.ALL);
         result.setAllowCredentials(true);
         result.setMaxAge(3600L);
-        return result;
-    }
-
-    @Bean
-    CookieSerializer cookieSerializer() {
-        DefaultCookieSerializer result = new DefaultCookieSerializer();
-        result.setCookieName("HugeToken");
-        return result;
-    }
-
-    @Bean
-    HttpSessionIdResolver httpSessionIdResolver(CookieSerializer cookieSerializer) {
-        CookieHttpSessionIdResolver result = new CookieHttpSessionIdResolver();
-        result.setCookieSerializer(cookieSerializer);
         return result;
     }
 

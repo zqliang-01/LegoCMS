@@ -3,7 +3,6 @@ package com.legocms.data.handler;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -11,6 +10,7 @@ import java.util.TreeSet;
 
 import com.legocms.core.common.CollectionUtil;
 import com.legocms.core.common.StringUtil;
+import com.legocms.core.dto.JsonResponse;
 
 /**
   * 指令处理器基类
@@ -87,7 +87,7 @@ public abstract class BaseFreemarkerHandler implements RenderHandler {
      * String数组类型参数
      */
     public static final String PARAMETER_TYPE_STRINGARRAY = "stringArray";
-    protected Map<String, Object> map = new LinkedHashMap<>();
+    protected JsonResponse map = JsonResponse.ok();
     protected List<Map<String, Object>> parameterList;
     protected boolean regristerParameters;
     protected boolean renderd = false;

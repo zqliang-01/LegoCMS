@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.persistence.EntityManager;
 
+import com.legocms.core.dto.Page;
 import com.legocms.data.base.BaseEntity;
 
 public class QueryHandler<T extends BaseEntity> extends BaseQueryHandler<T> {
@@ -87,8 +88,8 @@ public class QueryHandler<T extends BaseEntity> extends BaseQueryHandler<T> {
 
     public String getCountSql() {
         String sql = this.sqlBuilder.toString();
-        sql = sql.substring(sql.toLowerCase().indexOf(" FROM "));
-        int orderIndex = sql.toLowerCase().indexOf(" ORDER BY ");
+        sql = sql.substring(sql.toUpperCase().indexOf(" FROM "));
+        int orderIndex = sql.toUpperCase().indexOf(" ORDER BY ");
         if (-1 != orderIndex) {
             sql = sql.substring(0, orderIndex);
         }
@@ -97,6 +98,13 @@ public class QueryHandler<T extends BaseEntity> extends BaseQueryHandler<T> {
 
     public List<T> findList() {
         return findHQL(this.sqlBuilder.toString(), this.param);
+    }
+
+    public Page<T> findPage(int pageIndex, int pageSize) {
+        int firstResult = (pageIndex - 1) * pageSize;
+        List<T> result = limitedFindHQL(this.sqlBuilder.toString(), this.param, firstResult, pageSize);
+        long count = findCount(getCountSql(), this.param);
+        return new Page<T>(result, pageIndex, pageSize, count);
     }
 
     public List<T> findSqlList() {
