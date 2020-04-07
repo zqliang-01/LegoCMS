@@ -11,6 +11,8 @@ CALL addCmsSimpleType('file', '文件', 'TemplateType', 1);
 CALL addCmsSimpleType('dir', '目录', 'TemplateType', 2);
 CALL addCmsSimpleType('file', '文件', 'PlaceType', 1);
 CALL addCmsSimpleType('dir', '目录', 'PlaceType', 2);
+CALL addCmsSimpleType('file', '文件', 'FileType', 1);
+CALL addCmsSimpleType('dir', '目录', 'FileType', 2);
 
 CALL addOrganization('root', '根部门', null);
 
@@ -93,7 +95,21 @@ CALL addPermission('site-delete', 'site', null, null, 0, 2);
 CALL addPermissionLang('zh', '删除', 'site-delete');
 CALL addPermissionLang('en', 'delete', 'site-delete');
 
-CALL addPermission('template', 'site-maintenance', 'pe-7s-note', '/admin/template/init', 1, 2);
+
+CALL addPermission('domain', 'site-maintenance', 'pe-7s-display2', '/admin/domain/init', 1, 2);
+CALL addPermissionLang('zh', '域名管理', 'domain');
+CALL addPermissionLang('en', 'Domain Management', 'domain');
+
+CALL addPermission('domain-edit', 'domain', null, null, 0, 1);
+CALL addPermissionLang('zh', '修改', 'domain-edit');
+CALL addPermissionLang('en', 'edit', 'domain-edit');
+
+CALL addPermission('domain-delete', 'domain', null, null, 0, 2);
+CALL addPermissionLang('zh', '删除', 'domain-delete');
+CALL addPermissionLang('en', 'delete', 'domain-delete');
+
+
+CALL addPermission('template', 'site-maintenance', 'pe-7s-note', '/admin/template/init', 1, 3);
 CALL addPermissionLang('zh', '模板管理', 'template');
 CALL addPermissionLang('en', 'Template Management', 'template');
 
@@ -105,8 +121,8 @@ CALL addPermission('template-delete', 'template', null, null, 0, 2);
 CALL addPermissionLang('zh', '删除', 'template-delete');
 CALL addPermissionLang('en', 'delete', 'template-delete');
 
-CALL addPermission('place', 'site-maintenance', 'pe-7s-ribbon', '/admin/place/init', 1, 3);
-CALL addPermissionLang('zh', '模板片段管理', 'place');
+CALL addPermission('place', 'site-maintenance', 'pe-7s-ribbon', '/admin/place/init', 1, 4);
+CALL addPermissionLang('zh', '页面片段管理', 'place');
 CALL addPermissionLang('en', 'Place Management', 'place');
 
 CALL addPermission('place-edit', 'place', null, null, 0, 1);
@@ -116,6 +132,18 @@ CALL addPermissionLang('en', 'edit', 'place-edit');
 CALL addPermission('place-delete', 'place', null, null, 0, 2);
 CALL addPermissionLang('zh', '删除', 'place-delete');
 CALL addPermissionLang('en', 'delete', 'place-delete');
+
+CALL addPermission('file', 'site-maintenance', 'pe-7s-ribbon', '/admin/file/init', 1, 5);
+CALL addPermissionLang('zh', '站点文件管理', 'file');
+CALL addPermissionLang('en', 'File Management', 'file');
+
+CALL addPermission('file-edit', 'file', null, null, 0, 1);
+CALL addPermissionLang('zh', '修改', 'file-edit');
+CALL addPermissionLang('en', 'edit', 'file-edit');
+
+CALL addPermission('file-delete', 'file', null, null, 0, 2);
+CALL addPermissionLang('zh', '删除', 'file-delete');
+CALL addPermissionLang('en', 'delete', 'file-delete');
 
 CALL addRolePermission('super', 'root');
 CALL addRolePermission('super', 'admin');
@@ -135,9 +163,15 @@ CALL addRolePermission('super', 'site-maintenance');
 CALL addRolePermission('super', 'site');
 CALL addRolePermission('super', 'site-edit');
 CALL addRolePermission('super', 'site-delete');
+CALL addRolePermission('super', 'domain');
+CALL addRolePermission('super', 'domain-edit');
+CALL addRolePermission('super', 'domain-delete');
 CALL addRolePermission('super', 'template');
 CALL addRolePermission('super', 'template-edit');
 CALL addRolePermission('super', 'template-delete');
 CALL addRolePermission('super', 'place');
 CALL addRolePermission('super', 'place-edit');
 CALL addRolePermission('super', 'place-delete');
+CALL addRolePermission('super', 'file');
+CALL addRolePermission('super', 'file-edit');
+CALL addRolePermission('super', 'file-delete');

@@ -34,7 +34,7 @@ public class SysOrganizationAssembler extends AbstractAssembler<SysOrganizationI
         if (entity.getParent() != null) {
             info.setParent(typeInfoAssembler.create(entity.getParent()));
         }
-        info.setCreateDate(entity.getCreateDate());
+        info.setCreateDate(entity.getCreateTime());
         return info;
     }
 

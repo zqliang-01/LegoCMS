@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.legocms.component.TemplateComponent;
 import com.legocms.core.annotation.RequiresPermissions;
 import com.legocms.core.common.StringUtil;
+import com.legocms.core.dto.sys.SysSiteInfo;
+import com.legocms.core.exception.BusinessException;
 import com.legocms.core.vo.cms.CmsTemplateVo;
 import com.legocms.core.vo.sys.SysPermissionCode;
 import com.legocms.core.web.JsonResponse;
@@ -41,9 +43,11 @@ public class AdminCmsTemplateController extends AdminController {
     @PostMapping("/save")
     @RequiresPermissions(SysPermissionCode.TEMPLATE_EDIT)
     public JsonResponse save(CmsTemplateVo vo) {
-        if (vo.getSite() == null || StringUtil.isBlank(vo.getSite().getCode())) {
-            vo.setSite(getSite());
+        SysSiteInfo site = getAttribute(AdminView.SITE_SESSION_KEY);
+        if (site != null) {
+            vo.setSiteCode(site.getCode());
         }
+        BusinessException.check(StringUtil.isNotBlank(vo.getSiteCode()), "当前无管理站点，保存失败！");
         templateService.save(vo);
         return JsonResponse.ok();
     }
@@ -61,6 +65,7 @@ public class AdminCmsTemplateController extends AdminController {
     public String findTemplate(@PathVariable String code) {
         HashMap<String, Object> input = new HashMap<String, Object>();
         input.put(AdminView.USER_SESSION_KEY, getUser());
+        input.put(AdminView.SITE_SESSION_KEY, getSite());
         String output = templateComponent.generateStringByTemplate(code, input);
         return output;
     }

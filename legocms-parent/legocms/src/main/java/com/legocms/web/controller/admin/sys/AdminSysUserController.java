@@ -59,6 +59,7 @@ public class AdminSysUserController extends AdminController {
         }
 
         setUser(user);
+        setSite(user.getSite());
         return ViewResponse.redirect(AdminView.ROOT);
     }
 

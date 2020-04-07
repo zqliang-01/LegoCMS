@@ -17,7 +17,7 @@ public class SysPermissionDetailInfo extends SysPermissionInfo {
 
     private int sort;
     private boolean menu;
-    private Date createDate;
+    private Date createTime;
     private TypeInfo parent = new TypeInfo();
     private List<TypeInfo> lang = new ArrayList<TypeInfo>();
 

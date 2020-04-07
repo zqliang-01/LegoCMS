@@ -15,7 +15,7 @@ public class CmsPlaceVo extends Vo {
     private String code;
     private String name;
     private String content;
+    private String siteCode;
     private TypeInfo type;
-    private TypeInfo site;
     private TypeInfo parent;
 }

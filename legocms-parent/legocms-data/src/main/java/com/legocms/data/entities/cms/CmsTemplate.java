@@ -7,7 +7,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.legocms.data.base.BaseEntity;
-import com.legocms.data.entities.cms.simpletype.TemplateType;
+import com.legocms.data.entities.cms.simpletype.CmsTemplateType;
 import com.legocms.data.entities.sys.SysSite;
 
 import lombok.Data;
@@ -24,7 +24,7 @@ public class CmsTemplate extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "type_id", referencedColumnName = "id")
-    private TemplateType type;
+    private CmsTemplateType type;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id", referencedColumnName = "id")

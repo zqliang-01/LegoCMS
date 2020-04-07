@@ -8,13 +8,14 @@
 		<link rel="stylesheet" href="${res}/assets/js/codemirror/theme/eclipse.css">
 		<link rel="stylesheet" href="${res}/assets/js/codemirror/addon/hint/show-hint.css">
 		<link rel="stylesheet" href="${res}/assets/js/codemirror/addon/display/fullscreen.css">
+		<link rel="stylesheet" href="${res}/assets/js/codemirror/addon/scroll/simplescrollbars.css">
 		<script type="text/javascript" src="${res}/assets/js/codemirror/lib/codemirror.js"></script>
 		<script type="text/javascript" src="${res}/assets/js/codemirror/mode/xml/xml.js"></script>
 		<script type="text/javascript" src="${res}/assets/js/codemirror/mode/javascript/javascript.js"></script>
 		<script type="text/javascript" src="${res}/assets/js/codemirror/mode/css/css.js"></script>
 		<script type="text/javascript" src="${res}/assets/js/codemirror/mode/htmlmixed/htmlmixed.js"></script>
-		<script type="text/javascript" src="${res}/assets/js/codemirror/addon/mode/multiplex.js"></script>
 		<script type="text/javascript" src="${res}/assets/js/codemirror/mode/htmlembedded/htmlembedded.js"></script>
+		<script type="text/javascript" src="${res}/assets/js/codemirror/addon/mode/multiplex.js"></script>
 		<script type="text/javascript" src="${res}/assets/js/codemirror/addon/hint/anyword-hint.js"></script>
 		<script type="text/javascript" src="${res}/assets/js/codemirror/addon/hint/css-hint.js"></script>
 		<script type="text/javascript" src="${res}/assets/js/codemirror/addon/hint/html-hint.js"></script>
@@ -27,6 +28,7 @@
 		<script type="text/javascript" src="${res}/assets/js/codemirror/addon/edit/closebrackets.js"></script>
 		<script type="text/javascript" src="${res}/assets/js/codemirror/addon/fold/xml-fold.js"></script>
 		<script type="text/javascript" src="${res}/assets/js/codemirror/addon/selection/active-line.js"></script>
+		<script type="text/javascript" src="${res}/assets/js/codemirror/addon/scroll/simplescrollbars.js"></script>
 		<script type="text/javascript">
 		$(function(){
 			var dummy = {
@@ -104,6 +106,7 @@
 		        lineNumbers: true,
 		        mode: "application/x-ejs",
 		        theme: 'eclipse',
+		        scrollbarStyle: "simple",
 		        indentUnit: 4,
 		        indentWithTabs: true,
 		        autoCloseTags: true,
@@ -139,6 +142,7 @@
 						},
 						callback: {
 							onClick: function(event, treeId, treeNode) {
+								selectNode = treeNode;
 								refreshForm(treeNode.code);
 							}
 						}
@@ -157,6 +161,32 @@
 			    	form.find("[name=code]").attr("readonly", "");
 			    })
 			}
+
+			$('#add-place').click(function() {
+				var orgUrl = ctx + "/admin/directive/cmsPlaceTree";
+				ajaxSubmit(orgUrl, null, function(data) {
+					window.parent.showSimpleTree('片段选择', data.simpleTree, function(treeNode){
+						if (!treeNode.isParent) {
+							var temp = '&lt;@includePlace code="' + treeNode.code + '" /&gt;&lt;!-- ' + treeNode.name + ' --&gt;';
+							temp = temp.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+						    editor.replaceSelection(temp);
+						}
+					})
+				});
+			});
+
+			$('#add-template').click(function() {
+				var orgUrl = ctx + "/admin/directive/cmsTemplateTree";
+				ajaxSubmit(orgUrl, null, function(data) {
+					window.parent.showSimpleTree('片段选择', data.simpleTree, function(treeNode){
+						if (!treeNode.isParent) {
+							var temp = '&lt;@include code="' + treeNode.code + '" /&gt;&lt;!-- ' + treeNode.name + ' --&gt;';
+							temp = temp.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+						    editor.replaceSelection(temp);
+						}
+					})
+				});
+			});
 			
 			$('#add').click(function() {
 				var nodes = getTree('placeTree').getSelectedNodes();
@@ -212,7 +242,7 @@
 							<input name="site.code" type="hidden" required>
 							<input name="parent.code" type="hidden" required>
 							<div class="position-relative row form-group">
-				                <div class="col-md-3">
+				                <div class="col-md-2">
 									<label class="col-form-label"><@t.page 'list.code'/></label>
 									<input name="code" type="text" class="form-control" required>
 									<div class="invalid-feedback">
@@ -238,6 +268,13 @@
 									<div class="invalid-feedback">
                                         Please provide a valid sort
                                     </div>
+				                </div>
+				                <div class="col-md-4">
+									<label class="col-form-label"><@t.page 'list.operation'/></label>
+									<div>
+										<span class="btn btn-info" id="add-template">模板片段</span>
+										<span class="btn btn-info" id="add-place">页面片段</span>
+									</div>
 				                </div>
 							</div>
 							<div class="position-relative row form-group">

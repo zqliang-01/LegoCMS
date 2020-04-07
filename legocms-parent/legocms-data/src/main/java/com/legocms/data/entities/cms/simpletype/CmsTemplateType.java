@@ -5,11 +5,11 @@ import javax.persistence.Entity;
 
 @Entity
 @DiscriminatorValue("TemplateType")
-public class TemplateType extends CmsSimpleType {
+public class CmsTemplateType extends CmsSimpleType {
 
-    public TemplateType() { }
+    public CmsTemplateType() { }
 
-    public TemplateType(String code, String name, int sequence) {
+    public CmsTemplateType(String code, String name, int sequence) {
         super(code, name, sequence);
     }
 }

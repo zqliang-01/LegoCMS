@@ -4833,8 +4833,13 @@ input[type="button"].btn-block {
     text-align: center
 }
 
+.tab-content {
+    height: 100%;
+}
+
 .tab-content>.tab-pane {
-    display: none
+    display: none;
+    height: 100%;
 }
 
 .tab-content>.active {
@@ -25433,7 +25438,7 @@ a.fc-more:hover {
 
 @media (max-width: 767.98px) {
     .app-main .app-main__inner {
-        padding: 15px 15px 0
+        padding: 0px;
     }
 
     .mbg-3,

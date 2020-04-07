@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.legocms.core.dto.TypeInfo;
+import com.legocms.core.dto.sys.SysSiteInfo;
 import com.legocms.core.dto.sys.SysUserInfo;
 import com.legocms.core.web.session.SessionController;
 import com.legocms.service.sys.ISysUserService;
@@ -29,14 +29,23 @@ public class AdminController extends SessionController {
     protected void refreshUser() {
         SysUserInfo user = userService.findBy(getUserCode());
         setUser(user);
+        setSite(user.getSite());
     }
 
-    protected TypeInfo getSite() {
-        return getUser().getSite();
+    protected void setSite(SysSiteInfo site) {
+        setAttribute(AdminView.SITE_SESSION_KEY, site);
+    }
+
+    protected SysSiteInfo getSite() {
+        return getAttribute(AdminView.SITE_SESSION_KEY);
     }
 
     protected String getSiteCode() {
-        return getSite().getCode();
+        SysSiteInfo site = getSite();
+        if (site != null) {
+            return site.getCode();
+        }
+        return null;
     }
 
     protected List<String> getPermissionCodes() {

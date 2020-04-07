@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.legocms.core.dto.SimpleTreeInfo;
 import com.legocms.core.dto.cms.CmsTemplateInfo;
-import com.legocms.core.vo.cms.CmsTemplateType;
+import com.legocms.core.vo.cms.CmsTemplateTypeCode;
 import com.legocms.data.assembler.AbstractAssembler;
 import com.legocms.data.entities.cms.CmsTemplate;
 
@@ -37,7 +37,7 @@ public class CmsTemplateAssembler extends AbstractAssembler<CmsTemplateInfo, Cms
             if (template.getParent() != null) {
                 tree.setParentCode(template.getParent().getCode());
             }
-            if (CmsTemplateType.DIR.equals(template.getType().getCode())) {
+            if (CmsTemplateTypeCode.DIR.equals(template.getType().getCode())) {
                 tree.setParent(true);
             }
             trees.add(tree);

@@ -4,12 +4,12 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("PlaceType")
-public class PlaceType extends CmsSimpleType {
+@DiscriminatorValue("FileType")
+public class CmsFileType extends CmsSimpleType {
 
-    public PlaceType() { }
+    public CmsFileType() { }
 
-    public PlaceType(String code, String name, int sequence) {
+    public CmsFileType(String code, String name, int sequence) {
         super(code, name, sequence);
     }
 }

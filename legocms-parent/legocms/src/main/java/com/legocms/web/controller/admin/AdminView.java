@@ -3,6 +3,7 @@ package com.legocms.web.controller.admin;
 public interface AdminView {
 
     String USER_SESSION_KEY = "admin_user";
+    String SITE_SESSION_KEY = "site";
 
     String ROOT = "admin";
     String UI_TYPE = "dashboard-ui/";//"unicorn-ui/";
@@ -23,7 +24,12 @@ public interface AdminView {
     String SYS_SITE_LIST = UI_TYPE + "sys_site/list";
     String SYS_SITE_EDIT = UI_TYPE + "sys_site/edit";
 
+    String SYS_DOMAIN_LIST = UI_TYPE + "sys_domain/list";
+    String SYS_DOMAIN_EDIT = UI_TYPE + "sys_domain/edit";
+
     String CMS_TEMPLATE_LIST = UI_TYPE + "cms_template/list";
 
     String CMS_PLACE_LIST = UI_TYPE + "cms_place/list";
+
+    String CMS_FILE_LIST = UI_TYPE + "cms_file/list";
 }

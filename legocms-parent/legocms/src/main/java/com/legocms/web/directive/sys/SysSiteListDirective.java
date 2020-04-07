@@ -26,10 +26,11 @@ public class SysSiteListDirective extends ControllerTemplateDirective {
         String code = handler.getString("code");
         String name = handler.getString("name");
         SysUserInfo user = getAttribute(AdminView.USER_SESSION_KEY);
+        SysSiteInfo site = getAttribute(AdminView.SITE_SESSION_KEY);
         String organization = user.getOrganization().getCode();
         String manageSite = null;
-        if (user.getSite() != null) {
-            manageSite = user.getSite().getCode();
+        if (site != null) {
+            manageSite = site.getCode();
         }
         Page<SysSiteInfo> page = siteService.findBy(code, name, organization, manageSite, pageIndex, pageSize);
         handler.put(KEY_PAGE_NAME, page).render();

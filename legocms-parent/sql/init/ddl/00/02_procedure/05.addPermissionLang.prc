@@ -12,7 +12,7 @@ BEGIN
     SELECT p.id INTO vPermissionId FROM sys_permission p WHERE p.CODE = permissionCode;
  
 	 insert into sys_permission_lang
-	     (id, version, code, create_date, name, permission_id)
+	     (id, version, code, create_time, name, permission_id)
 	 values
 	     (vId, 1, code, sysdate(), name, vPermissionId);
 

@@ -15,7 +15,7 @@ BEGIN
     SELECT p.id INTO vParentId FROM sys_permission p WHERE p.CODE = parentCode;
  
 	insert into sys_permission
-		(id, version, code, create_date, icon, parent_id, menu, sort, url)
+		(id, version, code, create_time, icon, parent_id, menu, sort, url)
 	values
 		(vId, 1, code, sysdate(), icon, vParentId, menu, sort, url);
 

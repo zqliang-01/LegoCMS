@@ -16,10 +16,10 @@ $(function(){
         });
         that.parent().parent().parent().find('.menu-item-top').addClass('mm-active');
         var menuId = that.attr('id');
-        var menuName = that.attr('name');
+        var menuName = that.html();
         var menuUrl = that.attr('data-url');
         addTab(menuId, menuName, menuUrl);
-        $(document).attr("title", menuName);
+        $(document).attr("title", that.attr('name'));
     });
     
     // 向左滚动
@@ -54,6 +54,7 @@ $(function(){
     $(".closeAll").click(function() {
     	$(".body-tabs").html("");
     	$(".tab-content").html("");
+    	tabArray.length = 0;
     	marginLeft = 0;
     	setLeft();
     });
@@ -65,6 +66,8 @@ $(function(){
             	$($(this).attr('href')).remove();
     		}
     	});
+    	tabArray.length = 0;
+    	push($(this).parent().attr('id'));
     	marginLeft = 0;
     	setLeft();
     });
@@ -134,17 +137,11 @@ function addTab(menuId, tabName, menuUrl) {
 
 // 添加内容页面
 function addPage(pageId, path) {
-	var height = $('.app-main__inner').height() - 5;
-	if (height < 300) {
-		height = document.body.scrollHeight;
-	}
-	var iframe = $('<iframe onload="this.height=' + height + '" frameborder="0" allowtransparency="true" width="100%"></iframe>');
-	var page = $('<div class="tab-pane tabs-animation fade" role="tabpanel"></div>');
+	var iframe = $('<iframe class="tab-pane tabs-animation fade" role="tabpanel" frameborder="0" allowtransparency="true" width="100%"></iframe>');
 	iframe.attr("src", ctx + path);
-	iframe.appendTo(page);
-	page.attr("id", pageId);
-	page.appendTo($(".tab-content"));
-	selectPage(page);
+	iframe.attr("id", pageId);
+	iframe.appendTo($(".tab-content"));
+	selectPage(iframe);
 }
 
 function setNavMarginLeft() {

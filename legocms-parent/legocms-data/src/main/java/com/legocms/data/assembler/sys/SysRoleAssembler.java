@@ -14,7 +14,7 @@ public class SysRoleAssembler extends AbstractAssembler<SysRoleInfo, SysRole> {
         SysRoleInfo info = new SysRoleInfo();
         info.setCode(entity.getCode());
         info.setName(entity.getName());
-        info.setCreateDate(entity.getCreateDate());
+        info.setCreateTime(entity.getCreateTime());
         return info;
     }
 }

@@ -18,5 +18,5 @@ public class SysUserDetailInfo extends Dto {
     private String name;
     private TypeInfo organization;
     private TypeInfo status;
-    private Date createDate;
+    private Date createTime;
 }

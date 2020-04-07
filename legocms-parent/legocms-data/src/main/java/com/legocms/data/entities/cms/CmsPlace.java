@@ -7,7 +7,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.legocms.data.base.BaseEntity;
-import com.legocms.data.entities.cms.simpletype.PlaceType;
+import com.legocms.data.entities.cms.simpletype.CmsPlaceType;
 import com.legocms.data.entities.sys.SysSite;
 
 import lombok.Data;
@@ -24,7 +24,7 @@ public class CmsPlace extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "type_id", referencedColumnName = "id")
-    private PlaceType type;
+    private CmsPlaceType type;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id", referencedColumnName = "id")

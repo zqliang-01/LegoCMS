@@ -13,5 +13,5 @@ public class SysRoleInfo extends Dto {
     private static final long serialVersionUID = -675190400224637949L;
     private String code;
     private String name;
-    private Date createDate;
+    private Date createTime;
 }

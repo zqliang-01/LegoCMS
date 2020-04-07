@@ -11,7 +11,7 @@ BEGIN
     SET vId = nextval('sys');
 
 	 INSERT INTO cms_simple_type
-	     (id, version, code, create_date, name, class_type, sequence)
+	     (id, version, code, create_time, name, class_type, sequence)
 	 VALUES
 	     (vId, 1, code, sysdate(), name, classType, sequence);
 END;

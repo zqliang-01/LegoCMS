@@ -19,8 +19,8 @@ public class SysUserInfo extends Dto {
     private String password;
     private TypeInfo organization;
     private TypeInfo status;
-    private TypeInfo site;
-    private Date createDate;
+    private Date createTime;
+    private SysSiteInfo site;
     private List<String> permissions = new ArrayList<String>();
 
     public void addPermission(String permission) {

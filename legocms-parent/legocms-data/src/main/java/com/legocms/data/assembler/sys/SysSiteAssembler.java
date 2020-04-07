@@ -33,7 +33,7 @@ public class SysSiteAssembler extends AbstractAssembler<SysSiteInfo, SysSite> {
         info.setPath(entity.getPath());
         info.setDynamicPath(entity.getDynamicPath());
         info.setOrganization(typeInfoAssembler.create(entity.getOrganization()));
-        info.setCreateDate(entity.getCreateDate());
+        info.setCreateTime(entity.getCreateTime());
         return info;
     }
 

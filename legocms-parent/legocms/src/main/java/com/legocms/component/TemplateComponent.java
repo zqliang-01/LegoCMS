@@ -47,7 +47,7 @@ public class TemplateComponent {
         return stringWriter.toString();
     }
 
-    private Template getTemplate(String code) {
+    public Template getTemplate(String code) {
         try {
             templaceConfiguration.clearTemplateCache();
             return templaceConfiguration.getTemplate(code);

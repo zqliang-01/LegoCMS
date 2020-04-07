@@ -1,28 +1,25 @@
-<#macro permission parentCode top>
+<#macro permission parentCode>
     <@sysPermissionList code=parentCode menu=true>
-       	<ul class="vertical-nav-menu">
+       	<ul class="vertical-nav-menu metismenu mm-collapse">
 			<#list permissions as p>
 		        <#if p?size gt 0>
-		        		<#if top>
-				        	<!-- <li class="app-sidebar__heading">----</li> -->
-				        </#if>
-				        <li>
-				        	<#if top>
-					            <a href="#" aria-expanded="true" class="menu-item-top" id="${p.code!}" name="${p.name}">
-					                <i class="metismenu-icon ${p.icon!}"></i>
-					                <span>${p.name}</span>
-					                <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
-					            </a>
-				        	<#else>
-			                    <a href="#" data-url="${p.url!}" class="menu-item" id="${p.code!}" name="${p.name}">
-			                        <i class="metismenu-icon ${p.icon!}"></i>
-			                        <span>${p.name}</span>
-			                    </a>
-				        	</#if>
-	        				<#if p.hasChildren>
-								<@permission parentCode=p.code top=false />
-							</#if>
-				        </li>
+			        <li>
+			        	<#if p.hasChildren>
+				            <a href="#" aria-expanded="true" class="menu-item-top" id="${p.code!}">
+				                <i class="metismenu-icon ${p.icon!}"></i>
+				                <span>${p.name}</span>
+				                <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+				            </a>
+			        	<#else>
+		                    <a href="#" data-url="${p.url!}" class="menu-item" id="${p.code!}" name="${p.name}">
+		                        <i class="metismenu-icon ${p.icon!}"></i>
+		                        <span>${p.name}</span>
+		                    </a>
+			        	</#if>
+        				<#if p.hasChildren>
+							<@permission parentCode=p.code/>
+						</#if>
+			        </li>
 		        </#if>
 		    </#list>
 	    </ul>
@@ -59,6 +56,6 @@
 		</span>
 	</div>
 	<div class="scrollbar-sidebar">
-		<div class="app-sidebar__inner"><@permission parentCode='root' top=true /></div>
+		<div class="app-sidebar__inner"><@permission parentCode='root'/></div>
 	</div>
 </div>

@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.legocms.core.annotation.RequiresPermissions;
 import com.legocms.core.common.StringUtil;
+import com.legocms.core.dto.sys.SysSiteInfo;
+import com.legocms.core.exception.BusinessException;
 import com.legocms.core.vo.cms.CmsPlaceVo;
 import com.legocms.core.vo.sys.SysPermissionCode;
 import com.legocms.core.web.JsonResponse;
@@ -32,9 +34,11 @@ public class AdminCmsPlaceController extends AdminController {
     @PostMapping("/save")
     @RequiresPermissions(SysPermissionCode.PLACE_EDIT)
     public JsonResponse save(CmsPlaceVo vo) {
-        if (vo.getSite() == null || StringUtil.isBlank(vo.getSite().getCode())) {
-            vo.setSite(getSite());
+        SysSiteInfo site = getAttribute(AdminView.SITE_SESSION_KEY);
+        if (site != null) {
+            vo.setSiteCode(site.getCode());
         }
+        BusinessException.check(StringUtil.isNotBlank(vo.getSiteCode()), "当前无管理站点，保存失败！");
         templateService.save(vo);
         return JsonResponse.ok();
     }

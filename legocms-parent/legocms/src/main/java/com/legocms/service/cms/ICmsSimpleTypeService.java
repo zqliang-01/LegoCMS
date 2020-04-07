@@ -9,4 +9,6 @@ public interface ICmsSimpleTypeService {
     List<TypeInfo> findTemplateType();
 
     List<TypeInfo> findPlaceType();
+
+    List<TypeInfo> findFileType();
 }

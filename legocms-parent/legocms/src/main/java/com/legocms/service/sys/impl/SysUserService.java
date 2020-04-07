@@ -79,7 +79,7 @@ public class SysUserService extends BaseService implements ISysUserService {
             user.setPassword("123456");
         }
         user.setName(vo.getName());
-        user.setCreateDate(DateUtil.getCurrentDate());
+        user.setCreateTime(DateUtil.getCurrentDate());
         user.setOrganization(organizationDao.findByCode(vo.getOrganization().getCode()));
         user.setStatus(commonDao.findByCode(UserStatus.class, vo.getStatus()));
         user.setRoles(roleDao.findByCodes(vo.getRoles()));

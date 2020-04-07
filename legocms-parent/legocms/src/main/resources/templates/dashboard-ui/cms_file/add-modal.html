@@ -1,0 +1,24 @@
+<noscript id="add-modal" data-form="#add-form" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+	<form id="add-form" action="${ctx}/admin/file/save" onsubmit="return false;" class="needs-validation" novalidate>
+		<div class="modal-body">
+			<div class="position-relative row form-group">
+				<label class="col-sm-3 col-form-label"><@t.page 'setting.name'/></label>
+				<div class="col-sm-9">
+					<input name="name" type="text" class="form-control" required>
+					<div class="invalid-feedback">Please provide a valid name</div>
+				</div>
+				<div class="col-sm-9">
+					<select name="type" class="form-control custom-select">
+						<option value=""><@t.page 'list.status'/></option>
+						<@cmsFileType>
+							<#list types as type>
+								<option value="${type.code}">${type.name}</option>
+							</#list>
+						</@cmsFileType>
+					</select>
+					<div class="invalid-feedback">Please provide a valid type</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</noscript>

@@ -49,7 +49,7 @@ public class SysPermissionAssembler extends AbstractAssembler<SysPermissionInfo,
         info.setSort(entity.getSort());
         info.setUrl(entity.getUrl());
         info.setMenu(entity.isMenu());
-        info.setCreateDate(entity.getCreateDate());
+        info.setCreateTime(entity.getCreateTime());
         info.setSort(entity.getSort());
         if (entity.getParent() != null) {
             info.setParent(typeInfoAssembler.create(entity));

@@ -1,6 +1,6 @@
 package com.legocms.core.vo.cms;
 
-public interface CmsPlaceType {
+public interface CmsTemplateTypeCode {
 
     String FILE = "file";
 

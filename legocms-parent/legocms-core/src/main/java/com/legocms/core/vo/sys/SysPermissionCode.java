@@ -22,6 +22,10 @@ public interface SysPermissionCode {
     String SITE_EDIT = "site-edit";
     String SITE_DELETE = "site-delete";
 
+    String DOMAIN = "domain";
+    String DOMAIN_EDIT = "domain-edit";
+    String DOMAIN_DELETE = "domain-delete";
+
     String TEMPLATE = "template";
     String TEMPLATE_EDIT = "template-edit";
     String TEMPLATE_DELETE = "template-delete";
@@ -29,4 +33,8 @@ public interface SysPermissionCode {
     String PLACE = "place";
     String PLACE_EDIT = "place-edit";
     String PLACE_DELETE = "place-delete";
+
+    String FILE = "file";
+    String FILE_EDIT = "file-edit";
+    String FILE_DELETE = "file-delete";
 }

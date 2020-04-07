@@ -15,7 +15,7 @@ BEGIN
     SELECT s.id INTO vStatusId FROM sys_simple_type s WHERE s.CODE = 'Using' AND s.CLASS_TYPE = 'OrganizationStatus';
 
 	 insert into sys_organization
-	     (id, version, code, create_date, name, parent_id, status)
+	     (id, version, code, create_time, name, parent_id, status)
 	 values
 	     (vOrganizationId, 1, organizationCode, sysdate(), organizationName, vParentId, vStatusId);
 

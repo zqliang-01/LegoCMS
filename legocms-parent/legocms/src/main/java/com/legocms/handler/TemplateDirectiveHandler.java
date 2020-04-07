@@ -162,4 +162,8 @@ public class TemplateDirectiveHandler extends BaseFreemarkerHandler {
         }
         return null;
     }
+
+    public Environment getEnvironment() {
+        return environment;
+    }
 }

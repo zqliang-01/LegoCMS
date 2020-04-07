@@ -8,7 +8,7 @@ BEGIN
     SET vId = nextval('sys');
 
 	 insert into sys_role
-	     (id, version, code, create_date, name)
+	     (id, version, code, create_time, name)
 	 values
 	     (vId, 1, roleCode, sysdate(), roleName);
 

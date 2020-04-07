@@ -33,7 +33,7 @@ public class BaseEntity {
 
     private String name;
 
-    private Date createDate;
+    private Date createTime;
 
     protected BaseEntity() { }
 
@@ -42,7 +42,7 @@ public class BaseEntity {
         this.id = IdGenerator.getCurrent().nextId(this);
         this.code = (code == null ? id.toString() : code);
         this.setVersion(1);
-        this.createDate = DateUtil.getCurrentDate();
+        this.createTime = DateUtil.getCurrentDate();
     }
 
     /** 创建VO 子类覆盖 */

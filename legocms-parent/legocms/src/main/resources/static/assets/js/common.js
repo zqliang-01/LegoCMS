@@ -27,13 +27,16 @@ function showConfirm(msg, title, callback) {
 	}
 }
 
-function showFormDialog(title, id, init, callback) {
+function showFormDialog(title, id, init, height, callback) {
 	var form;
 	var submitNum = 0;
+	if (height) {
+		height = '420px';
+	}
 	layer.open({
 		type: 1,
 		title: title,
-		area : [ '420px' ],
+		area : [ '420px', height ],
 		content : id.html(),
 		success: function(layero, index) {
 			form = $(id.attr('data-form'));
@@ -140,7 +143,7 @@ function showIframe(title, url) {
 }
 
 function isEmpty(value) {
-    if (value == null || value == undefined || value == '') {
+    if (value == null || value == undefined || value === '') {
         return true;
     }
     if($.isArray(value) && value.length == 0){

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="LegoCMS">
+	<#include "../include_page/link.html"/>
+	<script type="text/javascript">
+		$(function(){
+			ajaxForm($('#save-domain-form'), function() {
+		    	$('#save-domain-form').find("[name=code]").attr("readonly", "");
+			});
+		});
+	</script>
+</head>
+<body>
+	<div class="app-main__inner" id="MyPagination-user-list">
+		<@sysDomain code=code>
+		<div class="main-card mb-3 card">
+			<div class="card-body">
+				<h5 class="card-title"><@t.page 'employee.info'/></h5>
+				<form id="save-domain-form" action="${ctx}/admin/domain/save" ajax="true" onsubmit="return false;" class="needs-validation" novalidate>
+					<div class="position-relative row form-group">
+						<label class="col-sm-2 col-form-label"><@t.page 'list.code'/></label>
+						<div class="col-sm-10">
+							<#if (domainInfo.code)??>
+								<input name="code" placeholder="Code" type="text" class="form-control" value="${(domainInfo.code)!''}" readonly required>
+							<#else>
+								<input name="code" placeholder="Code" type="text" class="form-control" required>
+							</#if>
+							<div class="invalid-feedback">
+                                Please provide a valid code
+                            </div>
+						</div>
+					</div>
+					<div class="position-relative row form-group">
+						<label class="col-sm-2 col-form-label"><@t.page 'list.name'/></label>
+						<div class="col-sm-10">
+							<input name="name" placeholder="Name" type="text" class="form-control" value="${(domainInfo.name)!''}" required>
+							<div class="invalid-feedback">
+                                Please provide a valid name
+                            </div>
+						</div>
+					</div>
+					<div class="position-relative row form-group">
+						<label class="col-sm-2 col-form-label"><@t.page 'list.path'/></label>
+						<div class="col-sm-10">
+							<input name="path" placeholder="Path" type="text" class="form-control" value="${(domainInfo.path)!''}" required>
+							<div class="invalid-feedback">
+                                Please provide a valid path
+                            </div>
+						</div>
+					</div>
+					<div class="position-relative row form-group">
+						<label class="col-sm-2 col-form-label"><@t.page 'list.site'/></label>
+						<div class="col-sm-10">
+							<input placeholder="Create Date" class="form-control" value="${(domainInfo.site.name)!''}" disabled>
+						</div>
+					</div>
+					<div class="position-relative row form-group">
+						<label class="col-sm-2 col-form-label"><@t.page 'list.create-time'/></label>
+						<div class="col-sm-10">
+							<input placeholder="Create Date" class="form-control" value="${(domainInfo.createDate)!''}" disabled>
+						</div>
+					</div>
+					<div class="position-relative row form-check">
+						<div class="col-sm-10 offset-sm-2">
+							<button class="btn btn-secondary"><@t.page 'btn.save'/></button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		</@sysDomain>
+	</div>
+</body>
+</html>

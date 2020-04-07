@@ -20,17 +20,20 @@ public class SysUserAssembler extends AbstractAssembler<SysUserInfo, SysUser> {
     @Autowired
     private TypeInfoAssembler typeInfoAssembler;
 
+    @Autowired
+    private SysSiteAssembler siteAssembler;
+
     @Override
     public SysUserInfo create(SysUser user) {
         SysUserInfo userInfo = new SysUserInfo();
         userInfo.setCode(user.getCode());
         userInfo.setName(user.getName());
         userInfo.setPassword(user.getPassword());
-        userInfo.setCreateDate(user.getCreateDate());
+        userInfo.setCreateTime(user.getCreateTime());
         userInfo.setOrganization(typeInfoAssembler.create(user.getOrganization()));
         userInfo.setStatus(typeInfoAssembler.create(user.getStatus()));
         if (user.getSite() != null) {
-            userInfo.setSite(typeInfoAssembler.create(user.getSite()));
+            userInfo.setSite(siteAssembler.create(user.getSite()));
         }
         userInfo.setPermissions(getPermissions(user.getRoles()));
         return userInfo;
@@ -40,7 +43,7 @@ public class SysUserAssembler extends AbstractAssembler<SysUserInfo, SysUser> {
         SysUserDetailInfo userInfo = new SysUserDetailInfo();
         userInfo.setCode(user.getCode());
         userInfo.setName(user.getName());
-        userInfo.setCreateDate(user.getCreateDate());
+        userInfo.setCreateTime(user.getCreateTime());
         userInfo.setOrganization(typeInfoAssembler.create(user.getOrganization()));
         userInfo.setStatus(typeInfoAssembler.create(user.getStatus()));
         return userInfo;

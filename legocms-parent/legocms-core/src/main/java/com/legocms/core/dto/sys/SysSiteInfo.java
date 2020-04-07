@@ -20,5 +20,5 @@ public class SysSiteInfo extends Dto {
     private String dynamicPath;
     private TypeInfo organization;
     private boolean isManageSite;
-    private Date createDate;
+    private Date createTime;
 }
