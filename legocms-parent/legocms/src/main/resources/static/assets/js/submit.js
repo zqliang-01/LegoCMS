@@ -165,3 +165,15 @@ function showMsg(msg, type, callback){
 		layer.msg(msg, {icon: type}, callback);
 	}
 }
+
+function isEmpty(value) {
+    if (value == null || value == undefined || value == '') {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function isNotEmpty(value) {
+    return !isEmpty(value);
+}

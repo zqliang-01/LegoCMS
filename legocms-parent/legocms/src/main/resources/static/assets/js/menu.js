@@ -66,6 +66,9 @@ $(function(){
     // 添加内容页面
     function addPage(menuId, path) {
     	var height = $('.app-main__inner').height() - 5;
+    	if (height < 300) {
+    		height = document.body.scrollHeight;
+    	}
     	var iframeHtml = '<iframe onload="this.height=' + height + '" frameborder="0" allowtransparency="true" width="100%" src="' + path + '"></iframe>';
     	var pageHtml = '<div class="tab-pane tabs-animation fade" id="' + menuId + '_page" role="tabpanel">' + iframeHtml + '</div>';
     	var childdiv = $(pageHtml);

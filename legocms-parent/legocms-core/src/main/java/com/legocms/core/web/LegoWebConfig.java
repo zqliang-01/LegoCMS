@@ -65,13 +65,18 @@ public class LegoWebConfig implements WebMvcConfigurer {
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        converters.add(0, getJsonMessageConverter());
+    }
+
+    @Bean
+    public FastJsonHttpMessageConverter getJsonMessageConverter() {
         FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
         FastJsonConfig config = converter.getFastJsonConfig();
         config.setCharset(Constants.DEFAULT_CHARSET);
         config.setSerializerFeatures(getSerializerFeatures());
         converter.setDefaultCharset(Constants.DEFAULT_CHARSET);
         converter.setSupportedMediaTypes(getSupportedMediaTypes());
-        converters.add(0, converter);
+        return converter;
     }
 
     public static SerializerFeature[] getSerializerFeatures() {

@@ -82,7 +82,6 @@ var myPagination = {
                     if (callBackFun != undefined) {
                         callBackFun(data);
                     }
-
                 }
             }
         });

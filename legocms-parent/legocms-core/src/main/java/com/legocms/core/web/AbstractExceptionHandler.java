@@ -59,7 +59,7 @@ public abstract class AbstractExceptionHandler {
     protected ModelAndView response(HttpServletResponse response, HandlerMethod handlerMethod, String errorCode, String errorMsg) {
 
         Class<?> returnType = handlerMethod.getMethod().getReturnType();
-        if (returnType == JsonResponse.class) {
+        if (returnType == JsonResponse.class || returnType == void.class) {
             return jsonResponse(response, errorMsg, errorCode);
         }
 
