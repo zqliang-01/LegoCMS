@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		<meta charset="utf-8">
+        <meta name="description" content="LegoCMS">
+        <#include "../include_page/link.html"/>
+        <script type="text/javascript" src="${res}/assets/js/cms/sys-organization.js"></script>
+    </head>
+    <body>
+       	<div class="row">
+			<div class="main-card card col-md-3">
+				<ul id="organizationTree" class="ztree"></ul>
+			</div>
+       		<div class="col-md-9">
+				<div class="main-card card">
+					<div class="card-body">
+		       			<form id="save-organization-form" action="${ctx}/admin/organization/save" onsubmit="return false;" class="needs-validation" novalidate>
+							<div class="position-relative row form-group">
+								<label class="col-sm-2 col-form-label"><@t.page 'list.code'/></label>
+								<div class="col-sm-10">
+									<input name="code" type="text" class="form-control" required>
+									<div class="invalid-feedback">
+                                        Please provide a valid Code
+                                    </div>
+								</div>
+							</div>
+							<div class="position-relative row form-group">
+								<label class="col-sm-2 col-form-label"><@t.page 'list.name'/></label>
+								<div class="col-sm-10">
+									<input name="name" type="text" class="form-control" required>
+									<div class="invalid-feedback">
+                                        Please provide a valid name
+                                    </div>
+								</div>
+							</div>
+							<div class="position-relative row form-group">
+								<label class="col-sm-2 col-form-label"><@t.page 'list.status'/></label>
+								<div class="col-sm-10">
+									<select name="status.code" class="form-control custom-select" required>
+										<@sysOrganizationStatus>
+											<#list status as state>
+												<option value="${state.code}">${state.name}</option>
+											</#list>
+										</@sysOrganizationStatus>
+									</select>
+									<div class="invalid-feedback">
+                                        Please provide a valid status
+                                    </div>
+								</div>
+							</div>
+							<input name="parent.code" type="hidden" data-noreset>
+							<div class="position-relative row form-group">
+								<label class="col-sm-2 col-form-label"><@t.page 'list.create_time'/></label>
+								<div class="col-sm-10">
+									<input name="createDate" placeholder="Create Date" class="form-control" readonly>
+								</div>
+							</div>
+							<div class="position-relative row form-check">
+								<div class="col-sm-10 offset-sm-2">
+									<button class="btn btn-info" type="submit"><@t.page 'btn-save'/></button>
+									<span class="btn btn-secondary" id="add"><@t.page 'btn-add'/></span>
+									<span class="btn btn-danger" id="delete"><@t.page 'btn-delete'/></span>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+       		</div>
+       	</div>
+    </body>
+</html>

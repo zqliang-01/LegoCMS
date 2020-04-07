@@ -41,4 +41,5 @@ public abstract class BaseTemplateDirective implements TemplateDirectiveModel, D
     public void setName(String name) {
         this.name = name;
     }
+
 }

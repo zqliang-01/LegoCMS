@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
         <meta name="description" content="LegoCMS">
         <#include "../include_page/link.html"/>
-		<script type="text/javascript" src="${res}/assets/js/cms/sysUser.js"></script>
+		<script type="text/javascript" src="${res}/assets/js/cms/sys-user.js"></script>
     </head>
     <body>
         <div class="app-main__inner" id="MyPagination-user-list">
@@ -19,22 +19,22 @@
 		                 </div>
 		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
 							<select name="status" id="status" class="form-control custom-select">
-								<option value="">状态</option>
-								<@sysUserState>
+								<option value=""><@t.page 'list.status'/></option>
+								<@sysUserStatus>
 									<#list userStatus as userState>
 										<option value="${userState.code}">${userState.name}</option>
 									</#list>
-								</@sysUserState>
+								</@sysUserStatus>
 							</select>
 		                 </div>
 		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
-		                 	<button class="btn btn-primary query">查 询</button>
+		                 	<button class="btn btn-primary query"><@t.page 'btn-query'/></button>
 		                 </div>
 		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
-		                 	<button type="button" data-toggle="collapse" href="#advanced-search" class="btn btn-danger">高级查询</button>
+		                 	<button type="button" data-toggle="collapse" href="#advanced-search" class="btn btn-danger"><@t.page 'btn-advance-query'/></button>
 		                 </div>
 		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
-		                 	<button class="btn btn-info"onclick="window.parent.addTab('user-add', '创建员工', '/admin/user/edit/1_#')" >创 建</button>
+		                 	<button class="btn btn-info"onclick="window.parent.addTab('user-add', '创建员工', '/admin/user/edit/1_#')" ><@t.page 'btn-create'/></button>
 		                 </div>
                      </div>
                 </div>
@@ -57,24 +57,17 @@
 	        <div class="row row-fluid">
 	            <div class="col-md-12">
 	                <div class="main-card mb-3 card">
-	                    <div class="card-header">员工列表
-	                        <div class="btn-actions-pane-right">
-	                            <div role="group" class="btn-group-sm btn-group">
-	                                <button class="active btn btn-focus">全部</button>
-	                                <button class="btn btn-focus">已激活</button>
-	                            </div>
-	                        </div>
-	                    </div>
+	                    <div class="card-header"><@t.page 'employee.list'/></div>
 	                    <div class="table-responsive">
 	                        <table role="grid" class="align-middle mb-0 table table-borderless table-striped table-hover mytab">
 	                            <thead>
 	                                <tr role="row">
-	                                    <th class="text-center">编码</th>
-	                                    <th>名称</th>
-	                                    <th class="text-center">部门</th>
-	                                    <th class="text-center">创建时间</th>
-	                                    <th class="text-center">状态</th>
-	                                    <th class="text-center">操作</th>
+	                                    <th class="text-center"><@t.page 'list.code'/></th>
+	                                    <th><@t.page 'list.name'/></th>
+	                                    <th class="text-center"><@t.page 'list.organization'/></th>
+	                                    <th class="text-center"><@t.page 'list.create_time'/></th>
+	                                    <th class="text-center"><@t.page 'list.status'/></th>
+	                                    <th class="text-center"><@t.page 'list.operation'/></th>
 	                                </tr>
 	                            </thead>
                         		<tbody></tbody>
@@ -101,11 +94,11 @@
 					                                	{#/if}
 					                                </td>
 					                                <td class="text-center">
-					                                	<button onclick="window.parent.addTab('user-edit', '员工修改', '/admin/user/edit/{$T.Result.code}')" class="btn btn-primary btn-sm">修改</button>
+					                                	<button onclick="window.parent.addTab('user-edit', '员工修改', '/admin/user/edit/{$T.Result.code}')" class="btn btn-primary btn-sm"><@t.page 'btn-edit'/></button>
 					                                	{#if $T.Result.status.code == 'Using'}
-					                                		<button onclick="invalid('{$T.Result.code}')" class="btn btn-primary btn-sm">注销</button>
+					                                		<button onclick="invalid('{$T.Result.code}')" class="btn btn-primary btn-sm"><@t.page 'btn-close-user'/></button>
 					                                	{#else}
-					                                		<button onclick="active('{$T.Result.code}')" class="btn btn-primary btn-sm">激活</button>
+					                                		<button onclick="active('{$T.Result.code}')" class="btn btn-primary btn-sm"><@t.page 'btn-edit'/></button>
 					                                	{#/if}
 					                                </td>
 					                            </tr>

@@ -3,10 +3,9 @@
         <i class="fa fa-cog fa-w-16 fa-spin fa-2x"></i>
     </button>
     <div class="theme-settings__inner">
-        <div class="scrollbar-container">
+        <div class="scrollbar-container ">
             <div class="theme-settings__options-wrapper">
-                <h3 class="themeoptions-heading">系统样式选择
-                </h3>
+                <h3 class="themeoptions-heading "><@t.page 'ui.layout-options'/></h3>
                 <div class="p-3">
                     <ul class="list-group">
                         <li class="list-group-item">
@@ -20,58 +19,35 @@
                                         </div>
                                     </div>
                                     <div class="widget-content-left">
-                                        <div class="widget-heading">固定顶部菜单</div>
-                                        <div class="widget-subheading">使标题顶部固定，始终可见！</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <!-- <li class="list-group-item">
-                            <div class="widget-content p-0">
-                                <div class="widget-content-wrapper">
-                                    <div class="widget-content-left mr-3">
-                                        <div class="switch has-switch switch-container-class" data-class="fixed-sidebar">
-                                            <div class="switch-animate switch-on">
-                                                <input type="checkbox" checked data-toggle="toggle"
-                                                    data-onstyle="success">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="widget-content-left">
-                                        <div class="widget-heading">固定左侧菜单栏</div>
-                                        <div class="widget-subheading">使侧边栏保持固定，始终可见！</div>
+                                        <div class="widget-heading"><@t.page 'ui.fixed-header'/></div>
+                                        <div class="widget-subheading"><@t.page 'ui.fixed-header-desc'/></div>
                                     </div>
                                 </div>
                             </div>
                         </li>
                         <li class="list-group-item">
-                            <div class="widget-content p-0">
-                                <div class="widget-content-wrapper">
-                                    <div class="widget-content-left mr-3">
-                                        <div class="switch has-switch switch-container-class" data-class="fixed-footer">
-                                            <div class="switch-animate switch-off">
-                                                <input type="checkbox" data-toggle="toggle" data-onstyle="success">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="widget-content-left">
-                                        <div class="widget-heading">固定底部
-                                        </div>
-                                        <div class="widget-subheading">使应用程序页脚底部固定，始终可见！</div>
-                                    </div>
+                            <h5 class="pb-2"><@t.page 'ui.lang-select'/></h5>
+                            <div class="theme-settings-swatches">
+                                <div role="group" class="mt-2 btn-group">
+									<#list langTypes as langType>
+									 	<#if langType.checked>
+                                    		<a class="btn-wide btn-shadow btn-primary active btn btn-secondary switch-theme-class" href="${ctx}/admin/changeLocale/${langType.code}">${langType.name}</a>
+									 	<#else>
+									 		<a class="btn-wide btn-shadow btn-primary btn btn-secondary switch-theme-class" href="${ctx}/admin/changeLocale/${langType.code}">${langType.name}</a>
+									 	</#if>
+									</#list>
                                 </div>
                             </div>
-                        </li> -->
+                        </li>
                     </ul>
                 </div>
-                <h3 class="themeoptions-heading">
-                    <div>顶部主题</div>
-                    <button type="button" class="btn-pill btn-shadow btn-wide ml-auto btn btn-focus btn-sm switch-header-cs-class" data-class="">恢复默认</button>
+                <h3 class="themeoptions-heading"><@t.page 'ui.header-options'/>
+                    <button type="button" class="btn-pill btn-shadow btn-wide ml-auto btn btn-focus btn-sm switch-header-cs-class" data-class=""><@t.page 'ui.btn-reset'/></button>
                 </h3>
                 <div class="p-3">
                     <ul class="list-group">
                         <li class="list-group-item">
-                            <h5 class="pb-2">选择配色方案
+                            <h5 class="pb-2"><@t.page 'ui.color'/>
                             </h5>
                             <div class="theme-settings-swatches">
                                 <div class="swatch-holder bg-primary switch-header-cs-class" data-class="bg-primary header-text-light"></div>
@@ -115,14 +91,13 @@
                         </li>
                     </ul>
                 </div>
-                <h3 class="themeoptions-heading">
-                    <div>侧边栏主题</div>
-                    <button type="button" class="btn-pill btn-shadow btn-wide ml-auto btn btn-focus btn-sm switch-sidebar-cs-class" data-class="">恢复默认</button>
+                <h3 class="themeoptions-heading"><@t.page 'ui.btn-reset'/>
+                    <button type="button" class="btn-pill btn-shadow btn-wide ml-auto btn btn-focus btn-sm switch-sidebar-cs-class" data-class=""><@t.page 'ui.btn-reset'/></button>
                 </h3>
                 <div class="p-3">
                     <ul class="list-group">
                         <li class="list-group-item">
-                            <h5 class="pb-2">选择配色方案
+                            <h5 class="pb-2"><@t.page 'ui.color'/>
                             </h5>
                             <div class="theme-settings-swatches">
                                 <div class="swatch-holder bg-primary switch-sidebar-cs-class" data-class="bg-primary sidebar-text-light"></div>
@@ -166,18 +141,17 @@
                         </li>
                     </ul>
                 </div>
-                <h3 class="themeoptions-heading">
-                    <div>内部样式选项</div>
-                    <button type="button" class="btn-pill btn-shadow btn-wide ml-auto active btn btn-focus btn-sm">恢复默认</button>
+                <h3 class="themeoptions-heading"><@t.page 'ui.content-options'/>
+                    <button type="button" class="btn-pill btn-shadow btn-wide ml-auto active btn btn-focus btn-sm"><@t.page 'ui.btn-reset'/></button>
                 </h3>
                 <div class="p-3">
                     <ul class="list-group">
                         <li class="list-group-item">
-                            <h5 class="pb-2">页面Tab标签样式</h5>
+                            <h5 class="pb-2"><@t.page 'ui.content-tab'/></h5>
                             <div class="theme-settings-swatches">
                                 <div role="group" class="mt-2 btn-group">
-                                    <button type="button" class="btn-wide btn-shadow btn-primary btn btn-secondary switch-theme-class" data-class="body-tabs-line">下划线</button>
-                                    <button type="button" class="btn-wide btn-shadow btn-primary active btn btn-secondary switch-theme-class" data-class="body-tabs-shadow">阴影</button>
+                                    <button type="button" class="btn-wide btn-shadow btn-primary btn btn-secondary switch-theme-class" data-class="body-tabs-line"><@t.page 'ui.tab-line'/></button>
+                                    <button type="button" class="btn-wide btn-shadow btn-primary active btn btn-secondary switch-theme-class" data-class="body-tabs-shadow"><@t.page 'ui.tab-shadow'/></button>
                                 </div>
                             </div>
                         </li>
