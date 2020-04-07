@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 public class InitController extends SessionController {
 
     @GetMapping
-    @RequiresPermissions("permission:admin")
+    @RequiresPermissions("admin")
     public ViewResponse index() {
         log.debug("page index");
         return ViewResponse.ok(AdminView.INDEX);

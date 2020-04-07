@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="${res}/assets/css/index.css">
         <script type="text/javascript" src="${res}/assets/js/jquery.js"></script>
         <script type="text/javascript" src="${res}/assets/js/main.js"></script>
+        <script type="text/javascript" src="${res}/assets/js/menu.js"></script>
         <script type="text/javascript" src="${res}/assets/js/index.js"></script>
     </head>
     <body>
@@ -22,47 +23,13 @@
             <#include "include_page/ui-selector.html"/>
             
             <div class="app-main">
-                <div class="app-sidebar sidebar-shadow bg-secondary sidebar-text-light">
-                    <div class="app-header__logo">
-                        <div class="logo-src"></div>
-                        <div class="header__pane ml-auto">
-                            <div>
-                                <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
-                                    <span class="hamburger-box">
-                                        <span class="hamburger-inner"></span>
-                                    </span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="app-header__mobile-menu">
-                        <div>
-                            <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
-                                <span class="hamburger-box">
-                                    <span class="hamburger-inner"></span>
-                                </span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="app-header__menu">
-                        <span>
-                            <button type="button" class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
-                                <span class="btn-icon-wrapper">
-                                    <i class="fa fa-ellipsis-v fa-w-6"></i>
-                                </span>
-                            </button>
-                        </span>
-                    </div>
-                    <div class="scrollbar-sidebar">
-            			<#include "include_page/menus.html"/>
-                    </div>
-                </div>
+            	<#include "include_page/menus.html"/>
                 <div class="app-main__outer">
                     
                     <div class="nav-tab">
 					    <p class="nav-scroll nav-scroll-left" title="向左滚动"></p>
 					    <div class="tabbed round">
-					        <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
+					        <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav" id="tab-home">
 					            <li class="nav-item">
 					                <a role="tab" class="nav-link" id="tab-0" data-toggle="tab" href="#tab-content-0">
 					                    <span>Card Tabs1</span><span class="closetag">×</span>
@@ -81,6 +48,11 @@
 					</div>
                     
                     <div class="app-main__inner">
+                    	<div class="tab-content">
+                            <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+                            	123
+                            </div>
+                        </div>
                     </div>
             		<#include "include_page/footer.html"/>
                 </div>
