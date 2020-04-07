@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.legocms.core.dto.Page;
 import com.legocms.core.dto.sys.SysUserInfo;
+import com.legocms.core.vo.sys.QuerySysUserVo;
 import com.legocms.data.handler.RenderHandler;
 import com.legocms.service.sys.ISysUserService;
 import com.legocms.web.directive.AbstractTemplateDirective;
@@ -19,9 +20,12 @@ public class SysUserListDirective extends AbstractTemplateDirective {
 
     @Override
     public void execute(RenderHandler handler) throws IOException, Exception {
-        String name = handler.getString("name");
-        String code = handler.getString("code");
-        Page<SysUserInfo> infos = userService.findBy(code, name, getPageIndex(), getPageSize());
+        QuerySysUserVo vo = new QuerySysUserVo();
+        vo.setName(handler.getString("name"));
+        vo.setCode(handler.getString("code"));
+        vo.setCreateStart(handler.getDate("createStart"));
+        vo.setCreateEnd(handler.getDate("createEnd"));
+        Page<SysUserInfo> infos = userService.findBy(vo, getPageIndex(), getPageSize());
         handler.put(KEY_PAGE_NAME, infos).render();
     }
 

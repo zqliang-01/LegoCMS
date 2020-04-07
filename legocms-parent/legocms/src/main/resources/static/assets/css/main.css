@@ -11063,8 +11063,8 @@ button,
 }
 
 .app-header__logo .logo-src {
-    height: 23px;
-    width: 97px;
+    height: 40px;
+    width: 100px;
     background: url(../images/logo-inverse.png)
 }
 
@@ -25700,4 +25700,11 @@ a.fc-more:hover {
     height: 350px;
     margin-bottom: 30px;
     background-size: 100%
+}
+.date-inline {
+    background: #fff;
+    box-shadow: none;
+    cursor: pointer;
+    border: 1px solid #ced4da;
+    width: 205px;
 }

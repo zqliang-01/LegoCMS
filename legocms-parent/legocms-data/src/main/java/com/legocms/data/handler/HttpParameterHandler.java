@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.HttpMessageNotWritableException;
+import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
@@ -21,6 +22,7 @@ import com.legocms.core.common.Constants;
 import com.legocms.core.common.DateUtil;
 import com.legocms.core.common.StringUtil;
 import com.legocms.core.exception.BusinessException;
+import com.legocms.core.vo.Vo;
 
 public class HttpParameterHandler extends BaseFreemarkerHandler {
 
@@ -173,6 +175,12 @@ public class HttpParameterHandler extends BaseFreemarkerHandler {
     @Override
     public Locale getLocale() throws Exception {
         return RequestContextUtils.getLocale(request);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T extends Vo> T getJsonVo(Class<T> clazz) throws IOException, Exception {
+        return (T) httpMessageConverter.read(clazz, new ServletServerHttpRequest(request));
     }
 
 }

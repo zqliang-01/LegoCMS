@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.legocms.core.dto.Page;
 import com.legocms.core.dto.sys.SysUserInfo;
+import com.legocms.core.vo.sys.QuerySysUserVo;
 import com.legocms.data.assembler.PageAssemler;
 import com.legocms.data.assembler.sys.SysUserAssembler;
 import com.legocms.data.dao.sys.ISysUserDao;
@@ -30,8 +31,8 @@ public class SysUserService extends BaseService implements ISysUserService {
     }
 
     @Override
-    public Page<SysUserInfo> findBy(String code, String name, int pageIndex, int pageSize) {
-        Page<SysUser> page = userDao.findBy(code, name, pageIndex, pageSize);
+    public Page<SysUserInfo> findBy(QuerySysUserVo vo, int pageIndex, int pageSize) {
+        Page<SysUser> page = userDao.findBy(vo, pageIndex, pageSize);
         return PageAssemler.createInfos(page, SysUserAssembler.class);
     }
 }

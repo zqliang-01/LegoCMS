@@ -1,5 +1,6 @@
 package com.legocms.data.handler;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,6 +12,8 @@ import java.util.TreeSet;
 import com.legocms.core.common.CollectionUtil;
 import com.legocms.core.common.StringUtil;
 import com.legocms.core.dto.JsonResponse;
+import com.legocms.core.exception.BusinessException;
+import com.legocms.core.vo.Vo;
 
 /**
   * 指令处理器基类
@@ -286,6 +289,11 @@ public abstract class BaseFreemarkerHandler implements RenderHandler {
     public String[] getStringArray(String name) throws Exception {
         regristerParameter(PARAMETER_TYPE_STRINGARRAY, name);
         return getStringArrayWithoutRegister(name);
+    }
+
+    @Override
+    public <T extends Vo> T getJsonVo(Class<T> clazz) throws IOException, Exception {
+        throw new BusinessException("未实现的getVo方法！");
     }
 
     @Override

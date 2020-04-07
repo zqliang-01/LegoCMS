@@ -1,32 +1,10 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title>LegoCMS</title>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta http-equiv="Content-Language" content="en">
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+		<meta charset="utf-8">
         <meta name="description" content="LegoCMS">
-        <meta name="msapplication-tap-highlight" content="no">
-        <link rel="stylesheet" href="${res}/assets/css/main.css">
-        <link rel="stylesheet" href="${res}/assets/js/myPagination/jqtransform.css" />
-        <link rel="stylesheet" href="${res}/assets/js/myPagination/messageBox.css" />
-        <link rel="stylesheet" href="${res}/assets/js/myPagination/page.css" />
-
-        <script type="text/javascript" src="${res}/assets/js/jquery.js"></script>
-        <script type="text/javascript" src="${res}/assets/js/main.js"></script>
-        <script type="text/javascript" src="${res}/assets/js/submit.js"></script>
-        <script type="text/javascript" src="${res}/assets/js/layer/layer.js"></script>
-        <script type="text/javascript" src="${res}/assets/js/myPagination/jquery.myPagination6.0.js"></script>
-        <script type="text/javascript" src="${res}/assets/js/myPagination/messageBox.js"></script>
-        <script type="text/javascript" src="${res}/assets/js/myPagination/jquery.jqtransform.js"></script>
-        <script type="text/javascript" src="${res}/assets/js/myPagination/jquery-jtemplates.js"></script>
-        <script type="text/javascript" src="${res}/assets/js/myPagination/myPagination.js"></script>
-        <script type="text/javascript">
-        	var ctx = "${ctx}";
-        </script>
-        <script type="text/javascript" src="${res}/assets/js/cms/sysUser.js"></script>
+        <#include "../include_page/link.html"/>
+		<script type="text/javascript" src="${res}/assets/js/cms/sysUser.js"></script>
     </head>
     <body>
         <div class="app-main__inner" id="MyPagination-user-list">
@@ -55,7 +33,12 @@
 					<div class="page-title-wrapper">
 						<div class="form-inline">
 							<div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
-								<input name="code" id="exampleEmail22" placeholder="name" type="text" class="form-control">
+								<div class="btn date-inline selectdate">
+									<i class="fa fa-calendar"></i>
+									<span></span>
+									<input type="hidden" name="createStart"  value="">
+									<input type="hidden" name="createEnd"  value="">
+								</div>
 							</div>
 						</div>
 					</div>

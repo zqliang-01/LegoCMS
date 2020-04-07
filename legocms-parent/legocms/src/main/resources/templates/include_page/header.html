@@ -82,15 +82,15 @@
                         </div>
                         <div class="widget-content-left  ml-3 header-user-info">
                             <div class="widget-heading">
-                                Zqliang
+                                ${Session.admin_user.name}
                             </div>
                             <div class="widget-subheading">
-                                Manager
+                                ${Session.admin_user.organization.name}
                             </div>
                         </div>
                         <div class="widget-content-right header-user-info ml-3">
-                            <button type="button" class="btn-shadow p-1 btn btn-primary btn-sm show-toastr-example">
-                                <i class="fa text-white fa-calendar pr-1 pl-1"></i>
+                            <button type="button" class="btn-shadow p-1 btn btn-primary btn-sm" id="logout">
+                                <i class="fa text-white fa-calendar pr-1 pl-1 pe-7s-door-lock"></i>
                             </button>
                         </div>
                     </div>

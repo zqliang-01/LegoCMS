@@ -132,7 +132,7 @@ function interceptorResponse(data) {
 	if (data.code != "0") {
 		if (data.code == "1000") {
 			showMsg(data.msg, 5, function() {
-				window.open(ctx + "login","_parent");
+				window.open(ctx + "/login","_parent");
 			});
 		}
 		else {

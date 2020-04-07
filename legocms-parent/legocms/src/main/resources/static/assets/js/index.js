@@ -1,0 +1,5 @@
+$(function() {
+	$('#logout').click(function() {
+		
+	});
+})

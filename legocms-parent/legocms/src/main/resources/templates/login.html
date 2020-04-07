@@ -24,6 +24,11 @@
         <script type="text/javascript" src="${res}/assets/js/jquery.js"></script>
         <script type="text/javascript" src="${res}/assets/js/layer/layer.js"></script>
         <script type="text/javascript" src="${res}/assets/js/submit.js"></script>
+        <script type="text/javascript">
+	        if(window.top != window.self){
+        		top.location.href = location.href;
+        	}
+        </script>
 	</head>
 	<body>
         <div class="fa-box-open">
