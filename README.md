@@ -12,17 +12,20 @@ https://gitee.com/zqliang_01/LegoCMS.git
 ### 创建数据库
 * 创建数据库lego-cms
 * 创建用户：legocms，密码：123456
+### 系统环境配置
+* 安装JDK
+* 配置Maven环境变量（自行百度配置）
 ### 项目打包 + 初始化数据库
-* cd到legocms-parent目录
-* 执行mvn package
-### 项目启动
-* cd到legocms-parent/legocms/target
-* 拷贝文件legocms.jar、目录lib到任意路径
-* cmd到该路经，执行java -jar legocms.jar
+* 根目录下双击执行dbInit.bat，初始化数据库
+* 根目录下双击执行devRun.bat，打包并运行项目
 ### 访问路径
 * 项目默认端口8080
 * 管理台路径http://localhost:8080/legocms/admin
 * 默认账号密码admin/admin
+### 项目版本路径
+* legocms-parent/legocms/target
+* 文件legocms.jar、目录lib为项目完整文件
+* 按实际需要把上述文件拷贝到指定路径，执行java -jar legocms.jar即可运行版本
 ### 配置修改
 * 默认配置
 ```psp
