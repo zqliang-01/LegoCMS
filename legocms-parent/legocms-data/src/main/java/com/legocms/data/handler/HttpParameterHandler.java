@@ -168,12 +168,12 @@ public class HttpParameterHandler extends BaseFreemarkerHandler {
     }
 
     @Override
-    public Object getAttribute(String name) {
+    public Object getAttribute(String name) throws IOException, Exception {
         return request.getAttribute(name);
     }
 
     @Override
-    public Locale getLocale() {
+    public Locale getLocale() throws Exception {
         return RequestContextUtils.getLocale(request);
     }
 

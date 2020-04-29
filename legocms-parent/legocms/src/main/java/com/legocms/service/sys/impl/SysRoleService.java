@@ -35,7 +35,7 @@ public class SysRoleService extends BaseService implements ISysRoleService {
     @Override
     public List<TypeCheckInfo> findSimple(String userCode) {
         List<SysRole> allRoles = roleDao.findAll();
-        List<SysRole> roles = roleDao.findByUser(userCode);
+        List<SysRole> roles = roleDao.findBy(userCode);
         return typeInfoAssembler.createCheck(allRoles, roles);
     }
 

@@ -16,7 +16,6 @@ import com.legocms.core.vo.sys.SysPermissionVo;
 import com.legocms.data.assembler.sys.SysPermissionAssembler;
 import com.legocms.data.dao.sys.ISysPermissionDao;
 import com.legocms.data.dao.sys.ISysPermissionLangDao;
-import com.legocms.data.dao.sys.ISysRoleDao;
 import com.legocms.data.entities.sys.SysPermission;
 import com.legocms.data.entities.sys.SysPermissionLang;
 import com.legocms.service.BaseService;
@@ -29,17 +28,14 @@ public class SysPermissionService extends BaseService implements ISysPermissionS
     private ISysPermissionDao permissionDao;
 
     @Autowired
-    private ISysRoleDao roleDao;
-
-    @Autowired
     private SysPermissionAssembler permissionAssembler;
 
     @Autowired
     private ISysPermissionLangDao permissionLangDao;
 
-    public List<SysPermissionInfo> findBy(String userCode, String parentCode, String lang, boolean menu) {
+    public List<SysPermissionInfo> findBy(String userCode, String parentCode, boolean menu) {
         List<SysPermission> permissions = permissionDao.findBy(userCode, parentCode, menu);
-        return this.permissionAssembler.create(permissions, lang);
+        return this.permissionAssembler.create(permissions);
     }
 
     @Override
@@ -91,8 +87,6 @@ public class SysPermissionService extends BaseService implements ISysPermissionS
     @Override
     public void delete(String code) {
         SysPermission permission = permissionDao.findByCode(code);
-        BusinessException.check(roleDao.findByPermission(permission).isEmpty(), "该菜单已授权，删除失败！");
-        BusinessException.check(permissionDao.findChildren(code).isEmpty(), "存在下级菜单，删除失败！");
         List<SysPermissionLang> permissionLangs = permissionLangDao.findBy(permission);
         permissionLangDao.deleteInBatch(permissionLangs);
         permissionDao.delete(permission);

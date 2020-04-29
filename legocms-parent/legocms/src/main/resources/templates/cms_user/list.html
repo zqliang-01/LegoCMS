@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
         <meta name="description" content="LegoCMS">
         <#include "../include_page/link.html"/>
-		<script type="text/javascript" src="${res}/assets/js/cms/sys-user.js"></script>
+		<script type="text/javascript" src="${res}/assets/js/cms/sysUser.js"></script>
     </head>
     <body>
         <div class="app-main__inner" id="MyPagination-user-list">
@@ -20,11 +20,11 @@
 		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
 							<select name="status" id="status" class="form-control custom-select">
 								<option value="">状态</option>
-								<@sysUserStatus>
+								<@sysUserState>
 									<#list userStatus as userState>
 										<option value="${userState.code}">${userState.name}</option>
 									</#list>
-								</@sysUserStatus>
+								</@sysUserState>
 							</select>
 		                 </div>
 		                 <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">

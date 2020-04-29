@@ -12,7 +12,4 @@ public interface AdminPermission {
     String ROLE = "role";
     String ROLE_AUTHORIZE = "role-authorize";
     String ROLE_EDIT = "role-edit";
-
-    String ORGANIZATION = "organization";
-    String ORGANIZATION_EDIT = "organization-edit";
 }

@@ -57,11 +57,4 @@ public class SysPermissionDao extends GenericDao<SysPermission> implements ISysP
         query.order("p.sort");
         return query.findSqlList();
     }
-
-    @Override
-    public List<SysPermission> findChildren(String parentCode) {
-        QueryHandler<SysPermission> query = createQueryHandler("FROM {0} p");
-        query.condition("p.parent.code = :parentCode").setParameter("parentCode", parentCode);
-        return query.findList();
-    }
 }

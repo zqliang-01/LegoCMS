@@ -1,7 +1,5 @@
 package com.legocms.data.dao.sys.impl;
 
-import java.util.List;
-
 import javax.persistence.EntityManager;
 
 import com.legocms.core.common.StringUtil;
@@ -39,13 +37,6 @@ public class SysUserDao extends GenericDao<SysUser> implements ISysUserDao {
             queryHandler.condition("u.createDate < :endStart").setParameter("endStart", vo.getCreateEnd());
         }
         return queryHandler.findPage(pageIndex, pageSize);
-    }
-
-    @Override
-    public List<SysUser> findBy(String organizationCode) {
-        QueryHandler<SysUser> query = createQueryHandler("FROM {0} u");
-        query.condition("u.organization.code = :organizationCode").setParameter("organizationCode", organizationCode);
-        return query.findList();
     }
 
 }

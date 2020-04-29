@@ -25,10 +25,4 @@ public class SysOrganization extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id", referencedColumnName = "id")
     private SysOrganization parent;
-
-    protected SysOrganization() { }
-
-    public SysOrganization(String code) {
-        super(code);
-    }
 }

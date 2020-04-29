@@ -10,11 +10,11 @@ import com.legocms.core.annotation.RequiresPermissions;
 import com.legocms.core.dto.TypeInfo;
 import com.legocms.data.handler.RenderHandler;
 import com.legocms.service.sys.ISysSimpleTypeService;
-import com.legocms.web.directive.ControllerTemplateDirective;
+import com.legocms.web.directive.AbstractTemplateDirective;
 
 @Component
 @RequiresPermissions(skip = true)
-public class SysUserStatusDirective extends ControllerTemplateDirective {
+public class SysUserStateDirective extends AbstractTemplateDirective {
 
     @Autowired
     private ISysSimpleTypeService simpleTypeService;

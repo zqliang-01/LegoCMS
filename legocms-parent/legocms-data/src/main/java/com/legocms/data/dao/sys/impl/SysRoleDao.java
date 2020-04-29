@@ -8,7 +8,6 @@ import com.legocms.core.common.StringUtil;
 import com.legocms.core.dto.Page;
 import com.legocms.data.base.impl.GenericDao;
 import com.legocms.data.dao.sys.ISysRoleDao;
-import com.legocms.data.entities.sys.SysPermission;
 import com.legocms.data.entities.sys.SysRole;
 import com.legocms.data.handler.QueryHandler;
 
@@ -19,7 +18,7 @@ public class SysRoleDao extends GenericDao<SysRole> implements ISysRoleDao {
     }
 
     @Override
-    public List<SysRole> findByUser(String userCode) {
+    public List<SysRole> findBy(String userCode) {
         String sql =
             " SELECT r.* FROM sys_role r " +
             " JOIN sys_user_role ur ON ur.role_id = r.id " +
@@ -28,13 +27,6 @@ public class SysRoleDao extends GenericDao<SysRole> implements ISysRoleDao {
         QueryHandler<SysRole> query = createQueryHandler(sql);
         query.setParameter("userCode", userCode);
         return query.findSqlList();
-    }
-
-    @Override
-    public List<SysRole> findByPermission(SysPermission permission) {
-        QueryHandler<SysRole> query = this.createQueryHandler("FROM {0} r");
-        query.condition(":permission IN ELEMENTS (r.permissions)").setParameter("permission", permission);
-        return query.findList();
     }
 
     @Override

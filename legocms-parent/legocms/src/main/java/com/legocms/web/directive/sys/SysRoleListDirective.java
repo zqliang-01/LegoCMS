@@ -10,11 +10,11 @@ import com.legocms.core.dto.Page;
 import com.legocms.core.dto.sys.SysRoleInfo;
 import com.legocms.data.handler.RenderHandler;
 import com.legocms.service.sys.ISysRoleService;
-import com.legocms.web.directive.ControllerTemplateDirective;
+import com.legocms.web.directive.AbstractTemplateDirective;
 
 @Component
 @RequiresPermissions(skip = true)
-public class SysRoleListDirective extends ControllerTemplateDirective {
+public class SysRoleListDirective extends AbstractTemplateDirective {
 
     @Autowired
     private ISysRoleService roleService;

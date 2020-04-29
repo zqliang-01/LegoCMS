@@ -11306,7 +11306,7 @@ button,
 }
 
 .app-sidebar .app-sidebar__inner {
-    padding: 2px 0.5rem 1.5rem
+    padding: 2px 1.5rem 1.5rem
 }
 
 .app-sidebar .scrollbar-sidebar {
@@ -11464,7 +11464,7 @@ button,
 
 .vertical-nav-menu ul {
     transition: padding 300ms;
-    padding: .3em 0 .3rem 2rem
+    padding: .5em 0 0 2rem
 }
 
 .vertical-nav-menu ul:before {
@@ -11492,11 +11492,6 @@ button,
 
 .vertical-nav-menu ul>li>a .metismenu-icon {
     display: contents
-}
-
-.vertical-nav-menu ul>li>a>i:before {
-	top: .2rem;
-    position: relative;
 }
 
 .vertical-nav-menu ul>li>a.mm-active {

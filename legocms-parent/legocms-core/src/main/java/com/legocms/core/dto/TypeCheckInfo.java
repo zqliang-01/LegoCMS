@@ -11,11 +11,6 @@ public class TypeCheckInfo extends TypeInfo {
 
     private boolean checked;
 
-    public TypeCheckInfo(TypeInfo info, boolean checked) {
-        super(info.getCode(), info.getName());
-        this.checked = checked;
-    }
-
     public TypeCheckInfo(String code, String name, boolean checked) {
         super(code, name);
         this.checked = checked;

@@ -9,11 +9,11 @@ import com.legocms.core.annotation.RequiresPermissions;
 import com.legocms.core.dto.sys.SysUserDetailInfo;
 import com.legocms.data.handler.RenderHandler;
 import com.legocms.service.sys.ISysUserService;
-import com.legocms.web.directive.ControllerTemplateDirective;
+import com.legocms.web.directive.AbstractTemplateDirective;
 
 @Component
 @RequiresPermissions(skip = true)
-public class SysUserDirective extends ControllerTemplateDirective {
+public class SysUserDirective extends AbstractTemplateDirective {
 
     @Autowired
     private ISysUserService userService;

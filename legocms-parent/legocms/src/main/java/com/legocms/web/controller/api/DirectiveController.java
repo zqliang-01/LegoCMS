@@ -14,7 +14,7 @@ import com.legocms.core.common.ConstantEnum;
 import com.legocms.core.common.Constants;
 import com.legocms.core.exception.BusinessException;
 import com.legocms.core.web.session.SessionController;
-import com.legocms.web.directive.ControllerTemplateDirective;
+import com.legocms.web.directive.AbstractTemplateDirective;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +34,7 @@ public class DirectiveController extends SessionController {
     @RequestMapping("{action}")
     public void api(@PathVariable String action, HttpServletRequest request, HttpServletResponse response) {
         log.debug("api:{}", action);
-        ControllerTemplateDirective directive = directiveComponent.getTemplateDirectiveMap().get(action);
+        AbstractTemplateDirective directive = directiveComponent.getTemplateDirectiveMap().get(action);
         BusinessException.check(directive != null && directive.httpEnabled(), ConstantEnum.INTERFACE_NOTFOUND_INVALID);
         directive.execute(mappingJackson2HttpMessageConverter, Constants.JSON_MEDIA_TYPE, request, response);
     }

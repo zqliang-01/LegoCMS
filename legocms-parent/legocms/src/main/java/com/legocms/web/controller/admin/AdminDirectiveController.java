@@ -18,7 +18,7 @@ import com.legocms.core.common.Constants;
 import com.legocms.core.exception.BusinessException;
 import com.legocms.core.web.session.SessionController;
 import com.legocms.web.AdminView;
-import com.legocms.web.directive.ControllerTemplateDirective;
+import com.legocms.web.directive.AbstractTemplateDirective;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +39,7 @@ public class AdminDirectiveController extends SessionController {
     @RequiresPermissions(skip = true)
     public void action(@PathVariable String action, HttpServletRequest request, HttpServletResponse response) {
         log.debug("/admin/action:{}", action);
-        ControllerTemplateDirective directive = directiveComponent.getTemplateDirectiveMap().get(action);
+        AbstractTemplateDirective directive = directiveComponent.getTemplateDirectiveMap().get(action);
         RequiresPermissions permission = directive.getClass().getAnnotation(RequiresPermissions.class);
         BusinessException.check(directive != null && directive.httpEnabled(), ConstantEnum.INTERFACE_NOTFOUND_INVALID);
         BusinessException.check(permission != null, ConstantEnum.AUTHORIZATION_INVALID);

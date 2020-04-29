@@ -9,11 +9,11 @@ import com.legocms.core.annotation.RequiresPermissions;
 import com.legocms.core.dto.sys.SysRoleInfo;
 import com.legocms.data.handler.RenderHandler;
 import com.legocms.service.sys.ISysRoleService;
-import com.legocms.web.directive.ControllerTemplateDirective;
+import com.legocms.web.directive.AbstractTemplateDirective;
 
 @Component
 @RequiresPermissions(skip = true)
-public class SysRoleDirective extends ControllerTemplateDirective {
+public class SysRoleDirective extends AbstractTemplateDirective {
 
     @Autowired
     private ISysRoleService roleService;

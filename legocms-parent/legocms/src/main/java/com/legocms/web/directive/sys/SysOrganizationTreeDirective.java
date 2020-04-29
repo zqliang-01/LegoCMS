@@ -10,11 +10,11 @@ import com.legocms.core.annotation.RequiresPermissions;
 import com.legocms.core.dto.SimpleTreeInfo;
 import com.legocms.data.handler.RenderHandler;
 import com.legocms.service.sys.ISysOrganizationService;
-import com.legocms.web.directive.ControllerTemplateDirective;
+import com.legocms.web.directive.AbstractTemplateDirective;
 
 @Component
 @RequiresPermissions(skip = true)
-public class SysOrganizationTreeDirective extends ControllerTemplateDirective {
+public class SysOrganizationTreeDirective extends AbstractTemplateDirective {
 
     @Autowired
     private ISysOrganizationService organizationService;
