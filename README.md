@@ -29,20 +29,23 @@ https://gitee.com/zqliang_01/LegoCMS.git
 ### 配置修改
 * 默认配置
 ```psp
-spring.profiles.include=hibernate,freemarker,redis 
-## tomcat配置
-server.port=8080 
-server.tomcat.maxThreads=500 
-server.tomcat.uri-encoding=UTF-8 
-server.tomcat.maxConnections=2000 
-server.servlet.session.timeout=1800 
-spring.servlet.multipart.enabled=true 
-server.servlet.context-path=/legocms 
-spring.session.store-type=none 
-## 数据库配置
-spring.datasource.driver-class-name=com.mysql.jdbc.Driver 
-spring.datasource.url=jdbc:mysql://127.0.0.1:3306/lego-cms?useunicode=true&characterEncoding=utf8&serverTimezone=GMT 
-spring.datasource.username=legocms 
-spring.datasource.password=123456 
+spring.profiles.include=hibernate,freemarker,redis
+
+### web
+server.port=8080
+server.tomcat.maxThreads=500
+server.tomcat.uri-encoding=UTF-8
+server.tomcat.maxConnections=2000
+server.servlet.session.timeout=PT30M
+spring.servlet.multipart.enabled=true
+server.servlet.context-path=/legocms
+spring.session.store-type=none
+spring.messages.basename=language/messages,language/page
+
+### database
+spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/lego-cms?useunicode=true&characterEncoding=utf8&serverTimezone=GMT
+spring.datasource.username=legocms
+spring.datasource.password=123456
 ```
 * 修改默认配置，在启动路径下新建文件application.properties，按上述配置内容修改即可
