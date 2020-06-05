@@ -43,8 +43,6 @@ spring.servlet.multipart.enabled=true
 spring.servlet.multipart.max-file-size=10MB
 spring.servlet.multipart.max-request-size=10MB
 server.servlet.context-path=/legocms
-### 默认值none单机会话，redis共享会话，共享会话依赖application-redis配置，默认本机单节点redis
-### 设置为redis后，会启用ftp托管站点文件，需配置ftp后开启
 spring.session.store-type=none
 spring.messages.basename=language/messages,language/page
 
@@ -54,7 +52,7 @@ ftp.username=test
 ftp.password=test
 
 ### database
-spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 spring.datasource.url=jdbc:mysql://localhost:3306/lego-cms?useunicode=true&characterEncoding=utf8&serverTimezone=GMT
 spring.datasource.username=legocms
 spring.datasource.password=123456
