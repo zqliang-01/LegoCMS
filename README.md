@@ -60,3 +60,13 @@ spring.datasource.username=legocms
 spring.datasource.password=123456
 ```
 * 修改默认配置，在启动路径下新建文件application.properties，按上述配置内容修改即可
+
+### 系统展示
+* 登录
+![image](https://github.com/zqliang-01/zqliang/blob/master/login.png)
+* 站点文件管理
+![image](https://github.com/zqliang-01/zqliang/blob/master/file.png)
+* 权限管理
+![image](https://github.com/zqliang-01/zqliang/blob/master/permission.png)
+* 模板管理
+![image](https://github.com/zqliang-01/zqliang/blob/master/template.png)
