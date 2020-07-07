@@ -63,10 +63,10 @@ spring.datasource.password=123456
 
 ### 系统展示
 * 登录
-![image](http://mmbiz.qpic.cn/mmbiz_png/Lic2heIgYrNFdZzohAxwul9nKlC6N7IzPES6RG3m0uAqg00TNGibWmDO4icqicjPCicNndVnLR86Laf8BpjtOsY3Yeg/0)
+![image](https://zqliang.cn/upload/image/cms/login.png)
 * 站点文件管理
-![image](http://mmbiz.qpic.cn/mmbiz_png/Lic2heIgYrNFdZzohAxwul9nKlC6N7IzPyNB3vSHic0TicMXTrFnZUuFAoWuF0M4HLNLeSXEr4WvibErRcFZoAic5QQ/0)
+![image](https://zqliang.cn/upload/image/cms/file.png)
 * 权限管理
-![image](http://mmbiz.qpic.cn/mmbiz_png/Lic2heIgYrNFdZzohAxwul9nKlC6N7IzPnzPf9vR0Iic12EuLicvK3QJ9WMcx04YVGdicKOG2WuacCTSdaa9ticS05Q/0)
+![image](https://zqliang.cn/upload/image/cms/permission.png)
 * 模板管理
-![image](http://mmbiz.qpic.cn/mmbiz_png/Lic2heIgYrNFdZzohAxwul9nKlC6N7IzPr4o64EGBhqV1qTJa1yLfxHCnmW3fCGCGJzksl2eInuXl5ia2QgZVp7w/0)
+![image](https://zqliang.cn/upload/image/cms/template.png)
