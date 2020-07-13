@@ -63,10 +63,10 @@ spring.datasource.password=123456
 
 ### 系统展示
 * 登录
-![image](https://zqliang.cn/upload/image/cms/login.png)
+![image](https://github.com/zqliang-01/zqliang/blob/master/login.png)
 * 站点文件管理
-![image](https://zqliang.cn/upload/image/cms/file.png)
+![image](https://github.com/zqliang-01/zqliang/blob/master/file.png)
 * 权限管理
-![image](https://zqliang.cn/upload/image/cms/permission.png)
+![image](https://github.com/zqliang-01/zqliang/blob/master/permission.png)
 * 模板管理
-![image](https://zqliang.cn/upload/image/cms/template.png)
+![image](https://github.com/zqliang-01/zqliang/blob/master/template.png)
